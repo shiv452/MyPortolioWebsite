@@ -1,0 +1,27 @@
+    *, html ,body {
+        font-family: Arial, sans-serif;
+        margin: 1px;
+        padding: 2px;
+        scroll-behavior: smooth;
+    }
+    
+    header {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .container {
+        background: linear-gradient(20deg, rgb(228, 75, 75), white, rgb(238, 218, 65));
+        background-attachment: fixed;
+        width: 100%;
+        height: auto;
+        margin-top: -20px;
+        font-weight: 300;
+        font-size: 20px;
+    }
+
+    .container p strong {
+        color: grey;
+    }

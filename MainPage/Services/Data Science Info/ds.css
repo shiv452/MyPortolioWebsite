@@ -1,0 +1,17 @@
+*, body, html {
+    margin: 1px;
+    padding-right: 2px;
+    scroll-behavior: smooth;
+}
+
+header {
+    background: grey;
+    color: white;
+    padding: 5px;
+}
+
+.container {
+    background: linear-gradient(112deg, rgb(96, 234, 197), white, rgb(105, 60, 220));
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}

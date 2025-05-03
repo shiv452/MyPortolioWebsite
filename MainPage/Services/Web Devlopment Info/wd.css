@@ -1,0 +1,15 @@
+*,body,html {
+    margin: 10px;
+    padding: 2px;
+    scroll-behavior: smooth;
+}
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+.container {
+    position: relative;
+    background: navajowhite;
+}
