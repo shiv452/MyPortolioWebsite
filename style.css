@@ -213,27 +213,24 @@ body {
     width: 100%;
 }
 
+.tab-contents ul {
+    background: linear-gradient(135deg, #e8a342, #64d5d9);
+    padding: 5px;
+    border-radius: 17px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
 .tab-contents ul li {
-    list-style: none;
-    margin: 10px 0;
+    margin-bottom: 6px;
+    padding: 1px 4px;
+    background-color: rgb(25, 24, 24);
+    border-radius: 12px;
+    transition: background-color 0.3s ease, transform 0.2s;
 }
 
-.tab-contents ul li span {
-    font-size: 17px;
-    animation: glitter 4s infinite;
-}
-
-@keyframes glitter {
-    0%, 100% {
-        color: rgb(30, 109, 157);
-        text-shadow: none;
-        }
-    50% {
-        color: rgb(111, 42, 201);
-        text-shadow: 0 0 5px rgba(135, 135, 135, 0.8),
-                    0 0 10px rgba(255, 255, 255, 0.8),
-                    0 0 15px rgba(255, 255, 255, 0.8);
-        }
+.tab-contents ul li:hover {
+    background-color: #cc7de9;
+    transform: translateX(6px);
 }
 
 .tab-contents {
