@@ -1,141 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Thank You</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #92EFFD, #B47BFF);
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      color: #fff;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thank You</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #92EFFD, #B47BFF);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            color: #fff;
+        }
 
-    .thank-you-box {
-      text-align: center;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(10px);
-      animation: float 4s ease-in-out infinite, glow 2s infinite alternate;
-    }
+        .thank-you-box {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            animation: float 4s ease-in-out infinite, glow 2s infinite alternate;
+        }
 
-    .thank-you-box h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5em;
-      animation: fadeIn 2s ease-in;
-    }
+        .thank-you-box h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5em;
+            animation: fadeIn 2s ease-in;
+        }
 
-    .thank-you-box p {
-      font-size: 1.2rem;
-      animation: fadeInUp 2s ease-in-out;
-    }
+        .thank-you-box p {
+            font-size: 1.2rem;
+            animation: fadeInUp 2s ease-in-out;
+        }
 
-    .back-link {
-      display: inline-block;
-      margin-top: 2rem;
-      padding: 10px 20px;
-      border: 2px solid #fff;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 30px;
-      transition: background 0.3s ease;
-    }
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 10px 20px;
+            border: 2px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: background 0.3s ease;
+        }
 
-    .back-link:hover {
-      background: #fff;
-      color: #6c00ff;
-    }
+        .back-link:hover {
+            background: #fff;
+            color: #6c00ff;
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
 
-    @keyframes fadeInUp {
-      from {
-        transform: translateY(20px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
+            to {
+                opacity: 1;
+            }
+        }
 
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
-    }
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
 
-    @keyframes glow {
-      0% { box-shadow: 0 0 20px rgba(255,255,255,0.2); }
-      100% { box-shadow: 0 0 30px rgba(255,255,255,0.5); }
-    }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
 
-    /* Confetti canvas full screen */
-    canvas#confetti-canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
-  </style>
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            }
+
+            100% {
+                box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        /* Confetti canvas full screen */
+        canvas#confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
 </head>
+
 <body>
-  <canvas id="confetti-canvas"></canvas>
+    <canvas id="confetti-canvas"></canvas>
 
-  <div class="thank-you-box">
-    <h1>Thank You! 🎉</h1>
-    <p>Your message has been sent successfully.<br>I'll get back to you as soon as possible.</p>
-    <a href="/" class="back-link">Go Back Home</a>
-  </div>
+    <div class="thank-you-box">
+        <h1>Thank You! 🎉</h1>
+        <p>Your message has been sent successfully.<br>I'll get back to you as soon as possible.</p>
+        <a href="/" class="back-link">Go Back Home</a>
+    </div>
 
-  <!-- 🎊 Confetti script -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script>
-    const duration = 5 * 1000;
-    const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+    <!-- 🎊 Confetti script -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        const duration = 5 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
-    function randomInRange(min, max) {
-      return Math.random() * (max - min) + min;
-    }
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
 
-    const interval = setInterval(function () {
-      const timeLeft = animationEnd - Date.now();
+        const interval = setInterval(function () {
+            const timeLeft = animationEnd - Date.now();
 
-      if (timeLeft <= 0) {
-        return clearInterval(interval);
-      }
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
 
-      confetti(Object.assign({}, defaults, {
-        particleCount: 3,
-        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
-      }));
+            confetti(Object.assign({}, defaults, {
+                particleCount: 3,
+                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+            }));
 
-      confetti(Object.assign({}, defaults, {
-        particleCount: 3,
-        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
-      }));
-    }, 250);
-  </script>
+            confetti(Object.assign({}, defaults, {
+                particleCount: 3,
+                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+            }));
+        }, 250);
+    </script>
 
-  <!-- 🎶 Optional sound (uncomment below if you want a chime sound) -->
-  
-  <!-- Sound -->
-  <!-- <audio id="thankYouSound" autoplay>
+    <!-- 🎶 Optional sound (uncomment below if you want a chime sound) -->
+
+    <!-- Sound -->
+    <!-- <audio id="thankYouSound" autoplay>
     <source src="https://assets.mixkit.co/sfx/preview/mixkit-interface-hint-notification-911.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
@@ -152,8 +174,9 @@
       }, 300);
     });
   </script> -->
-  
-  
-  
+
+
+
 </body>
+
 </html>
