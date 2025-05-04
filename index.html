@@ -371,14 +371,30 @@
                     <a href="/Documents/ShivamGoyal.pdf" download class="btn btn2">Download CV ⇣</a>
                 </div>
 
-                <div class="contact-right">
+                <!-- <div class="contact-right">
                     <form>
                         <input type="text" name="Name" placeholder="Your Name" required>
                         <input type="email" name="Email" placeholder="Your Email" required>
                         <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
                         <button type="submit" class="btn btn3">Submit</button>
                     </form>
-                </div>
+                </div> -->
+
+                <div class="contact-right">
+                    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html" netlify>
+                      <input type="hidden" name="form-name" value="contact" />
+                      <p hidden>
+                        <label>Don’t fill this out: <input name="bot-field" /></label>
+                      </p>
+                      <input type="text" name="Name" placeholder="Your Name" required>
+                      <input type="email" name="Email" placeholder="Your Email" required>
+                      <textarea name="Message" rows="6" placeholder="Your Message" required></textarea>
+                      <button type="submit" class="btn btn3">Submit</button>
+                    </form>
+                  </div>
+                  
+                
+
             </div>
         </div>
 
