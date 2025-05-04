@@ -40,3 +40,5 @@ Content in my WebSite:
 
     * Submission Page on same page 
     - Automate auto reply to the sender. 
+    - Email automation is config with {https://connect.pabbly.com/workflow/mapping/IjU3NjYwNTY4MDYzMzA0MzY1MjY1NTUzNDUxMzYi_pc}
+    and Netlify
