@@ -40,5 +40,7 @@ Content in my WebSite:
 
     * Submission Page on same page 
     - Automate auto reply to the sender. 
-    - Email automation is config with {https://connect.pabbly.com/workflow/mapping/IjU3NjYwNTY4MDYzMzA0MzY1MjY1NTUzNDUxMzYi_pc}
-    and Netlify
+    - Configure the Email from which I'm sending the reply to the user 
+    {https://connect.pabbly.com/workflow/mapping/IjU3NjYwNTY4MDYzMzA0MzY1MjY1NTUzNDUxMzYi_pc}
+    - Also config the Notification whenever i get any for submission through my website
+    - It will send to my personal mail with all the content that user has put on the submission page.
