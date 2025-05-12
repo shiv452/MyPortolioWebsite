@@ -902,7 +902,7 @@ nav ul li {
 }
 
 nav ul li a {
-    color: rgb(88, 185, 224);
+    color: rgb(184, 43, 219);
     text-decoration: none;
     font-size: 20px; /* Adjust the nav font size */
     transition: color 0.3s;
@@ -911,22 +911,22 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #0933a8;
-    text-shadow: 0 0 10px #00f, 0 0 20px #00f;
+    color: #09a890;
+    text-shadow: 0 0 10px rgb(249, 251, 249), 0 0 20px rgb(250, 252, 252);
     transform: scale(1.1);
 }
 
 /* Base styling for icons */
 nav .fas {
     font-size: 24px;
-    color: rgb(255, 0, 0); /* Intense fire color */
+    color: rgb(91, 203, 228); /* Intense fire color */
     cursor: pointer;
     display: none; /* Hide icons by default */
     position: absolute;
     left: 490px;
     top: -1px;
     animation: burn 1s infinite;
-    text-shadow: 0 0 20px rgba(255, 0, 0, 1), 0 0 40px rgba(255, 0, 0, 0.8);
+    text-shadow: 0 0 20px rgb(110, 215, 58), 0 0 40px rgba(32, 195, 97, 0.8);
 }
 
 /* Animation for intense burning effect */
@@ -1054,34 +1054,64 @@ min-width: 1025px for larger desktops. */
     }
 
     /* Navigation Styling for Small Screens */
-    nav .fas {
-        display: block;
-        font-size: 15px;
-        margin-left: -130px;
-        margin-top: 25px;
-    }
+/* ----------Base Navigation Styles---------- */
+nav ul {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%; /* Adjust width for mobile view */
+    height: 50vh; /* Full screen height */
+    background-color: #9a4fd0;
+    padding-top: 10px;
+    transform: translateX(100%); /* Initially hidden off-canvas */
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
 
-    nav ul {
-        /* background: #cf0c46; */
-        position: fixed;
-        top: 0;
-        /* width: 20px; */
-        right: 0;
-        height: 49vh;
-        padding-top: 10px;
-        transform: translateX(100px); /* Off-canvas initially */
-        transition: transform 0.3s ease-in-out;
-        display: none; /* Hidden by default */
-    }
+nav ul.show {
+    display: flex;
+    transform: translateX(0); /* Slide in when 'show' class is added */
+}
 
-    nav ul.show {
-        transform: translateX(-15px); /* Display the menu when 'show' class is applied */
-    }
+/* Navigation items */
+nav ul li {
+    margin: 0px 2px;
+}
 
-    nav ul li {
-        display: block;
-        margin: -0px -10px;
-    }
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+/* Hamburger and Close Icons */
+nav .fas {
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    position: absolute;
+    top: 25px;
+    left: 20px;
+}
+
+nav .fas.fa-bars {
+    display: block;
+}
+
+nav .fas.fa-times {
+    display: none;
+}
+
+/* Show close icon and hide hamburger when menu is open */
+nav ul.show ~ .fas.fa-bars {
+    display: none;
+}
+
+nav ul.show ~ .fas.fa-times {
+    display: block;
+}
 
     /* Adjustments for Services Section */
     #services {
@@ -1191,19 +1221,15 @@ min-width: 1025px for larger desktops. */
     }
 
     #time {
-        margin: -20rem 0 0 -50rem;
+        margin: -27rem 0 0 -54rem;
     }
 
     nav .fas {
-        position: relative;
-        left: 1px;
-        top: -50px;
+        left: 10px;
+        top: 10px;
     }
-
     nav ul {
-        position: fixed;
-        transform: translateX(100px); /* Off-canvas initially */
-        transition: transform 0.3s ease-in-out;
+        width: 70%; 
     }
 }
 /* ----------Media Query for Mobile Devices (max-width: 768px)---------- */
@@ -1211,53 +1237,35 @@ min-width: 1025px for larger desktops. */
     .logo {
         margin-right: -80px;
     }
-    /* Hide the menu items by default */
+    
+    nav ul {
+        width: 80%; /* Adjust width on smaller screens */
+    }
+
+    /* Ensure visibility of the menu icon */
     nav .fas {
         display: block;
     }
 
-    nav ul {
-        flex-direction: column;
-        background-color: #000; /* Optional mobile dropdown bg */
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 50%;
-        display: none;
-    }
-
-    nav ul.show {
-        display: flex;
-    }
-
-    /* Show the hamburger menu icon and close icon */
-    nav .fas.fa-bars,
-    nav .fas.fa-times {
-        display: block;
-    }
-
-    /* Initially hide the close icon */
-    nav .fas.fa-times {
-        display: none;
-    }
-
-    /* Style the hamburger menu icon */
+    /* Position the hamburger menu */
     nav .fas.fa-bars {
-        font-size: 24px;
+        font-size: 30px;
+        position: fixed;
+        top: 10px;
+        left: 530px;
     }
 
-    /* Style the close menu icon */
+    /* Initially hide close icon */
     nav .fas.fa-times {
-        font-size: 24px;
+        font-size: 30px;
+        position: What;
+        top: 10px;
+        left: 543px;
     }
 
-    /* Show close icon and hide hamburger when menu is open */
-    nav ul.show ~ .fas.fa-bars {
-        display: none;
-    }
-
-    nav ul.show ~ .fas.fa-times {
-        display: block;
+    /* Menu and icon behavior */
+    nav ul.show {
+        display: flex; /* Ensure it's displayed when toggled */
     }
 }
 
@@ -1278,17 +1286,15 @@ min-width: 1025px for larger desktops. */
 
     nav ul {
         display: none;
-        width: 100%; /* or auto */
-        padding: 10px;
-        border-radius: 0;
+        width: 20%;
+        align-items: center;
+        border-radius: 20%
     }
 
     nav .fas {
-        display: flex;
-        position: absolute;
-        top: 0;
+        /* display: flex; */
+        top: 10px;
         left: 30px;
-        margin-top: -50px;
     }
 
     #time {
@@ -1300,9 +1306,9 @@ min-width: 1025px for larger desktops. */
 
 
     .about-col-2 p {
-        font-size: 10px; 
-        line-height: 1.0; 
-        text-align: start; 
+        font-size: 12.5px; 
+        line-height: 1.2; 
+        text-align: justify; 
     }
 
     .logo {
