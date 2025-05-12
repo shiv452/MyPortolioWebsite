@@ -911,7 +911,9 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #0933a8; /* Example hover color */
+    color: #0933a8;
+    text-shadow: 0 0 10px #00f, 0 0 20px #00f;
+    transform: scale(1.1);
 }
 
 /* Base styling for icons */
@@ -1171,9 +1173,10 @@ min-width: 1025px for larger desktops. */
 /* ----------Media Query for Medium Screens (451px to 1020px)---------- */
 @media only screen and (max-width: 1020px) {
     .services-list div {
-        font-size: 11px;
+        font-size: 12px;
         padding: 12px;
         width: 90%; 
+        margin-left: 20px;
     }
 
     .service_dot {
@@ -1209,29 +1212,22 @@ min-width: 1025px for larger desktops. */
         margin-right: -80px;
     }
     /* Hide the menu items by default */
-    nav ul {
-        display: none;
-        position: absolute;
-        top: 10px; /* Adjust based on your header height */
-        right: -30px;
-        width: 10px;
-        flex-direction: column;
-        text-align: center;
-        background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(146, 39, 213, 0.8)); /* Semi-transparent background */
- /* Semi-transparent background for mobile menu */
-    }
     nav .fas {
         display: block;
-        font-size: 15px;
-        margin-left: -120px;
-        margin-top: 15px;
     }
 
-    /* Display menu items when 'show' class is added */
+    nav ul {
+        flex-direction: column;
+        background-color: #000; /* Optional mobile dropdown bg */
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 50%;
+        display: none;
+    }
+
     nav ul.show {
         display: flex;
-        position: absolute;
-        margin: 1px 15px 12px 3px;
     }
 
     /* Show the hamburger menu icon and close icon */
@@ -1282,22 +1278,26 @@ min-width: 1025px for larger desktops. */
 
     nav ul {
         display: none;
-        width: 140px;
-        border-radius: 100%;
+        width: 100%; /* or auto */
         padding: 10px;
+        border-radius: 0;
     }
 
     nav .fas {
         display: flex;
-        margin-top: -50px;
+        position: absolute;
+        top: 0;
         left: 30px;
-        
+        margin-top: -50px;
     }
 
     #time {
-        margin-right: 200px;
-        margin-top: -350px;
+        position: relative;
+        top: -90px;
+        right: 20px;
+        transform: scale(0.9);
     }
+
 
     .about-col-2 p {
         font-size: 10px; 
