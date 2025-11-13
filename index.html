@@ -75,10 +75,9 @@
                 <div class="about-col-2">
                     <h1 class="sub-title">About Me<span class="about_dot"></span></h1>
                     <p>
-                        Hello! I'm Shivam Goyal — a detail-driven Software Tester and aspiring Data Scientist with a
-                        passion for technology and quality.
+                        Hello! I'm Shivam Goyal — a detail-driven Software Engineer and aspiring Product Manager in upcoming future.
                         <br>
-                        Currently, I work as an Associate QA Engineer at Finastra, where I focus on ensuring the
+                        Currently, I recently step up from Ass. QA to Software Engineer at Finastra, where I focus on ensuring the
                         reliability and excellence of software applications. Prior to this, I gained hands-on experience
                         as a freelance tester through uTest, sharpening my skills in real-world testing environments.
                         <br>
@@ -107,8 +106,9 @@
 
                     <div class="tab-contents active-tab" id="skills">
                         <ul>
+                            <li><span>Software Engineer</span><br>Continue improving the real life product.</li>
+                            <li><span>Software Testing</span><br>performing my testing skill on real life product to reduce breaking</li>
                             <li><span>Data Science</span><br>Performing Analytical skill in the big data</li>
-                            <li><span>Software Testing</span><br>Testing the Software code and hardware product</li>
                             <li><span>Web Development</span><br>Building Website</li>
                         </ul>
                     </div>
@@ -789,7 +789,18 @@
                             <i class="fab fa-youtube"></i></a>
                     </div>
                     <!-- Resume Link -->
-                    <a href="/Documents/ShivamGoyal.pdf" download class="btn btn2">Download CV ⇣</a>
+                    <!--Old code which download one file at a time  -->
+                    <!-- <a href="/Documents/ShivamGoyal_SDET.pdf" download class="btn btn2">Download CV ⇣</a> -->
+                        <!--enhance code: where user can select the which file need to download.-->
+                    <div class="resume-download">
+                        <select id="resumeSelect" class="resume-dropdown">
+                            <option value="">Select Resume</option>
+                            <option value="/Documents/Shivam Goyal_APM_Resume.pdf">APM Resume</option>
+                            <option value="/Documents/ShivamGoyal_SDET.pdf">SDET Resume</option>
+                        </select>
+                        <button class="btn btn2" onclick="downloadResume()">Download CV ⇣</button>
+                    </div>
+
                 </div>
 
                 <!-- <div class="contact-right">
@@ -852,6 +863,9 @@
     <script src="https://kit.fontawesome.com/e674bba739.js" crossorigin="anonymous"></script>
 
     <script src="/JavaScript/UpArrow.js"></script>
+
+    <!-- Resume js -->
+    <script src="/JavaScript/downloadResume.js"></script>
 
     <!-- <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.3/build/spline-viewer.js"></script>
 <spline-viewer url="https://prod.spline.design/0mBTJmrgqzr2ehai/scene.splinecode"></spline-viewer> -->

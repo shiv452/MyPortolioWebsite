@@ -1189,6 +1189,27 @@ nav ul.show ~ .fas.fa-times {
 
 }
 
+/* Resume Section Styling */
+.resume-download {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.resume-dropdown {
+    padding: 8px 7px;
+    border: 1px solid #8f7878;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.resume-dropdown:hover {
+    border-color: lightseagreen;
+}
+/* End */
+
+
 /* ----------Media Query for Carousel Adjustment (max-width: 678px)---------- */
 /* Adjust padding and title font size for carousel items */
 @media screen and (max-width: 678px) {
