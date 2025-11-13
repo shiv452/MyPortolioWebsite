@@ -1194,6 +1194,7 @@ nav ul.show ~ .fas.fa-times {
     display: flex;
     gap: 10px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .resume-dropdown {
@@ -1202,10 +1203,28 @@ nav ul.show ~ .fas.fa-times {
     border-radius: 4px;
     font-size: 12px;
     cursor: pointer;
+    flex: 1;
+    min-width: 150px;
 }
 
 .resume-dropdown:hover {
     border-color: lightseagreen;
+}
+
+@media (max-width: 768px) {
+    .resume-download {
+    flex-direction: column;
+    width: 100%;
+    }
+    
+    .resume-dropdown {
+    width: 100%;
+    min-width: unset;
+    }
+    
+    .btn.btn2 {
+    width: 100%;
+    }
 }
 /* End */
 
