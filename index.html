@@ -5,908 +5,235 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--Tab Favicon icon-->
+
+    <meta name="description" content="Shivam Goyal - Software Engineer in Test at Finastra. QA Automation, Data Science &amp; Web Development portfolio.">
+    <meta name="author" content="Shivam Goyal">
+    <meta name="keywords" content="Shivam Goyal, Software Engineer in Test, QA Automation, Data Science, Web Development, Portfolio">
+
+    <!-- Open Graph / Social sharing -->
+    <meta property="org:type" content="website">
+    <meta property="org:title" content="Shivam Goyal - Software Engineer in Test">
+    <meta property="org:description" content="Portfolio of Shivam Goyal - Software Engineer in Test at Finastra. Projects, achievement &amp; contact.">
+    <meta property="org:image" content="/Images/website_images/Images/website_images/profileImage.png">
+    <meta property="org:url" content="https://shivamgoyal.netlify.app">
+    <meta property="twitter:card" content="summary_large_image"> 
+    <meta property="twitter:title" content="Shivam Goyal | Software Engineer in Test">
+    <meta property="twitter:description" content="Portfolio of Shivam Goyal - Software Engineer in Test at Finastra.">
+    <meta property="twitter:image" content="/Images/website_images/Images/website_images/profileImage.png">
+
     <link rel="shortcut icon" href="/Images/website_images/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-    <title>My Portfolio Shivam Goyal...!</title>
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.3/build/spline-viewer.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/style.css">
+
+    <title>Shivam Goyal | Software Engineer in Test</title>
 </head>
 
 <body>
+    <!-- Scroll progress bar -->
+    <div class="scrollprogressbar"></div>
+
+    <!-- ======== NAVIGATION ======== -->
     <div id="header">
         <div class="container">
             <nav>
-                <img src="/Images/website_images/logo.png" class="logo" alt="Company logo" id="logo">
-                <ul>
+                <img src="/Images/website_images/logo.png" class="logo" alt="Shivam goyal logo" id="logo">
+                <ul id="side-menu">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">About</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#documents">Documents</a></li>
-                    <li><a href="#images">Images</a></li>
-                    <li><a href="#videos">Videos</a></li>
-                    <li><a href="#carousel">Achievement</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#carousel">Achievements</a></li>
                     <li><a href="#contact">Contact</a></li>
+
+                    <i class="fas fa-times" onclick="closemenu()"></i>
                 </ul>
-                <i class="fas fa-bars"></i> <!-- Open Menu Icon -->
-                <i class="fas fa-times"></i> <!-- Close Menu Icon -->
+                <i class="fas fa-bars" onclick="openmenu"></i>
             </nav>
 
-            <!--Home-->
+            <!-- ===== HERO ===== -->
             <section class="home" id="home">
                 <div class="max-width">
-                    <div class="home-content">
-                        <div class="text-1">Hi, I'm</div>
-                        <div class="text-2"><span
-                                style="background: linear-gradient(125deg, rgb(195, 47, 198), rgb(3, 205, 245), white); background-clip: text; -webkit-background-clip: text;  -webkit-text-fill-color: transparent;">S</span>hivam
-                            <span
-                                style="background: linear-gradient(125deg, rgb(230, 218, 218), rgb(228, 14, 236), rgb(15, 166, 231)); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">G</span>oyal
-                        </div>
-                        <div class="text-3">And I'm a <span class="typing"></span></div>
+                    <p class="text-1">Hi, I'm</p>
+                    <h1 class="text-2">Shivam Goyal</h1>
+                    <p class="text-3"><span class="typed-role"></span></p>
+                    <p class="hero-tagline">
+                        SDET at <strong>Finastra</strong> &nbsp;&middot;&nbsp; QA Automation &nbsp;&middot;&nbsp; Data Science Enthusiast &nbsp;&middot;&nbsp; Product Management Enthusiast
+                    </p>
+                    <div class="hero-cta">
+                        <a href="#portfolio" class="btn btn-primary">View Project</a>
+                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
                     </div>
+                </div>
+
+                <!-- Scroll down cue -->
+                <div class="scroll-indicator" arian-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </section>
         </div>
-
-        <!--Time Clock-->
-        <div id="time">
-            <!--Hour-->
-            <div class="circle">
-                <div class="time-display" id="hours">00</div>
-            </div>
-            <!--Min-->
-            <div class="circle">
-                <div class="time-display" id="minutes">00</div>
-            </div>
-            <!--Sec-->
-            <div class="circle">
-                <div class="time-display" id="seconds">00</div>
-            </div>
-            <div class="ap">
-                <div id="ampm">AM</div>
-            </div>
-        </div>
     </div>
 
-    <!-- ----------ABOUT---------- -->
+    <!-- ======= ABOUT ======== -->
     <div id="about">
         <div class="container">
-            <div class="row">
+            <div class="about-intro">
                 <div class="about-col-1">
-                    <img src="/Images/website_images/picture.jpeg">
+                    <img src="/Images/website_images/profileImage.png" alt="Shivam Goyal">
                 </div>
                 <div class="about-col-2">
-                    <h1 class="sub-title">About Me<span class="about_dot"></span></h1>
-                    <p>
-                        Hello! I'm Shivam Goyal — a detail-driven Software Engineer and aspiring Product Manager in upcoming future.
-                        <br>
-                        Currently, I recently step up from Ass. QA to Software Engineer at Finastra, where I focus on ensuring the
-                        reliability and excellence of software applications. Prior to this, I gained hands-on experience
-                        as a freelance tester through uTest, sharpening my skills in real-world testing environments.
-                        <br>
-                        I'm also a proud student of Data Science at the International Institute of Information
-                        Technology (I.I.I.T.- B), Bangalore — one of the leading institutions in tech education. My
-                        academic journey has equipped me with a solid foundation in software testing, while also
-                        immersing me in the world of data analysis, machine learning, and statistical modeling.
-                        <br>
-                        I take a methodical, user-first approach to quality assurance, always striving to identify even
-                        the most elusive bugs to ensure smooth and intuitive digital experiences. At the same time, my
-                        growing expertise in data science allows me to extract actionable insights and bring a
-                        data-informed mindset to my work.
-                        <br>
-                        Beyond work and studies, I love staying updated with emerging tech trends, reading insightful
-                        books, and reconnecting with nature. I'm driven by curiosity, fueled by learning, and excited
-                        about building solutions that truly make a difference.
-                        <br>
-                        Let’s innovate, explore, and create impact together.
+                    <h2 class="sub-title">About Me</h2>
+                    <p class="about-bio">
+                        Software Engineer in Test at <strong>Finastra</strong> with expertise in QA Automation, test framework development, and data-driven quality assurance. Promoted from Associate QA to Software Engineer in Test
+                        within two year by delivering measurable impact across UniCredit and SEPA clearing also handle end-to-end testing, customer support(Bank) for SWED Bank. I also worked with different clearing like NZRTGS, CBPR+, CBPR+ 2025 (Hybrid payment) and so on.
+                        <br><br>
+                        Postgraduate in Data Science from <strong>IIIT Bangalore</strong>. Passionate about building reliable software, automating manual workflows, and applying analytical thinking to solve complex engineering problems.
                     </p>
-                    <div class="tab-titles">
-                        <p class="tab-links active-link" onclick="openTab('skills')">Skills</p>
-                        <p class="tab-links" onclick="openTab('experience')">Experience</p>
-                        <p class="tab-links" onclick="openTab('education')">Education</p>
-                        <p class="tab-links" onclick="openTab('hobbies')">Hobbies</p>
-                    </div>
+                </div>
+            </div>
 
-                    <div class="tab-contents active-tab" id="skills">
-                        <ul>
-                            <li><span>Software Engineer</span><br>Continue improving the real life product.</li>
-                            <li><span>Software Testing</span><br>performing my testing skill on real life product to reduce breaking</li>
-                            <li><span>Data Science</span><br>Performing Analytical skill in the big data</li>
-                            <li><span>Web Development</span><br>Building Website</li>
-                        </ul>
-                    </div>
+            <div class="about-panels"></div>
 
-                    <div class="tab-contents" id="experience">
-                        <ul>
-                            <li><span>2023 Current</span><br>Finastra - Associate QA Engineer</li>
-                            <li><span>2023-2024</span><br>UpWork - Freelancer Data Science</li>
-                            <li><span>2021-2023</span><br>UTest - Freelancer Tester</li>
-                            <li><span>2021-2022</span><br>BYJU'S - Applicant Trainee Program</li>
-                            <li><span>2022-2022</span><br>QSpider - Software Tester Trainee</li>
-                            <li><span>2021-2022</span><br>Silicon Media Technology Pvt Ltd - Technology Process
-                                Executive</li>
-                        </ul>
-                    </div>
+            <div class="about-panel">
+                <div class="panel-header">
+                    <div class="panel-icon"><i class="fa-solid fa-code"></i></div>
+                    <h3>Skills</h3>
+                </div>
+                <ul>
+                    <li>
+                        <span>Automation Testing</span>
+                        Selenium WebDriver, Playwright, RestAssured, Postman, JUnit, TestNG, Cucumber, BDD/TDD frameworks, SOAP-UI, FFFv1 &amp; FFFv2 (IntelliJ), Maven
+                    </li>
 
-                    <div class="tab-contents" id="education">
-                        <ul>
-                            <li><span>2022 - 2023</span><br>Master's in Data Science from International Institute of
-                                Information Technology Bangalore</li>
-                            <li><span>2017 - 2021</span><br>B.E. in E.C.E. from Sambhram Institute of Technology
-                                Bangalore</li>
-                            <li><span>2017</span><br>Intermediate from U.P.</li>
-                        </ul>
-                    </div>
+                    <li>
+                        <span>Language &amp; Framework</span>
+                        Java, Python, JavaScript, HTML/CSS, SQL
+                    </li>
 
-                    <div class="tab-contents" id="hobbies">
-                        <ul>
-                            <li><a href="/MainPage/About/Hobbies/Flower/flower.html" style="color: rgb(58, 182, 178);">
-                                    Animation By Playing with Code</a></li>
-                            <li><a href="/MainPage/About/Hobbies/Pictures_Videos/memories.html"
-                                    style="color: rgb(60, 182, 58);"> Some old and current memories files</a></li>
-                            <li><a href="/MainPage/About/Hobbies/Music/index.html" style="color: rgb(151, 58, 182);">
-                                    Some Songs List</a></li>
-                        </ul>
+                    <li>
+                        <span>Data Science</span>
+                        Data Analysis, Machine Learning, Deep Learning, Natural Language Processing, Data Visualization, Pandas, NumPy, Scikit-learn, Matplotlib, Bussiness Analytics, Data-Driven Decision Making
+                    </li>
+
+                    <li>
+                        <span>Tools &amp; Platform</span>
+                        Jenkins, Git, GitHub, Jira, Confluence, Eclipse, Intellij IDE, VS Code, Postman, Azure DevOps
+                    </li>
+                </ul>
+            </div>
+
+            <div class="about-panel">
+                <div class="panel-header">
+                    <div class="panel-icon"><i class="fa-solid fa-briefcase"></i></div>
+                    <h3>Experience</h3>
+                </div>
+
+                <ul>
+                    <li>
+                        <span>Aug 2023 &ndash; Present &nbsp;&middot;&nbsp; Finastra</span>
+                        Software Engineer in Test (QA Automation) &mdash; Migrated 290+ test cases to master branch, reducing pipeline execution by ~40%. Resolved failures across UniCredit Bank for GPP version 4.6.15 &amp; SEPA Clearing. Owned end-to-end testing and customer support for SWED Bank, ensuring seamless operations and issue resolution. Collaborated with cross-functional teams to enhance test coverage and reliability also support FFFv1 IntelliJ environment setup for the QA teams.
+                    </li>
+
+                    <li>
+                        <span>2023 &ndash; 2024 &nbsp;&middot;&nbsp; Upwork</span>
+                        Freelance Software Tester &mdash; Performed manual and automated testing for various clients, ensuring software quality and compliance. Collaborated with development teams to identify and resolve issues, improving overall product reliability.
+                        <br>
+                        Freelance Data Scientist Consultant &mdash; Delivered data analysis and ML-bases solutions for clients across multiple domains. 
+                    </li>
+
+                    <li>
+                        <span>2021 &ndash; 2023 &nbsp;&middot;&nbsp; uTest</span>
+                        Freelance Software Tester &mdash; Executed functional, regression, and exploratory testing on live products for global client.
+                    </li>
+
+                    <li>
+                        <span>2022 &nbsp;&middot;&nbsp; QSpider(Certificate)</span>
+                        Software Testing Trainee &mdash; Trained in manual and automation testing; build Selenium + Java foundation.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="about-panel">
+                <div class="panel-header">
+                    <div class="panel-icon"><i class="fa-solid fa-graduation-cap"></i>
+                        <h3>Education</h3>
+                    </div>
+                    <ul>
+                        <li>
+                            <span>2022 &ndash; 2023 &nbsp;&middot;&nbsp; IIIT Bangalore</span>
+                            M.Sc. in Data Science &mdash; Machine Learning, Statistics, Data Engineer, Business Analytics
+                        </li>
+
+                        <li>
+                            <span>2017 &ndash; 2021 &nbsp;&middot;&nbsp; Sambhram Institute of Technology, Bangalore (VTU)</span>
+                            B.E. in Electronic &amp; Communication Engineering &mdash; Published research paper at ICCRTESM-2021.
+                        </li>
+                    </ul>
+
+                    <div class="about-panel">
+                        <div class="panel-header">
+                            <div class="panel-icon"><i class="fa-solid fa-heart"></i></div>
+                            <h3>Hobbies</h3>
+                        </div>
+                        <div class="hobby-list">
+                            <a href="/MainPage/About/Hobbies/Flower/flower.html" class="hobby-card">
+                                <div class="hobby-icon" style="--hc:#6366f1">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                </div>
+                                <div class="hobby-info">
+                                    <span class="hobby-title">Creative Coding</span>
+                                    <span class="hobby-desc">Canvas animations &amp; interactive art</span>
+                                </div>
+                                <i class="fa-solid fa-arrow-right hobby-arrow"></i>
+                            </a>
+
+                            <a href="./MainPage/About/Hobbies/Music/index.html" class="hobby-card">
+                                <div class="hobby-icon" style="--hc:#22d3ee;">
+                                    <i class="fa-solid fa-music"></i>
+                                </div>
+                                <div class="hobby-info">
+                                    <span class="hobby-title">Music &amp; Audio</span>
+                                    <span class="hobby-desc">Custom player with audio visualizer</span>
+                                </div>
+                                <i class="fa-solid fa-arrow-right hobby-arrow"></i>
+                            </a>
+
+                            <a href="/MainPage/About/Hobbies/Pictures_Videos/memories.html" class="hobby-card">
+                                <div class="hobby-icon" style="--hc:#f472b6;">
+                                    <i class="fa-solid fa-camera-retro"></i>
+                                </div>
+                                <div class="hobby-info">
+                                    <span class="hobby-title">Photography &amp; Memories</span>
+                                    <span class="hobby-desc">Photo gallery &amp; video moments</span>
+                                </div>
+                                <i class="fa-solid fa-arrow-right hobby-arrow"></i>
+                            </a>
+                        </div>
+
                     </div>
                 </div>
             </div>
+
+            <!-- ========== PROJECTS =========== -->
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
     </div>
 
-    <!-- ----------DOCUMENTS MANAGER---------- -->
-    <div id="documents" class="section-documents">
-        <div class="container">
-            <h1 class="sub-title">My Documents<span class="doc_dot"></span></h1>
-            <div class="upload-section">
-                <div class="upload-header">
-                    <h3>Upload & Manage Documents</h3>
-                    <p>Upload PDFs, Word docs, and other files</p>
-                </div>
-                <div class="drop-zone" id="docDropZone">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <h4>Drag and drop your documents here</h4>
-                    <p>or click to browse</p>
-                    <input type="file" id="docUploadInput" accept=".pdf,.doc,.docx,.xlsx,.ppt,.pptx" multiple hidden>
-                </div>
-                <div id="docUploadStatus"></div>
-                <div class="files-list">
-                    <h4>Uploaded Documents</h4>
-                    <div id="docList" class="doc-list"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ----------IMAGES GALLERY---------- -->
-    <div id="images" class="section-images">
-        <div class="container">
-            <h1 class="sub-title">My Images<span class="img_dot"></span></h1>
-            <div class="upload-section">
-                <div class="upload-header">
-                    <h3>Upload & Manage Images</h3>
-                    <p>Share your photos and images</p>
-                </div>
-                <div class="drop-zone" id="imgDropZone">
-                    <i class="fas fa-image"></i>
-                    <h4>Drag and drop your images here</h4>
-                    <p>or click to browse</p>
-                    <input type="file" id="imgUploadInput" accept=".jpg,.jpeg,.png,.gif,.webp" multiple hidden>
-                </div>
-                <div id="imgUploadStatus"></div>
-                <div class="gallery-container">
-                    <div id="imgGallery" class="gallery-grid"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ----------VIDEOS GALLERY---------- -->
-    <div id="videos" class="section-videos">
-        <div class="container">
-            <h1 class="sub-title">My Videos<span class="vid_dot"></span></h1>
-            <div class="upload-section">
-                <div class="upload-header">
-                    <h3>Upload & Manage Videos</h3>
-                    <p>Share your videos and recordings</p>
-                </div>
-                <div class="drop-zone" id="vidDropZone">
-                    <i class="fas fa-video"></i>
-                    <h4>Drag and drop your videos here</h4>
-                    <p>or click to browse</p>
-                    <input type="file" id="vidUploadInput" accept=".mp4,.webm,.ogg,.mov" multiple hidden>
-                </div>
-                <div id="vidUploadStatus"></div>
-                <div class="videos-container">
-                    <div id="vidGallery" class="videos-grid"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ----------PORTFOLIO--------- -->
-    <div id="portfolio">
-        <div class="container">
-            <h1 class="sub-title">My Works<span class="work_dot"></span></h1>
-            <div class="work-list">
-                <div class="work">
-                    <img src="/Images/website_images/software testing.png" alt="software testing img">
-                    <div class="layer">
-                        <h2>Software Testing Project</h2>
-                        <p>Feel free to check the code in my GitHub account if you want to be, I cover almost all the
-                            points their but still the code not complete because I haven't check all the blocks of the
-                            website. If you want to contribute then this will help you to improve you software testing
-                            analysing skill, and you will learn a lot. Well! I used Eclipse software to write the code
-                            and selenium WebDriver with cucumber framework. </p>
-                        <a href="https://github.com/shiv452/JalaAcademyWebsite_Testing"><i
-                                class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-                <div class="work">
-                    <img src="/Images/website_images/web-development.png" alt="web development img">
-                    <div class="layer">
-                        <h2>Web Development Project</h2>
-                        <p>Here you will find the portfolio website that is created by me, just for a sample the one you
-                            are in right now this is also a portfolio that i created recently and this one is I created
-                            long back, Well if you want to peak inside the code then feel free to click on the below
-                            button that will directly land to my GitHub account that then you can see the entire code by
-                            your own eyes.</p>
-                        <a href="https://github.com/shiv452/portfoliowebsite"><i
-                                class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-                <div class="work">
-                    <img src="/Images/website_images/Airbnb.png" alt="Air Bnb Data analyzing">
-                    <div class="layer">
-                        <h2>Data Science Project</h2>
-                        <p>In this section I did some analyzing on Air Bnb New York data, as per the project given to
-                            me. The Airbnb was facing the major loss in the revenue due to lock-down situation but now
-                            the lock-down has been lifted off and folks are starting to traveling again. So, AirBnb want
-                            to prepare all the future things so that their customer does not uncomfortable. </p>
-                        <a href="https://github.com/shiv452/Airbnb_casestudy_IIITB"><i
-                                class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-            </div>
-            <a href="https://github.com/shiv452" class="btn">See more</a>
-        </div>
-    </div>
-
-    <!-- ----------ACHIEVEMENT---------- -->
-    <div id="carousel" class="carousel">
-        <!-- list item -->
-        <div class="list">
-            
-<!------------------------- Office Certificates -------------------------->
-            <div class="item">
-                <img src="/Images/Certificates/ServiceAniversery.png">
-                <div class="content">
-                    <div class="author">Shivam Goyal</div>
-                    <div class="title">One Year Service Anniversary</div>
-                    <div class="topic">Finastra</div>
-                    <div class="des">
-                        <!-- lorem 50 -->
-                        Today (Aug 2024) I completed one year in Finastra. It was such a wonderful journey and expecting
-                        many more to come.
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/Bushra.jpg">
-                <div class="content">
-                    <div class="author">Celebrate</div>
-                    <div class="title">Award Message</div>
-                    <div class="topic">Bushra Khan</div>
-                    <div class="des">
-                        Shivam made significant improvements to the UniCredit 4.6.15 MP test cases written in FFFv1-
-                        IntelliJ. Initially, these test cases were located in a local branch and executed from there,
-                        taking over more than 30 hours for pipeline execution. while executing test cases from a local
-                        branch is not recommended, Shivam managed to move them to the master branch despite the
-                        challenges posed by dependencies. He successfully relocated all 290 test cases to the master
-                        branch, optimized their execution time and resolved issues related to redundant code.
-                        Additionally, he fixed the failure testcases,resulting in a good pass count. His contribution is
-                        commendable. Kudos to Shivam for this hard work!
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/Arpita.jpg">
-                <div class="content">
-                    <div class="author">Celebrate</div>
-                    <div class="title">Award Message</div>
-                    <div class="topic">Arpita Mehta</div>
-                    <div class="des">
-                        Shivam, who joined as a fresher, has quickly adapted to tasks and demonstrated a good
-                        understanding. He proactively handled multiple defects for Unicredit & SEPA and contributed to
-                        SOAPUI automation fixes. Shivam consistently exhibits punctuality and discipline in his
-                        day-to-day work assignments. His enthusiasm for learning new tasks is commendable. He swiftly
-                        grasped FFFv1(IntelliJ) with minimal training and independently resolved failed test cases.
-                        Currently, he is actively engaged in working on FFFv2, taking ownership of learning new tools,
-                        writing code, and executing testcases. Keep up the great work, Shivam!
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/Rahul.jpg">
-                <div class="content">
-                    <div class="author">Celebrate</div>
-                    <div class="title">Award Message</div>
-                    <div class="topic">Rahul Kumar</div>
-                    <div class="des">
-                        Shivam, your contributions to the SWED and UC project deliverables are appreciated. Your
-                        independent efforts to enhance the UC FF1 automation are remarkable, your initiative and
-                        persistence in this is truly impressive. Despite several setbacks, your determination to learn
-                        and implement FF2 is commendable. Additionally, your assistance in setting up the FF1 automation
-                        in every QA member’s environment is highly appreciated. Your commitment to continuous learning
-                        and improvement within the product is inspiring. Keep exploring and pushing boundaries!
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/Certificate.png">
-                <div class="content">
-                    <div class="author">Shivam Goyal</div>
-                    <div class="title">Certificate</div>
-                    <div class="topic">A. C. H. F. S. M.</div>
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/PMCertificate.jpeg">
-                <div class="content">
-                    <div class="author">Shivam Goyal</div>
-                    <div class="title">P.M. Certificate</div>
-                    <div class="topic">Product Manager Certificate</div>
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-
-<!------------------------- Office Certificates -------------------------->
-
-<!------------------------- Old college Certificate -------------------------->
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/1.jpg">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/BSM.png">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/capgemini Data Scientist .png">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/capgimine riginal chalange .png">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/Course Completion Certificate (6).jpg">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/Course.jpg">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/EthicalHacker.jpg">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/globalAcademyTech.png">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/globalAcademyTech.png">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/I2CS__1_.png">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/IMG_20200816_184732.jpg">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/internship.jpg">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/Introduction to Embedded System Design.jpg">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/KaaShiv.png">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/oxford.png">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/Python_101_Data_Science.png">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/Screenshot_2021-01-22-01-14-32-27.jpg">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/Shivam Goyal.jpg">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/System Design.png">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/TexasCertificate.png">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/Udemy.png">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/VLSI College Certifiacte.png">
-                <div class="content">
-                    <div class="des">
-                    </div>
-                </div>
-            </div>
-<!----------------------- Old college Certificate end-------------------------->
-        </div>
-
-<!------------------------ Bottom mover thumbnail------------------->
-
-<!------------------------- Office Certificates -------------------------->
-        <div class="thumbnail">
-            <div class="item">
-                <img src="/Images/Certificates/ServiceAniversery.png">
-                <div class="content">
-                    <div class="title">
-                        Service Anniversary
-                    </div>
-                    <div class="description">
-                        Finastra
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/Bushra.jpg">
-                <div class="content">
-                    <div class="title">
-                        Recognize
-                    </div>
-                    <div class="description">
-                        Finastra
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/Arpita.jpg">
-                <div class="content">
-                    <div class="title">
-                        Recognize
-                    </div>
-                    <div class="description">
-                        Finastra
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/Rahul.jpg">
-                <div class="content">
-                    <div class="title">
-                        Recognize
-                    </div>
-                    <div class="description">
-                        Finastra
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/Certificate.png">
-                <div class="content">
-                    <div class="title">
-                        Paper Publish Certificate
-                    </div>
-                    <div class="description">
-                        I.J.S.R.E.M.
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/PMCertificate.jpeg">
-                <div class="content">
-                    <div class="title">
-                        P.M. Certificate
-                    </div>
-                    <div class="description">
-                        P.M. Certificate
-                    </div>
-                </div>
-            </div>
-<!------------------------- Office Certificates End-------------------------->
-
-<!------------------------- Old college Certificate -------------------------->
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/1.jpg">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/BSM.png">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/capgemini Data Scientist .png">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/capgimine riginal chalange .png">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/Course Completion Certificate (6).jpg">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/Course.jpg">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/EthicalHacker.jpg">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/globalAcademyTech.png">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/I2CS__1_.png">
-                <div class="content">
-                    <div class="title">
-                        Conference Certificate
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/IMG_20200816_184732.jpg">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/internship.jpg">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/Introduction to Embedded System Design.jpg">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/KaaShiv.png">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/oxford.png">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/Python_101_Data_Science.png">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/Screenshot_2021-01-22-01-14-32-27.jpg">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/Shivam Goyal.jpg">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/System Design.png">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/TexasCertificate.png">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/Udemy.png">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="/Images/Certificates/collegeTime/VLSI College Certifiacte.png">
-                <div class="content">
-                    <div class="title">
-                    </div>
-                    <div class="description">
-                    </div>
-                </div>
-            </div>
-<!---------------------------College Certificates ended -------------------->
-
-        </div>
-        <!-- next prev -->
-
-        <div class="arrows">
-            <button id="prev"> <
-                    </button>
-                    <button id="next"> >
-                    </button>
-        </div>
-        <!-- time running -->
-        <div class="time"></div>
-    </div>
-
-    <!-- ----------CONTACT---------- -->
-    <div id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="contact-left">
-                    <h1 class="sub-title">Contact Me<span class="contact_dot"></span></h1>
-                    <p><i class="fas fa-paper-plane"></i> shivamgoyal452@gmail.com</p>
-                    <p><i class="fas fa-phone-square-alt"></i>+91 8433191219 / +91 7500225843</p>
-                    <div class="social-icons">
-                        <a href="https://github.com/shiv452"> <!----------github---------->
-                            <i class="fab fa-github"></i></a>
-                        <a href="https://twitter.com/Shivam45017152"><!----------Twitter---------->
-                            <i class="fab fa-twitter-square"></i></a>
-                        <a href="https://www.instagram.com/shivamgoyal452/"><!----------Instagram---------->
-                            <i class="fab fa-instagram"></i></a>
-                        <a href="https://www.linkedin.com/in/shivamgoyal452/"><!----------LinkedIn---------->
-                            <i class="fab fa-linkedin"></i></a>
-                        <a href="https://www.youtube.com/channel/UCljwr82bv6rJItmOI7TwD5g"><!----------YouTube---------->
-                            <i class="fab fa-youtube"></i></a>
-                    </div>
-                    <!-- Resume Link -->
-                    <!--Old code which download one file at a time  -->
-                    <!-- <a href="/Documents/ShivamGoyal_SDET.pdf" download class="btn btn2">Download CV ⇣</a> -->
-                        <!--enhance code: where user can select the which file need to download.-->
-                    <div class="resume-download">
-                        <select id="resumeSelect" class="resume-dropdown">
-                            <option value="">Select Resume</option>
-                            <option value="Documents/ShivamGoyal_APM.pdf">APM Resume</option>
-                            <option value="Documents/ShivamGoyal_SDET.pdf">SDET Resume</option>
-                            <option value="Documents/Android Controlled Hovercraft for Space Mission.pdf">Final Year Project</option>
-
-                        </select>
-                        <button class="btn btn2" onclick="downloadResume()">Download CV ⇣</button>
-                    </div>
-
-                </div>
-
-                <!-- <div class="contact-right">
-                    <form>
-                        <input type="text" name="Name" placeholder="Your Name" required>
-                        <input type="email" name="Email" placeholder="Your Email" required>
-                        <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
-                        <button type="submit" class="btn btn3">Submit</button>
-                    </form>
-                </div> -->
-
-                <div class="contact-right">
-                    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"
-                        action="/thank-you.html" netlify>
-                        <input type="hidden" name="form-name" value="contact" />
-                        <p hidden>
-                            <label>Don’t fill this out: <input name="bot-field" /></label>
-                        </p>
-                        <input type="text" name="Name" placeholder="Your Name" required>
-                        <input type="email" name="Email" placeholder="Your Email" required>
-                        <textarea name="Message" rows="6" placeholder="Your Message" required></textarea>
-                        <button type="submit" class="btn btn3">Submit</button>
-                    </form>
-                </div>
-
-
-
-            </div>
-        </div>
-
-        <div class="back-to-top" id="backToTop">
-            &#x25B2; <!-- Up arrow -->
-        </div>
-    </div>
-
-    <footer>
-        <div class="copyright">
-            <p>Copyright © Shivam Goyal. Made with <i class="fas fa-heart"></i> by Shivam</p>
-        </div>
-    </footer>
-
-
-    <!-- ---------- Java Script Connection ----------------- -->
-    <!-- File Manager js -->
-    <script src="/JavaScript/fileManager.js"></script>
-
-    <!-- Achievement js -->
-    <script src="/JavaScript/script.js"></script>
-
-    <script src="/JavaScript/logo.js"></script>
-
-    <script src="https://kit.fontawesome.com/e674bba739.js" crossorigin="anonymous"></script>
-
-    <!-- Mobile Version-->
-    <script src="/JavaScript/mobile.js"></script>
-
-    <!-- Time JavaScript Code-->
-    <script src="/JavaScript/time.js"></script>
-
-    <!--Make sure you have included the Typed.js library correctly.-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
-
-    <script src="https://kit.fontawesome.com/e674bba739.js" crossorigin="anonymous"></script>
-
-    <script src="/JavaScript/UpArrow.js"></script>
-
-    <!-- Resume js -->
-    <script src="/JavaScript/downloadResume.js"></script>
-
-    <!-- <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.3/build/spline-viewer.js"></script>
-<spline-viewer url="https://prod.spline.design/0mBTJmrgqzr2ehai/scene.splinecode"></spline-viewer> -->
 
 
 </body>
-
 </html>
