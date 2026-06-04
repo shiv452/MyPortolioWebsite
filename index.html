@@ -20,8 +20,10 @@
                 <ul>
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
                     <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#documents">Documents</a></li>
+                    <li><a href="#images">Images</a></li>
+                    <li><a href="#videos">Videos</a></li>
                     <li><a href="#carousel">Achievement</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -143,54 +145,83 @@
                                     style="color: rgb(60, 182, 58);"> Some old and current memories files</a></li>
                             <li><a href="/MainPage/About/Hobbies/Music/index.html" style="color: rgb(151, 58, 182);">
                                     Some Songs List</a></li>
-                            <li><a href=""></a></li> //Adding a page link where I will put all the content.
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- ----------SERVICES---------- -->
-    <div id="services">
-        <div class="container">
-            <h1 class="sub-title">My Services<span class="service_dot"></span></h1>
-            <div class="services-list">
-                <div>
-                    <i class="fa-brands fa-android"></i>
-                    <h2 style="color: lime;">Software Testing</h2>
-                    <p>I offer software testing services to companies with 100% accuracy,
-                        ensuring flawless performance and reliable results. My expertise guarantees thorough and
-                        meticulous testing, providing clients with reliable software products for enhanced user
-                        experiences</p>
-                    <br> <br>
-                    <!-- <h4 style="color: red;">I stopped this service for time being.</h4> -->
-                    <a href="/MainPage/Services/Software Testing Info/sf.html" style="color: rgb(0, 174, 255);">Learn
-                        more</a>
-                </div>
-                <div>
-                    <i class="fa-solid fa-feather"></i>
-                    <h2 style="color: lime;">Web Development</h2>
-                    <p>I provide web development services to companies with 100% accuracy, crafting high-quality
-                        websites that meet client specifications and deliver seamless user experiences. With precision
-                        and attention to detail, I ensure reliable and efficient web solutions for businesses to thrive
-                        online.</p>
-                    <a href="/MainPage/Services/Web Devlopment Info/wd.html" style="color: rgb(0, 174, 255);">Learn
-                        more</a>
 
+    <!-- ----------DOCUMENTS MANAGER---------- -->
+    <div id="documents" class="section-documents">
+        <div class="container">
+            <h1 class="sub-title">My Documents<span class="doc_dot"></span></h1>
+            <div class="upload-section">
+                <div class="upload-header">
+                    <h3>Upload & Manage Documents</h3>
+                    <p>Upload PDFs, Word docs, and other files</p>
                 </div>
-                <div>
-                    <i class="fa-solid fa-code"></i>
-                    <h2 style="color: lime;">Data Science</h2>
-                    <p>I offer Data Science services to companies with 100% accuracy,
-                        leveraging advanced analytics and machine learning techniques to extract valuable insights from
-                        data. My expertise ensures precise and reliable data-driven solutions, empowering businesses to
-                        make informed decisions and achieve their goals with confidence.</p>
-                    <a href="/MainPage/Services/Data Science Info/ds.html" style="color: rgb(0, 174, 255);">Learn
-                        more</a>
+                <div class="drop-zone" id="docDropZone">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h4>Drag and drop your documents here</h4>
+                    <p>or click to browse</p>
+                    <input type="file" id="docUploadInput" accept=".pdf,.doc,.docx,.xlsx,.ppt,.pptx" multiple hidden>
+                </div>
+                <div id="docUploadStatus"></div>
+                <div class="files-list">
+                    <h4>Uploaded Documents</h4>
+                    <div id="docList" class="doc-list"></div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- ----------IMAGES GALLERY---------- -->
+    <div id="images" class="section-images">
+        <div class="container">
+            <h1 class="sub-title">My Images<span class="img_dot"></span></h1>
+            <div class="upload-section">
+                <div class="upload-header">
+                    <h3>Upload & Manage Images</h3>
+                    <p>Share your photos and images</p>
+                </div>
+                <div class="drop-zone" id="imgDropZone">
+                    <i class="fas fa-image"></i>
+                    <h4>Drag and drop your images here</h4>
+                    <p>or click to browse</p>
+                    <input type="file" id="imgUploadInput" accept=".jpg,.jpeg,.png,.gif,.webp" multiple hidden>
+                </div>
+                <div id="imgUploadStatus"></div>
+                <div class="gallery-container">
+                    <div id="imgGallery" class="gallery-grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ----------VIDEOS GALLERY---------- -->
+    <div id="videos" class="section-videos">
+        <div class="container">
+            <h1 class="sub-title">My Videos<span class="vid_dot"></span></h1>
+            <div class="upload-section">
+                <div class="upload-header">
+                    <h3>Upload & Manage Videos</h3>
+                    <p>Share your videos and recordings</p>
+                </div>
+                <div class="drop-zone" id="vidDropZone">
+                    <i class="fas fa-video"></i>
+                    <h4>Drag and drop your videos here</h4>
+                    <p>or click to browse</p>
+                    <input type="file" id="vidUploadInput" accept=".mp4,.webm,.ogg,.mov" multiple hidden>
+                </div>
+                <div id="vidUploadStatus"></div>
+                <div class="videos-container">
+                    <div id="vidGallery" class="videos-grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ----------PORTFOLIO--------- -->
     <div id="portfolio">
         <div class="container">
@@ -846,6 +877,9 @@
 
 
     <!-- ---------- Java Script Connection ----------------- -->
+    <!-- File Manager js -->
+    <script src="/JavaScript/fileManager.js"></script>
+
     <!-- Achievement js -->
     <script src="/JavaScript/script.js"></script>
 
