@@ -520,17 +520,147 @@
             </div>
 
             <!-- ====== CONTACT ======== -->
-            
+            <div id="contact">
+                <div class="container">
+                    <h2 class="sub-title">Contact Me</h2>
+                    <div class="row"></div>
+                    <div class="contact-left">
+                        <p><i class="fas fa-paper-plane"></i> shivamgoyal452@gmail.com</p>
+                        <p><i class="fas fa-phone-square-alt"></i> +91 83441 91219</p>
+                        
+                        <div class="social-icons">
+                            <a href="https://github.com/shiv452" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-github"></i>
+                            </a>
 
+                            <a href="https://linkedin.con/in/shivamgoyal452/" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
 
+                            <a href="https://www.instagram.com/shiavmgoyal452/" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-instagram"></i>
+                            </a>
 
+                            <a href="https://twitter.com/Shivam45017152" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-twitter-suare"></i>
+                            </a>
+                                
+                            <a href="https://www.youtube.com/channel/UCljwr82bv6rJItmOI7TwD5g" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-youtube"></i>
+                            </a>  
+                        
+                            <div class="resume-widget">
+                                <div class="rw-label"><i class="fas fa-file-alt"></i> Download Resume</div>
+                                <div class="rw-controls">
+                                    <div class="rw-select-wrap">
+                                        <i class="fas fa-file-pdf rw-pdf-icon"></i>
+                                        <select id="resumeSelect" class="rw-select">
+                                            <option value="">Choose a file&hellip;</option>
+                                            <option value="Documents/ShivamGoyal_APM.pdf">APM Resume</option>
+                                            <option value="Documents/ShivaGoyal_SDET_QA.pdf">SDET QA Resume</option>
+                                            <option value="Documents/ShivamGoyal_BA.pdf">BA Resume</option>
+                                            <option value="Documents/Documents/Android Controlled Hovercraft for Space Mission.pdf">B.E. - Final Year Project Paper</option>
+                                        </select>
+                                    </div>
 
+                                    <button class="rw-dl-btn" onclick="downloadResume()">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
 
+                                    <button class="rw-del-btn" id="resumeDeleteBtn" onclick="deleteUploadResume()" title="Delete this uploaded resume" style="display: none;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
 
+                                    <button class="rw-upload-btn" onclick="document.getElementById('resumeUploadInput').click()">
+                                        <i class="fas fa-cloud-upload-alt"></i> Upload New Document
+                                    </button>
+
+                                    <input type="file" id="resumeUploadInput" accept=".pdf" style="display: none;">
+
+                                </div>
+                            </div>
+
+                            <!-- =======Input Message Section ========= -->
+                            
+                            <div class="contact-right">
+                                <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html" netlify id="contactForm">
+                                    <input type="hidden" name="form-name" value="contact" />
+                                    <p hidden>
+                                        <label>Don't fill this out: <input name="bot-field"></label>
+                                    </p>
+
+                                    <div class="cf-field">
+                                        <input type="text" name="Name" id="cd-name" placeholder=" " required autocomplete="name">
+                                        <label for="cd-name"><i class="fas fa-user"></i> Your Name</label>
+                                    </div>
+
+                                    <div class="cd-field">
+                                        <input type="email" name="Email" id="cf-email" placeholder=" " required autocomplete="email">
+                                        <label for="cd-email"><i class="fas fa-envelop"></i> Your Email</label>
+                                    </div>
+
+                                    <div class="cd-field cf-field--area">
+                                        <textarea name="Message" id="cf-msg" placeholder=" " rows="6" required maxlength="2000"></textarea>
+                                        <label for="cf-msg"><i class="fas fa-comment-dots"></i> Your Message</label>
+                                        <span class="cf-char-count"><span id="cfCharUsed">0</span> / 2000</span>
+                                    </div>
+
+                                    <button type="submit" class="cf-submit-btn" id="cfSubmitBtn">
+                                        <span class="cf-btn-text">
+                                            <i class="fas fa-paper-plane"></i> Send Message
+                                        </span>
+
+                                        <span class="cf-btn-sending" aria-hidden="true">
+                                            <i class="fas fa-spinner fa-spin"></i> Sending...
+                                        </span>
+
+                                    </button>
+                                </form>
+
+                                <!-- ==========Success Overlay shown on submit ====== -->
+                                <div class="cf-success" id="cfSuccess" aria-live="polite">
+                                    <div class="cf-success-icon"><i class="fas fa-check-circle"></i></div>
+                                    <h3>Message Sent!</h3>
+                                    <p>Thanks for reaching out, I'll get back to you soon.</p>
+                                    <button class="cf-success-reset" id="cfReset">Send Another</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="back-to-top" id="backToTop">&#x25B2;</div>
+            </div>
         </div>
     </div>
+            <footer>
+                <div class="copyright">
+                    <p>&copy; 2025 Shivam Goyal &nbsp;&middot;&nbsp; Built with <i class="fas fa-heart"></i> &nbsp;&middot;&nbsp; Deployed on Netlify</p>
+                </div>
+            </footer>
 
 
+
+        <!-- ======= JS Script =========== -->
+        <script src="https;//kit.fontawesome.com/e674bba739.js" crossorigin="anonymous"></script>
+        <script src="https;//cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+        <!-- Navigation hamburger -->
+        <script></script>
+        <!-- Logo 3-D spin hover -->
+        <script></script>
+        <!-- Back-to-top button -->
+        <script></script>
+        <!-- Resume download + upload manger -->
+        <script></script>
+        <!-- Typed hero text, modals, toast, cursor spotlight -->
+        <script></script>
+        <!-- About profile picture + collapsible panels -->
+        <script></script>
+        <!-- Achievement tabs, lightbox, add/remove cert & award -->
+        <script></script>
+        <!-- Project add-card modal + infinite carousel -->
+        <script></script>
+        <script>/* All JS has been moved to external files under /JavaScript/ folder */</script>
 
 </body>
 </html>
