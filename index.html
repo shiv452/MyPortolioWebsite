@@ -26,7 +26,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
 
     <title>Shivam Goyal | Software Engineer in Test</title>
 </head>
@@ -63,7 +63,7 @@
                     </p>
                     <div class="hero-cta">
                         <a href="#portfolio" class="btn btn-primary">View Project</a>
-                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                        <a href="#contact" class="btn btn-outline">Get In Touch</a>
                     </div>
                 </div>
 
@@ -228,18 +228,21 @@
                     </div>
                 </div>
 
-                <div class="project-grid" id="workTrace">
+                <div class="projects-grid" id="workTrace">
                     <div class="work">
                         <img src="/Images/website_images/software testing.png" alt="Test Automation Suit">
-                        <div class="layer-tags">
-                            <span class="tag"></span>
-                            <span class="tag"></span>
-                            <span class="tag"></span>
+                        <div class="layer">
+                            <div class="layer-tags">
+                                <span class="tag">Selenium</span>
+                                <span class="tag">Cucumber</span>
+                                <span class="tag">Java</span>
+                            </div>
+                            <h3>Test Automation Suit</h3>
+                            <p>Automated end-to-end coverage for JalaAcademy web application. Structured using Page Object. Model with BDD scenario; executable via CI pipeline.</p>
+                            <a href="https://github.com/shiv452/JalaAcademyWebsite_Testing" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
                         </div>
-                        <h3>Test Automation Suit</h3>
-                        <p>Automated end-to-end coverage for JalaAcademy web application. Structured using Page Object. Model with BDD scenario; executable via CI pipeline.</p>
-                        <a href="https://github.com/shiv452/JalaAcademyWebsite_Testing" target="_blank" rel="noopener noreferrer"></a>
-                        <i class="fas fa-external-link-alt"></i>
                     </div>
 
                     <div class="work">
@@ -252,8 +255,9 @@
                             </div>
                             <h3>Portfolio Website</h3>
                             <p>Responsive single-page portfolio with music player, canvas animations, Netlify contact form, and dynamic certificate carousel. Deployed on Netlify.</p>
-                            <a href="https://github.com/shiv452/portfoliowebsite" target="_blank" rel="noopener noreferrer"></a>
+                            <a href="https://github.com/shiv452/portfoliowebsite" target="_blank" rel="noopener noreferrer">
                             <i class="fas fa-external-link-alt"></i>
+                            </a>
                         </div>
                     </div>
 
@@ -326,21 +330,23 @@
                                     <h4 class="ach-award-title">1-Year Service Anniversary</h4>
                                     <p class="ach-award-desc">Completed one year at Finastra (Aug&nbsp;2024) as Software Engineer &mdash; contributing to automation excellence across banking product lines.</p>
                                 </div>
-                                <div class="ach-award-img" onclick="openLightbox('/Images/Certificates/ServiceAniversery.png')"></div>
-                                <img src="/Images/Certificates/ServiceAniversery.png" alt="Service Anniversary">
-                                <span>VIEW</span>
+                                <div class="ach-award-img" onclick="openLightbox('/Images/Certificates/ServiceAniversery.png')">
+                                    <img src="/Images/Certificates/ServiceAniversery.png" alt="Service Anniversary">
+                                    <span>VIEW</span>
+                                </div>
                             </div>
                         </div>
 
                         <div class="ach-award-card">
                             <div class="ach-award-badge kudos"><i class="fas fa-thumbs-up"></i></div>
-                            <div class="ach-award-org">By Bushra Khan &middot; Finastra</div>
-                            <h4 class="ach-award-title">Kudos Award</h4>
-                            <p class="ach-award-desc">Migrated 290 UniCredit test cases form local branch to master; optimised pipeline execution time and resolved redundant code.</p>
-                        </div>
-                        <div class="ach-award-img" onclick="opneLightbox('/Images/Certificates/Bushra.jpg')">
-                            <img src="/Images/Certificates/Bushra.jpg" alt="Kudos Award">
-                            <span>VIEW</span>
+                            <div class="ach-award-info">
+                                <span class="ach-award-org">By Bushra Khan &middot; Finastra</span>
+                                <h4 class="ach-award-title">Kudos Award</h4>
+                                <p class="ach-award-desc">Migrated 290 UniCredit test cases form local branch to master; optimized pipeline execution time and resolved redundant code.</p>
+                            </div>
+                            <div class="ach-award-img" onclick="openLightbox('/Images/Certificates/Bushra.jpg')">
+                                <img src="/Images/Certificates/Bushra.jpg" alt="Kudos Award">
+                                <span>VIEW</span>
                         </div>
                     </div>
 
@@ -617,7 +623,7 @@
                                     </button>
                                 </form>
 
-                                <!-- ==========Success Overlay shown on submit ====== -->
+                                <!-- Success Overlay shown on submit ====== -->
                                 <div class="cf-success" id="cfSuccess" aria-live="polite">
                                     <div class="cf-success-icon"><i class="fas fa-check-circle"></i></div>
                                     <h3>Message Sent!</h3>
