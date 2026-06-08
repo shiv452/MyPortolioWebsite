@@ -852,4 +852,275 @@ nav .fas {
 .rw-dl-btn:hover { opacity: 0.88; transform: translateY(-1px);}
 
 /* Delete button - red pill, sits beside the Download button */
-line-> 893
+.rw-del-btn {
+    padding: 10px 14px;
+    background: rgba(239,68,68,0.12);
+    border: 1px solid rgba(239,68,68,0.35);
+    border-radius: 10px;
+    color: #f87171;
+    font-size: 0.88rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    font-family: inherit;
+    white-space: nowrap;
+}
+.rw-del-btn:hover {
+    background: rgba(239,68,68,0.25);
+    border-color: rgba(239,68,68,0.6);
+    transform: translateY(-1px);
+}
+.rw-upload-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 9px 16px;
+    background: transparent;
+    border: 1px dashed rgba(99, 102, 241, 0.32);
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-family: inherit;
+}
+.rw-upload-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(99, 102, 241, 0.05);
+}
+
+/* ======== CURSOR LIGHT (section glow that follows cursor) ====== */
+.cursor-light {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(600px circle at var(--lcx, -400px) var(--lc, -400px), var(--lc, transparent), transparent 60%);
+    transition: background 0.05s;
+}
+
+/* Contact form */
+.contact-right { position: relative; }
+
+.contact-right form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Floating-label field wrapper */
+.cd-field { position: relative; }
+
+.cd-field input,
+.cf-field textarea {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    outline: none;
+    background: var(--card);
+    padding: 22px 16px 10px;
+    color: var(--text);
+    font-size: 0.95rem;
+    border-radius: 12px;
+    transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.cf-field textarea {
+    resize: vertical;
+    min-height: 140px;
+    padding-bottom: 28px; /* room for char counter */
+}
+
+.ccf-field input:focus,
+.cf-field textarea:focus {
+    border-color: var(--accent);
+    background: rgba(99, 102, 241, 0.04);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+}
+
+/* Floating label */
+.cd-field label {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 0.92s;
+    pointer-events: none;
+    transition: top 0.22s ease, font-size 0.22s ease, color 0.22s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.cd-field--area label {
+    top: 22px;
+    transform: none;
+}
+
+/* Floating up when focused has content (placeholder not shown = value present) */
+.cf-field input:focus ~ label,
+.cd-field input:not(:placeholder-shown) ~ label,
+.cd-field textarea:focus ~ label,
+.cf-field textarea:not(:placeholder-shown) ~ label {
+    top: 8px; 
+    font-size: 0.72rem;
+    color: var(--accent);
+    transform: translateY(0);
+}
+
+.cd-field--area input:focus ~ label,
+.cf-field--area textarea:focus ~ label,
+.cf-field--area textarea:not(:placeholder-shown) ~ label {
+    top: 7px;
+    font-size: 0.72rem;
+    color: var(--accent);
+}
+
+/* Character counter */
+.cf-char-count {
+    position: absolute;
+    bottom: 8px;
+    right: 14px;
+    font-size: 0.72rem;
+    color: var(--muted);
+    pointer-events: none;
+    transition: color 0.2s;
+}
+.cf-field-count.warm { color: #f59e0b; }
+.cf-char-count.limit { color: #f43f5e; }
+
+/* Submit button */
+.cf-submit-btn {
+    position: relative;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: inherit;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(99, 102, 241, 0.04);
+    transition: opacity 0.25s, transform 0.25s, box-shadow 0.25s;
+    align-self: flex-start;
+}
+.cf-submit-btn:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(99, 102, 241, 0.55);
+}
+.cf-submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+.cf-btn-text, 
+.cf-btn-sending {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 0.2s;
+}
+.cf-btn-sending {
+    position: absolute;
+    inset: 0;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+}
+.cf-submit-btn.sending .cf-btn-text { opacity: 0; }
+.cf-submit-btn.sending .cf-btn-sending { opacity: 1; }
+
+/* Success overlay */
+.cf-success {
+    position: absolute;
+    inset: 0;
+    background: var(--card);
+    border: 1.5px solid rgba(99, 102, 241, 0.3);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+    padding: 40px 32px;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.94);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.cf-success.show {
+    opacity: 1;
+    pointer-events: all;
+    transform: scale(1);
+}
+
+.cf-success-icon {
+    font-size: 3.5rem;
+    color: #22d3ee;
+    animation: successPop 0.6s cubic-bezier(0.17, 0.89, 0.32, 1.49) both;
+}
+@keyframes successPop {
+    0% { transform: scale(0); opacity: 0;}
+    70% { transform: scale(1.2); }
+    100% {transform: scale(1); opacity: 1; }
+}
+
+.cf-success h3 {
+    font-size: 1.4rem;
+    color: var(--text);
+    margin: 0;
+}
+.cf-success p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin: 0;
+}
+.cf-success-reset {
+    margin-top: 8px;
+    padding: 10px 24px;
+    background: transparent;
+    border: 1.5px solid var(--accent);
+    border-radius: 8px;
+    color: var(--accent);
+    font-size: 0.88rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.25s, color 0.25s;
+}
+.cf-success-reset:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* ----- FOOTER -------- */
+footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+}
+
+.copyright {
+    width: 100%;
+    text-align: center;
+    padding: 24px 0;
+    font-size: 0.88rem;
+    color: var(--muted);
+}
+
+.copyright i {
+    color: #f43f5e;
+}
+
+
+/* ------------ BACK TO TOP --------- */
+1157
