@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Message Sent - Shivam Goyal</title>
-    <link rel="shortcut icon" type="image/x-icon" href="./Images/website_images/logo.png">
+    <link rel="shortcut icon" href="./Images/website_images/logo.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0;}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
         --bg: #0a0a0f;
@@ -304,6 +305,7 @@
     }
 
     </style>
+
 </head>
 
 <body>
@@ -318,7 +320,7 @@
         <!-- Animated check -->
         <div class="ty-check">
             <svg viewBox="0 0 24 24">
-                <polyline points="20 6 9 17 4 12" fill="none"></polyline>
+                <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
         </div>
 
@@ -338,7 +340,7 @@
             </div>
 
             <div class="ty-step">
-                <div class="step-dot">&#128187;</div>
+                <div class="step-dot">&#128269;</div>
                 <div class="step-text">
                     <strong>Message received</strong>
                     <span>I personally read every message I receive.</span>
@@ -346,7 +348,7 @@
             </div>   
             
             <div class="ty-step">
-                <div class="step-dot">&#128336;</div>
+                <div class="step-dot">&#128172;</div>
                 <div class="step-text">
                     <strong>Reply within 24-48 hours</strong>
                     <span>Expect a thoughtful response soon.</span>
@@ -372,7 +374,7 @@
     <script>
         // Confetti burst on load
         (function() {
-            var end = Date.now() + 5000;
+            var end = Date.now() + 3000; //burst count
             var colors = ['#6366f1', '#22d3ee', '#8b5cf6', '#f472b6'];
             
             (function burst() {
@@ -393,9 +395,7 @@
                     zIndex: 0
                 });
                 
-                if (Date.now() < end) {
-                    requestAnimationFrame(burst);
-                }
+                if (Date.now() < end) requestAnimationFrame(burst);
             })();
         })();
 
