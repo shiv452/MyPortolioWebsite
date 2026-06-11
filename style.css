@@ -1706,4 +1706,613 @@ nav .fas.fa-bars { display: none; }
 }
 
 /* Modal section label */
-//1759
+.modal-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin: 4px 0 8px;
+}
+
+/* Award icon picker grid */
+.award-icon-picker {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.award-icon-opt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+
+.award-icon-opt.selected {
+    border-color: var(--accent);
+    background: rgba(99, 102, 241, 0.12);
+    transform: scale(1.08);
+    box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.3);
+}
+
+/* Inside the picker, badges are slightly smaller */
+.award-icon-picker .ach-award-badge {
+    width: 38px;
+    height: 38px;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+@keyframes certPulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(99, 102, 241, 0.55); }
+    50%     { box-shadow: 0 4px 20px rgba(99, 102, 241, 0.9); }
+}
+
+/* ------------ TOAST NOTIFICATION --------- */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--card);
+    color: var(--text);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    z-index: 20000;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast-success { border-color: #22d3ee; color: #22d3ee; }
+.toast-error { border-color: #f87171; color: #f87171; }
+
+/* 900px responsive overriding consolidated above */
+@media (max-width: 600px) {
+    .about-intro { flex-direction: column; }
+    .about-intro .about-col-1 { flex-basis: 100%; }
+    .add-cert-btn { 
+        bottom: 80px; 
+        right: 16px;
+        width: 44px;
+        height: 44px;
+        font-size: 1rem;
+    }
+    .add-award-btn {
+        bottom: 134px;
+        right: 16px;
+        width: 44px;
+        height: 44px;
+        font-size: 0.95rem;
+    }
+    .modal-card { padding: 20px 20px; }
+}
+
+/* ------ Profile picture upload ------- */
+.about-pic-wrap {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    border-radius: 16px;
+}
+.about-pic-wrap img {
+    width: 100%;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    display: block;
+    transition: filter 0.3s;
+}
+.about-pic-wrap:hover img {
+    filter: brightness(0.72);
+}
+.about-pic-edit {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.9);
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: transform 0.2s, background 0.2s, opacity 0.3s;
+    opacity: 0;
+    z-index: 2;
+}
+.about-pic-wrap:hover .about-pic-edit { opacity: 1; }
+.about-pic-edit:hover {
+    transform: scale(1.15);
+    background: var(--accent);
+}
+
+/* ------ Collapsible panel body ------ */
+.panel-body {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding-top: 0;
+    transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1),
+                opacity 0.35s ease,
+                padding-top 0.35s ease;
+}
+.about-panel.pinned .panel-body,
+.about-panel.peeking .panel-body {
+    max-height: 700px;
+    opacity: 1;
+    padding-top: 20px;
+}
+
+/* ------ Projects scroll wrap + arrows ------ */
+.project-scroll-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+.proj-arrow {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(15,17,23,0.72);
+    border: 1px solid rgba(99, 102, 241, 0.5);
+    color: var(--accent);
+    font-size: 2.1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+    z-index: 4;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.proj-arrow:hover {
+    background: rgba(99, 102, 241, 0.35);
+    transform: translateY(-50%) scale(1.12);
+    box-shadow: 0 6px 28px rgba(99, 102, 241, 0.5);
+}
+.proj-prev { left: 10px; }
+.proj-next { right: 10px }
+/* Make scroll-wrap full width and override flex gap for absolute arrows */
+.project-scroll-wrap .projects-grid {
+    width: 100%;
+    flex: 1;
+}
+
+/* ------ Achievement card remove button ------ */
+.ach-card-del {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    border-radius: 50%;
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.3);
+    color: #ef4444;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s, background 0.2s, transform 0.2s;
+}
+.ach-award-card:hover .ach-card-del { opacity: 1; }
+.ach-card-del:hover {
+    background: rgba(239,68,68,0.28);
+    transform: scale(1.12);
+}
+
+/* -------- Cert thumbnail remove button ------ */
+.cert-thumb { position: relative; }
+.cert-del-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(239,68,68,0.82);
+    border: none;
+    color: #fff;
+    font-size: 0.85rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 2;
+}
+.cert-thumb:hover .cert-del-btn { opacity: 1; }
+.cert-del-btn:hover { transform: scale(1.14); }
+
+/* ----- Responsive : projects arrows ------- */
+@media (max-width: 600px) {
+    .proj-arrow { width: 38px; height: 38px; font-size: 1.5rem; }
+    .work { width: 300px; }
+    .work img { height: 220px; }
+}
+
+/* ===========================================================
+    PROFESSIONAL POLISH - scroll bar, active nav, animations
+    footer, scroll indicator
+    ======================================================== */
+
+/* ----------- Scroll Progress Bar ------------- */
+#scrollProgress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    z-index: 99999;
+    transition: width 0.08s linear;
+    border-radius: 0 2px 2px 0;
+    pointer-events: none;
+}
+
+/* ------ Active Nav Link --------- */
+nav ul li a.active {
+    color: var(--accent);
+    background: rgba(99, 102, 241, 0.12);
+    border-radius: 6px;
+}
+
+/* ---------- Hero Scroll Indicator ---------- */
+.scroll-indicator {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    opacity: 0.5;
+    animation: siAppear 1s ease 1.5s both;
+}
+
+.scroll-indicator span {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid var(--text);
+    border-bottom: 2px solid var(--text);
+    transform: rotate(45deg);
+    animation: scrollBounce 1.8s ease infinite;
+}
+.scroll-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.scroll-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes scrollBounce {
+    0%, 100% { opacity: 0.2; transform: rotate(45deg) translateY(-4px); }
+    50% { opacity: 1; transform: rotate(45deg) translateY(4px); }
+}
+@keyframes siAppear {
+    from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+    to { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+}
+
+/* Make hero container position:relative so indicator can be absolute */
+.home { position: relative; }
+
+/* ------ Section Reveal Animation --------- */
+.reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.35s; }
+
+/* --------- Footer Upgrade ------ */
+footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    margin-top: 60px;
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 36px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.footer-name{
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+}
+.footer-role {
+    font-size: 0.78rem;
+    color: var(--muted);
+}
+
+.footer-links {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+.footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: color 0.25s, background 0.25s;
+}
+.footer-links a:hover {
+    color: var(--accent);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.footer-social {
+    display: flex;
+    gap: 10px;
+}
+.footer-social {
+    display: flex;
+    gap: 10px;
+}
+.footer-social a {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.25s, border-color 0.25s, background 0.25s;
+}
+.footer-social a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.copyright {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 5%;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+@media (max-width: 600px) {
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .scroll-indicator { bottom: 18px; }
+}
+
+/* ============================================================
+    COMPREHENSIVE RESPONSIVE - Full Device Support
+    Breakpoints: 1100px | 900px | 768px | 600px | 480px | 360px
+    ========================================================= */
+
+/* --------------- 1100px: Large tablets / small laptops -------- */
+@media (max-width: 1100px) {
+    .container { padding: 0 4%; }
+    .home .home-content .text-2 { font-size: 3.4rem; }
+    .work { width: 360px; }
+}
+
+/* -------- 900px: Tablets ------ */
+@media (max-width: 900px) {
+    /* Hero */
+    .home .home-content .text-2 { font-size: 2.8rem; }
+    .home .home-content .text-3 { font-size: 1.25rem; }
+
+    /* About */
+    .row { gap: 28px; }
+    .about-col-1, .about-col-2 { flex-basis: 100%; min-width: unset; }
+
+    /* Contact */
+    .contact-left, .contact-right { flex-basis: 100%; min-height: unset; }
+    #contact .row { flex-direction: column; }
+
+    /* Projects */
+    .work { width: 340px; }
+    .portfolio-header { flex-direction: column; align-items: center; gap: 12px; }
+
+    /* Carousel */
+    .carousel .list .item .content { padding: 0 32px 80px; }
+}
+
+/* -------- 768px: Portrait tablet ------ */
+@media (max-width: 768px) {
+    nav { padding: 16px 0 0; }
+    .logo { width: 5.5rem; }
+
+    .home .home-content .text-2 { font-size: 2.4rem; }
+    .home .home-content .text-1 { font-size: 0.88rem; }
+
+    #about, #portfolio, .achievements-sec, #contact { padding: 60px 0; }
+
+    .sub-title { font-size: 2rem; }
+
+    /* About panels stack tightly */
+    .about-panel { gap: 16px; }
+
+    /* Contact: full width button */
+    .cf-submit-btn {
+        width: 100%;
+        align-self: center;
+        justify-content: center;
+        display: flex;
+    }
+
+    /* Footer */
+    .footer-links { justify-content: flex-start; }
+}
+
+/* -------- 600px: Mobile ------- */
+@media (max-width: 600px) {
+    .container { padding: 0 5%; }
+
+    /* Navigation */
+    nav { padding: 14px 0 0; }
+    nav .logo { width: 5rem; }
+
+    /* Hero text */
+    .home .home-content .text-1 { font-size: 0.8rem; letter-spacing: 0.05rem; }
+    .home .home-content .text-2 { font-size: 2rem; }
+    .home .home-content .text-3 { font-size: 1rem; min-height: 2rem; }
+    .hero-tagline { font-size: 0.88rem; margin: 12px 0 24px; }
+    .hero-cta { flex-direction: column; align-items: center; gap: 12px; }
+    .hero-cta .btn { width: 100%; max-height: 280px; text-align: center; }
+
+    /* Sections */
+    #about, #portfolio, .achievements-sec, #contact { padding: 48px 0; }
+    .sub-title { font-size: 1.75rem; }
+
+    /* About */
+    .row { flex-direction: column; gap: 20px; }
+    .about-col-1, .about-col-2 { flex-basis: 100%; min-height: unset; }
+
+    /* About panels */
+    .about-panels { grid-template-columns: 1fr; gap: 14px;}
+    .about-panel { padding: 20px 18px; }
+
+    /* Resume widget */
+    .rw-controls { flex-direction: column; }
+    .rw-dl-btn { width: 100%; justify-content: center; }
+
+    /* Projects */
+    .work { width: 80vw; min-height: 260px; }
+    .work img { height: 200px; }
+    .proj-arrow { width: 36px; height: 36px; font-size: 1.4rem; }
+
+    /* Achievements */
+    .ach-tab { padding: 7px 12px; font-size: 0.76rem; }
+    .certs-masonry { columns: 2; gap: 10px; }
+
+    /* Contact */
+    #contact .row { flex-direction: column; }
+    .contact-left, .contact-right { flex-basis: 100%; min-height: unset; }
+    .cf-submit-btn {
+        width: 100%;
+        align-items: stretch;
+        justify-content: center;
+        display: flex;
+    }
+    .cf-success { padding: 28px 20px; }
+    .social-icons { gap: 10px; }
+
+    /* Footer */
+    .footer-inner {
+        flex-direction: column;
+        align-items: center;
+        padding: 28px 5%;
+        gap: 18px;
+    }
+    .footer-links { gap: 2px; }
+    .copyright { padding: 14px 5%; font-size: 0.75rem; }
+
+    /* Scroll indicator */
+    .scroll-indicator { bottom: 16px; }
+    .scroll-indicator span { width: 8px; height: 8px; }
+
+    /* Modals */
+    .modal-card { padding: 24px 18px; max-height: 85vh; }
+    .modal-overlay { padding: 16px; }
+
+    /* Toast */
+    .toast { white-space: normal; text-align: center; max-width: 90vw; }
+
+
+    /* Back to top */
+    .back-to-top { bottom: 20px; right: 16px; }
+
+    /* Add cert btn */
+    .add-cert-btn {bottom: 72px; right: 14px; width: 44px; height: 44px; font-size: 1rem;}
+    .add-award-btn { bottom: 126px; right: 14px; width: 44px; height: 44px; font-size: 0.95rem;}
+    .award-icon-picker { grid-template-columns: repeat(6, 1fr); gap: 6px;}
+}
+
+/* ------480px: Small Phones ------- */
+@media (max-width: 480px) {
+    .home .home-content .text-2 { font-size: 1.75rem; }
+    .home .home-content .text-3 { font-size: 0.92rem; }
+    .sub-title { font-size: 1.5rem; }
+    .btn { padding: 11px 22px; font-size: 14px;}
+    .work { width: 88vw;}
+    .certs-masonry { columns: 1;}
+    .carousel .list .item .title ,
+    .carousel .list .item .topic { font-size: 1.6rem; }
+    .cf-success h3 { font-size: 1.1rem; }
+}
+
+/* ----- 360px: Very small Android phones ------ */
+@media (max-width: 360px) {
+    .home .home-content .text-2 {  font-size: 1.55rem; }
+    .sub-title { font-size: 1.3rem; }
+    .hero-cta .btn { max-width: 100%; }
+    .work { width: 92vw; }
+    .logo { width: 4.5rem; }
+    .footer-links a { padding: 5px 8px; font-size: 0.78rem;}
+}
+
+/* --------- Touch Device Improvements -------- */
+@media (hover: none) and (pointer: coarse) {
+    /* Show edit button on touch (no hover) */
+    .about-pic-edit { opacity: 1; }
+
+    /* Show delete buttons on touch */
+    .ach-card-del { opacity: 1; }
+    .cert-del-btn { opacity: 1; }
+
+    /* Larger tap targets */
+    .proj-arrow { width: 44px; height: 44px;}
+    nav ul li a { padding: 12px 8px; }
+}
