@@ -221,14 +221,13 @@
             <div id="portfolio">
                 <div class="container">
                     <div class="portfolio-header">
-                    <h2 class="sub-title">Project</h2>
-                    <button class="btn btn-outline add-item-btn" onclick="openModal('addProjectModal')">
-                        <i class="fas fa-plus"></i> Add Project
-                    </button>
+                        <h2 class="sub-title">Project</h2>
+                        <button class="btn btn-outline add-item-btn" onclick="openModal('addProjectModal')">
+                            <i class="fas fa-plus"></i> Add Project
+                        </button>
                     </div>
-                </div>
 
-                <div class="projects-grid" id="workTrace">
+                    <div class="projects-grid" id="workTrace">
                     <div class="work">
                         <img src="/Images/website_images/software testing.png" alt="Test Automation Suit">
                         <div class="layer">
@@ -279,10 +278,11 @@
                     </div>
 
                     <a href="https://github.com/shiv452" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View All on GitHub</a>
-
+            
                 </div>
             </div>
-
+        </div>
+        
             <!-- Add Project Modal -->
             <div class="modal-overlay" id="addProjectModal" onclick="handleOverlayClick(event,'addProjectModal')">
                 <div class="modal-card">
@@ -639,11 +639,50 @@
             </div>
         </div>
     </div>
-            <footer>
-                <div class="copyright">
-                    <p>&copy; 2025 Shivam Goyal &nbsp;&middot;&nbsp; Built with <i class="fas fa-heart"></i> &nbsp;&middot;&nbsp; Deployed on Netlify</p>
-                </div>
-            </footer>
+
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="footer-name">Shivam Goyal</span>
+                <span class="footer-role">Software Engineer in Test &middot; Finastra</span>
+            </div>
+
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="#home">Homw</a>
+                <a href="#about">About</a>
+                <a href="#portfolio">Projects</a>
+                <a href="#carousel">Achievements</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <div class="footer-social">
+                <a href="https://github.com/shiv452" target="_blank" rel="noopener noreferrer" arial-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+
+                <a href="https://linkedin.com/in/shivamgoyal452/" target="_blank" rel="noopener noreferrer"  aria-label="Linkedin">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+
+                <a href="https://twitter.com/Shivam45017152" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+
+                <a href="https://www.instagram.com/shivamgoyal452/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+
+                <a href="https://www.youtube.com/channel/UCljwr82bv6rJItmOI7TwD5g" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2025 Shivam Goyal &nbsp;&middot;&nbsp; Built with <i class="fas fa-heart"></i> &nbsp;&middot;&nbsp; Deployed on Netlify</p>
+        </div>
+    </footer>
 
 
 
@@ -651,21 +690,21 @@
         <script src="https;//kit.fontawesome.com/e674bba739.js" crossorigin="anonymous"></script>
         <script src="https;//cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
         <!-- Navigation hamburger -->
-        <script></script>
+        <script src="/JavaScript/nav.js"></script>
         <!-- Logo 3-D spin hover -->
-        <script></script>
+        <script src="/JavaScript//logo.js"></script>
         <!-- Back-to-top button -->
-        <script></script>
+        <script src="/JavaScript/scroll-top.js"></script>
         <!-- Resume download + upload manger -->
-        <script></script>
+        <script src="/JavaScript/resume.js"></script>
         <!-- Typed hero text, modals, toast, cursor spotlight -->
-        <script></script>
+        <script src="/JavaScript/ui.js"></script>
         <!-- About profile picture + collapsible panels -->
-        <script></script>
+        <script src="/JavaScript/about.js"></script>
         <!-- Achievement tabs, lightbox, add/remove cert & award -->
-        <script></script>
+        <script src="/JavaScript/achievements.js"></script>
         <!-- Project add-card modal + infinite carousel -->
-        <script></script>
+        <script src="/JavaScript/projects.js"></script>
         <script>/* All JS has been moved to external files under /JavaScript/ folder */</script>
 
 </body>
