@@ -15,12 +15,12 @@
 
     var wrap = document.createElement('div');
     wrap.className = 'about-pic-wrap';
-    col1img.appendChild(col1img);
+    wrap.appendChild(col1img);
 
     var lb1 = document.createElement('label');
     lb1.className = 'about-pic-edit';
     lb1.title = 'Change photo';
-    lb1.innerHTML = '<i class"fas fa-camera"></i>'
+    lb1.innerHTML = '<i class="fas fa-camera"></i>'
 
     var fileInp = document.createElement('input');
     fileInp.type = 'file';
@@ -77,7 +77,7 @@
             clearTimeout(peekTimer);
             panel.classList.remove('peeking');
             var wasPinned = panel.classList.contains('pinned');
-            document.querySelectorAll('.about-panel-pinned').forEach(function (p) {
+            document.querySelectorAll('.about-panel.pinned').forEach(function (p) {
                 p.classList.remove('pinned');
             });
             if (!wasPinned) panel.classList.add('pinned');

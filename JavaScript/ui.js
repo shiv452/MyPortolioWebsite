@@ -7,11 +7,11 @@
 /* ============== Typed Hero text =======*/
 // Requires Typed.js (loaded via CDN before this field)
 new Typed('.typed-role', {
-    String: [
+    strings: [
         'Software Engineer in Test',
         'QA Automation Engineer',
         'Data Science Enthusiast',
-        'Product Management Aim'
+        'Product Management Enthusiast'
     ],
     typeSpeed: 55,
     backSpeed: 30,
@@ -43,7 +43,7 @@ function showToast(msg, type) {
     t.className = 'toast toast-' + type;
     t.textContent = msg;
     document.body.appendChild(t);
-    setTimeout(function () { t.className.add('show'); }, 10);
+    setTimeout(function () { t.classList.add('show'); }, 10);
     setTimeout(function () {
         t.classList.remove('show');
         setTimeout(function () { t.remove(); }, 300);

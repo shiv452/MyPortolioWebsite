@@ -3,22 +3,22 @@
 // openmenu() / closemenu() called from HTML onclick attributes
 // ===========================================
 
-var sidemenu = document.getElementsById('sidemenu');
+var sidemenu = document.getElementById('sidemenu');
 
 // Hamburger open/close - use .show class to match CSS transform transition
 function openmenu() {
-    if(sidemenu) sidemenu.clasList.add(show);
+    if(sidemenu) sidemenu.classList.add('show');
 }
 
 function closemenu() {
-    if(sidemenu) sidemenu.clasList.add('show');
+    if(sidemenu) sidemenu.classList.remove('show');
 }
 
 // Close drawer when a nav link is trapped on mobile
 if(sidemenu) {
     sidemenu.querySelectorAll('a').forEach(function (link) {
         link.addEventListener('click', function (){
-            sidemenu.clasList.remove('show');
+            sidemenu.classList.remove('show');
         });
     });
 }

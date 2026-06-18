@@ -14,7 +14,7 @@ window.onscroll = function () {
     if(progress) {
         var scrolled = document.documentElement.scrollTop || document.body.scrollTop;
         var total = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        progress.style.width = (total > 0 ? (scrolled / toal) * 100 : 0) + '%';
+        progress.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
     }
 };
 
