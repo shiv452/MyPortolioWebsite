@@ -1,91 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Glimpse of Memories</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/MainPage/About/Hobbies/Pictures_Videos/memories.css">
+    </head>
 
-<head lang="ru">
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Some Memories from My Arsenal </title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/MainPage/About/Hobbies/Pictures_Videos/memories.css">
-</head>
+    <body>
+        
 
-<body>
-    <section class="section-wrapper">
-        <h2 class="section-title">📸 My Photo Memories</h2>
-        <div class="container">
-            <!-- all your <img> tags go here -->
-            <img src="/Images/memories/1.jpg" alt="Memory 1">
-            <img src="/Images/memories/2.jpg" alt="Memory 2">
-            <img src="/Images/memories/4.jpg" alt="Memory 4">
-            <img src="/Images/memories/5.jpg" alt="Memory 5">
-            <img src="/Images/memories/6.jpg" alt="Memory 6">
-            <img src="/Images/memories/7.jpg" alt="Memory 7">
-            <img src="/Images/memories/8.jpg" alt="Memory 8">
-            <img src="/Images/memories/9.jpg" alt="Memory 9">
-            <img src="/Images/memories/11.jpg" alt="Memory 11">
-            <img src="/Images/memories/12.jpg" alt="Memory 12">
-            <img src="/Images/memories/13.jpg" alt="Memory 13">
-            <img src="/Images/memories/14.jpg" alt="Memory 14">
-            <img src="/Images/memories/15.jpg" alt="Memory 14">
-            <img src="/Images/memories/16.jpg" alt="Memory 15">
-            <img src="/Images/memories/17.jpg" alt="Memory 16">
-            <img src="/Images/memories/18.jpg" alt="Memory 17">
-            <img src="/Images/memories/19.jpg" alt="Memory 18">
-            <img src="/Images/memories/20.jpg" alt="Memory 19">
-            <img src="/Images/memories/21.jpg" alt="Memory 20">
-    
-            <img src="/Images/memories/pic1.jpg" alt="Memory 21">
-            <img src="/Images/memories/pic2.jpg" alt="Memory 22">
-            <img src="/Images/memories/pic3.jpg" alt="Memory 23">
-            <img src="/Images/memories/pic4.jpg" alt="Memory 24">
-            <img src="/Images/memories/pic5.jpg" alt="Memory 25">
-            <img src="/Images/memories/pic7.jpg" alt="Memory 26">
-            <img src="/Images/memories/pic8.jpg" alt="Memory 27">
-            <img src="/Images/memories/pic9.jpg" alt="Memory 28">
-            <img src="/Images/memories/pic10.jpg" alt="Memory 29">
-            <img src="/Images/memories/pic11.jpg" alt="Memory 30">
-            <img src="/Images/memories/pic12.jpg" alt="Memory 31">
-            <img src="/Images/memories/pic13.jpg" alt="Memory 32">
-            <!-- <img src="/Images/memories/pic14.jpg" alt="Memory 33"> -->
-            <img src="/Images/memories/pic15.jpg" alt="Memory 34">
-            <img src="/Images/memories/pic16.jpg" alt="Memory 35">
+        <canvas id="starCanvas"></canvas>
 
-            <img src="/Images/memories/img17.jpg" alt="Memory 36">
-            <img src="/Images/memories/img18.jpg" alt="Memory 37">
-            <img src="/Images/memories/img19.jpg" alt="Memory 38">
-            <img src="/Images/memories/img20.jpg" alt="Memory 39">
-            <img src="/Images/memories/img21.jpg" alt="Memory 40">
-            <img src="/Images/memories/img22.jpg" alt="Memory 41">
-            <img src="/Images/memories/img23.jpg" alt="Memory 42">
-            <img src="/Images/memories/img24.webp" alt="Memory 43">
-            <img src="/Images/memories/img25.webp" alt="Memory 44">
+        <header class="hdr">
+            <a href="/index.html#about" class="back-btn">&#8592; Back</a>
+            <div class="hdr-mid">
+                <h1>&#128248; My Glimpse</h1>
+                <p>Hover to reveal &nbsp;&#183;&nabla; Click to pin &nbsp;&#182;&nabla; &#10005; to remove &nabla;&#183;&nabla; + to add</p>
+            </div>
 
-        </div>
+            <div class="hdr-right">
+                <div class="photo-count" id="photoCount">0 photos</div>
+                <button class="add-btn" title="Add Photos" onclick="document.getElementById('photoInput').click()">+</button>
+                <input type="file" id="photoInput" multiple accept="image/*" style="display: none;">
+            </div>
+        </header>
+
+        <div class="mem-toast" id="memToast"></div>
+
+        <script>
+            (function() {
+                var SRCS = [
+                    '/Images/memories/1.jpg',
+                    '/Images/memories/2.jpg',
+                    '/Images/memories/4.jpg',
+                    '/Images/memories/5.jpg',
+                    '/Images/memories/6.jpg',
+                    '/Images/memories/7.jpg',
+                    '/Images/memories/8.jpg',
+                    '/Images/memories/9.jpg',
+                    '/Images/memories/11.jpg',
+                    '/Images/memories/12.jpg',
+                    '/Images/memories/13.jpg',
+                    '/Images/memories/14.jpg',
+                    '/Images/memories/15.jpg',
+                    '/Images/memories/16.jpg',
+                    '/Images/memories/17.jpg',
+                    '/Images/memories/18.jpg',
+                    '/Images/memories/19.jpg',
+                    '/Images/memories/20.jpg',
+                    '/Images/memories/21.jpg',
+                    '/Images/memories/img17.jpg',
+                    '/Images/memories/img24.webp',
+                    '/Images/memories/img25.webp',
+                    '/Images/memories/pic1.jpg',
+                    '/Images/memories/pic2.jpg',
+                    '/Images/memories/pic3.jpg',
+                    '/Images/memories/pic4.jpg',
+                    '/Images/memories/pic5.jpg',
+                    '/Images/memories/pic6.jpg',
+                    '/Images/memories/pic7.jpg',
+                    '/Images/memories/pic8.jpg',
+                    '/Images/memories/pic9.jpg',
+                    '/Images/memories/pic10.jpg',
+                    '/Images/memories/pic11.jpg'
+                ];
+
+                var EXPAND = 320; //expanded size of the photo when hovered/pinned
+                var HEADER_H = 64; // height of header to prevent photo from going under it when spawned.
+                var GLOWS = [
+                    {c:'#6366f1', s:'0 0 0 1px rgba(99,102,241,0.9), 0 0 8px 4px #6366f1, 0 0 22px 10px rgba(99,102,241,0.5)'},
+                    {c:'#22d3ee', s:'0 0 0 1px rgba(34,211,238,0.9), 0 0 8px 4px #22d3ee, 0 0 22px 10px rgba(34,211,238,0.5)'},
+                    {c:'#a78bfa', s:'0 0 0 1px rgba(167,139,250,0.9), 0 0 8px 4px #a78bfa, 0 0 22px 10px rgba(167,139,250,0.5)'},
+                    {c:'#f472b6', s:'0 0 0 1px rgba(244,114,182,0.9), 0 0 8px 4px #f472b6, 0 0 22px 10px rgba(244,114,182,0.5)'},
+                    {c:'#fbbf24', s:'0 0 0 1px rgba(251,191,36,0.9), 0 0 8px 4px #fbbf24, 0 0 22px 10px rgba(251,191,36,0.5)'},
+                    {c:'#34d399', s:'0 0 0 1px rgba(52,211,153,0.9), 0 0 8px 4px #34d399, 0 0 22px 10px rgba(52,211,153,0.5)'},
+                    {c:'#fb7185', s:'0 0 0 1px rgba(251,113,133,0.9), 0 0 8px 4px #fb7185, 0 0 22px 10px rgba(251,113,133,0.5)'},
+                    {c:'#06b6d4', s:'0 0 0 1px rgba(6,182,212,0.9), 0 0 8px 4px #06b6d4, 0 0 22px 10px rgba(6,182,212,0.5)'},
+                    {c:'#ec4899', s:'0 0 0 1px rgba(236,72,153,0.9), 0 0 8px 4px #ec4899, 0 0 22px 10px rgba(236,72,153,0.5)'},
+                    {c:'#8b5cf6', s:'0 0 0 1px rgba(139,92,246,0.9), 0 0 8px 4px #8b5cf6, 0 0 22px 10px rgba(139,92,246,0.5)'},
+                    {c:'#14b8a6', s:'0 0 0 1px rgba(20,184,166,0.9), 0 0 8px 4px #14b8a6, 0 0 22px 10px rgba(20,184,166,0.5)'},
+                    {c:'#f97316', s:'0 0 0 1px rgba(249,115,22,0.9), 0 0 8px 4px #f97316, 0 0 22px 10px rgba(249,115,22,0.5)'}
+                ];
+
+                var W = window.innerWidth, H = window.innerHeight;
+                var mx = -9999, my = -9999;
+                var bubbles = [];
+
+                /* Removals are session only for now - Firebase will them permanent */
+
+                window.addEventListener('resize', function() { W = window.innerWidth; H = window.innerHeight; })
+
+                function rand(a, b) { return a + Math.random() * (b - a); }
+
+                /* ========= Star Canvas ========== */
+                
+            })
+        </script>
 
 
-    </section>
-
-    <section class="section-wrapper">
-        <h2 class="section-title">🎥 My Video Memories</h2>
-        <div class="video-grid">
-            <!-- all your <video> tags go here -->
-                <video controls class="grid-video"><source src="videos/vid1.mp4" type="video/mp4"></video>
-                <video controls class="grid-video"><source src="videos/vid2.mp4" type="video/mp4"></video>
-                <video controls class="grid-video"><source src="videos/vid3.mp4" type="video/mp4"></video>
-                <video controls class="grid-video"><source src="videos/vid4.mp4" type="video/mp4"></video>
-                <!-- <video controls class="grid-video"><source src="videos/vid5.mp4" type="video/mp4"></video> -->
-                <video controls class="grid-video"><source src="videos/vid6.mp4" type="video/mp4"></video>
-                <video controls class="grid-video"><source src="videos/vid7.mp4" type="video/mp4"></video>
-                <video controls class="grid-video"><source src="videos/vid8.mp4" type="video/mp4"></video>
-                <video controls class="grid-video"><source src="videos/vid9.mp4" type="video/mp4"></video>
-                <video controls class="grid-video"><source src="videos/vid10.mp4" type="video/mp4"></video>
-                <video controls class="grid-video"><source src="videos/vid11.mp4" type="video/mp4"></video>
-                <video controls class="grid-video"><source src="videos/vid12.mp4" type="video/mp4"></video>
-                <video controls class="grid-video"><source src="videos/vid13.mp4" type="video/mp4"></video>
-                <video controls class="grid-video"><source src="videos/vid14.mp4" type="video/mp4"></video>
-        </div>
-    </section>
-
-</body>
+    </body>
 </html>

@@ -1,75 +1,190 @@
-body {
+/* ===================================
+   MEMORIES PAGE - Vanilla JS Photo Gallery
+   ================================== */
+
+* {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
-    background: linear-gradient(270deg, #ff6ec4, #7873f5, #4ade80, #facc15, rgb(232, 191, 108));
-    background-size: 800% 800%;
-    animation: animatedBackground 20s ease infinite;
-}
-@keyframes animatedBackground {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    box-sizing: border-box;
 }
 
-.container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.container img {
+html, body {
     width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(39, 38, 38, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    background: #0a0a0f;
+    color: #f1f5f9;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
 }
 
-.container img:hover {
-    transform: scale(1.20);
-    box-shadow: 0 8px 16px rgba(116, 217, 237, 0.4);
+body {
+    display: flex;
+    flex-direction: column;
 }
 
-/* ----Videos----- */
-.video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 16px;
-    padding: 20px;
-}
-
-.grid-video {
+/* ========= Canvas Background ========= */
+#starCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 70%;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease;
+    height: 100%;
+    z-index: 1;
 }
 
-.grid-video:hover {
-    transform: scale(1.03);
+/* ========= Header ========= */
+.hdr {
+    position: relative;
+    z-index: 10;
+    height: 64px;
+    background: rgba(10, 10, 15, 0.95);
+    border-bottom: 1px solid rgba(225, 225, 225, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    gap: 24px;
+    flex-wrap: wrap;
+    backdrop-filter: blur(8px);
 }
 
-
-.section-wrapper {
-    margin: 40px auto;
-    padding: 20px;
-    max-width: 1200px;
-    background: rgba(238, 233, 233, 0.05);
-    border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+.back-btn {
+    color: #f1f5f9;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    cursor: pointer;
+    white-space: nowrap;
 }
 
-.section-title {
+.back-btn:hover {
+    background: rgba(99, 102, 241, 0.1);
+    color: #6366f1;
+}
+
+.hdr-mid {
+    flex: 1;
+    min-width: 250px;
     text-align: center;
-    font-size: 2em;
-    margin-bottom: 20px;
+}
+
+.hdr-mid h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.hdr-mid p {
+    font-size: 0.75rem;
+    color: rgba(241, 245, 249, 0.7);
+    letter-spacing: 0.05em;
+}
+
+.hdr-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    white-space: nowrap;
+}
+
+.photo-count {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #22d3ee;
+    padding: 6px 12px;
+    border: 1px solid rgba(34, 211, 238, 0.3);
+    border-radius: 20px;
+    background: rgba(34, 211, 238, 0.08);
+}
+
+.add-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #6366f1;
     color: #fff;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: none;
+    font-size: 24px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-btn:hover {
+    background: #4f52d4;
+    transform: scale(1.05);
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+}
+
+.add-btn:active {
+    transform: scale(0.95);
+}
+
+/* ========= Toast Notification ========= */
+.mem-toast {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: rgba(99, 102, 241, 0.95);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
+    transition: bottom 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+}
+
+.mem-toast.show {
+    bottom: 32px;
+}
+
+/* ========= Responsive ========= */
+@media (max-width: 768px) {
+    .hdr {
+        padding: 0 16px;
+        height: auto;
+        flex-direction: column;
+        gap: 12px;
+        min-height: 64px;
+    }
+
+    .hdr-mid h1 {
+        font-size: 1.1rem;
+    }
+
+    .hdr-mid p {
+        font-size: 0.7rem;
+    }
+
+    .hdr-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 480px) {
+    .hdr-mid p {
+        display: none;
+    }
+
+    .photo-count {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+    }
+
+    .add-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+    }
 }
