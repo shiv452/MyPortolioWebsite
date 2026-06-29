@@ -1,4 +1,4 @@
-a// ===============================================================
+// ===============================================================
 // Projects.js - Projects section
 // Add-project modal logic and infinite auto-scroll carousel
 //===============================================================
@@ -25,19 +25,20 @@ function addProject() {
     var tagsRaw = document.getElementById('proj-tags').value.trim();
     var desc = document.getElementById('proj-desc').value.trim();
     var link = document.getElementById('proj-link').value.trim();
-    var imgUrl = projImageData || '/Image/website_images/web-development.png';
+    var imgUrl = projImageData || '/Images/website_images/web-development.png';
     var tags = tagsRaw
     ? tagsRaw.split(',').map(function (t) { return '<span class="tag">' + t.trim() + '</span>'; }).join('') : '';
-    var linkHtml = link? '<a href="' + link + '"target=_blank" rel="noopner noreferrer"><i class="fas fa-external-link-alt"></i></a>' : '';
+    var linkHtml = link? '<a href="' + link + '" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i></a>' : '';
 
     var card = document.createElement('div');
     card.className = 'work';
     card.innerHTML = 
-        '<img src="' + imgUrl + '"alt="' + title + '">' +
+        '<img src="' + imgUrl + '" alt="' + title + '">' +
         '<div class="layer">' +
             '<div class="layer-tags">' + tags + '</div>' +
             '<h3>' + title + '</h3>' +
             '<p>' + desc +'</p>' +
+            linkHtml +
         '</div>';
 
     document.getElementById('workTrack').appendChild(card);
@@ -53,29 +54,32 @@ function addProject() {
     showToast('Project added successfully!', 'success');
 }
 
-//------ Infinite  auto-scroll carousel
+//------ Infinite auto-scroll carousel
 (function () {
-    var grid = document.getElementById('workTrack');
-    if(!grid) return;
+    var grid = document.getElementById('workTrace') || document.getElementById('workTrack');
+    if (!grid) return;
 
-    // wrap in .projects-scroll-wrap for positioning arrow buttons
-    var wrap = document.createElement('div');
-    wrap.className = 'projects-scroll-wrap';
-    grid.parentNode.insertBefore(wrap, grid);
-    wrap.appendChild(grid);
+    // If already wrapped by markup, use the existing wrapper (.project-scroll-wrap)
+    var wrap = grid.parentNode && grid.parentNode.classList && grid.parentNode.classList.contains('project-scroll-wrap') ? grid.parentNode : null;
+    if (!wrap) {
+        wrap = document.createElement('div');
+        wrap.className = 'project-scroll-wrap';
+        grid.parentNode.insertBefore(wrap, grid);
+        wrap.appendChild(grid);
+    }
 
     // Duplicate original cards for seamless infinite loop
     var origCards = Array.from(grid.querySelectorAll('.work'));
     origCards.forEach(function (card) {
         var clone = card.cloneNode(true);
         clone.setAttribute('aria-hidden', 'true');
-        //remove delete button clones-- only originals are deletable
+        // remove delete button clones -- only originals are deletable
         var delBtn = clone.querySelector('.ach-card-del');
-        if(delBtn) delBtn.remove();
+        if (delBtn) delBtn.remove();
         grid.appendChild(clone);
     });
 
-    //Auto-scroll engine - requestAnimationFrame loop
+    // Auto-scroll engine - requestAnimationFrame loop
     var speed = 0.55;
     var paused = false;
 
@@ -85,10 +89,10 @@ function addProject() {
     }
 
     function tick() {
-        if(!paused) {
+        if (!paused) {
             grid.scrollLeft += speed;
             var tw = trackWidth();
-            if(tw > 0 && grid.scrollLeft >= tw) {
+            if (tw > 0 && grid.scrollLeft >= tw) {
                 grid.scrollLeft = 0;
             }
         }
@@ -97,26 +101,17 @@ function addProject() {
 
     requestAnimationFrame(tick);
 
-    //Pause scrolling while cursor is over the carousel
-    grid.addEventListener('.mouseenter', function () { paused = true; })
-    grid.addEventListener('.mouseleave', function () { paused = false; })
+    // Pause scrolling while cursor is over the carousel
+    grid.addEventListener('mouseenter', function () { paused = true; });
+    grid.addEventListener('mouseleave', function () { paused = false; });
 
-    //   Arrow button
-    function makeArrow(dir) {
-        var btn = document.createElement('button');
-        btn.className = 'proj-arrow proj-' + (dir < 0 ? 'prev' : 'next');
-        btn.setAttribute('aria-label', dir < 0 ? 'Scroll left' : 'Scroll right');
-        btn.innerHTML = dir < 0 ? '&#8249' : '&#8250';
-        btn.addEventListener('click', function () {
-            var card = grid.querySelector('.work');
-            var amt = card ? card.offsetWidth + 28 : 448;
-            paused = true;
-            grid.scrollBy({ left: dir * amt, behavior: 'smooth' });
-            setTimeout(function () { paused = false; }, 900);
-        });
-        return btn;
-    }
-
-    wrap.appendChild(makeArrow(-1));
-    wrap.appendChild(makeArrow(1));
+    // Provide a global bridge for the existing HTML arrow buttons (which call scrollProjects)
+    window.scrollProjects = function (dir) {
+        var card = grid.querySelector('.work');
+        var amt = card ? card.offsetWidth + 28 : 448;
+        paused = true;
+        var mul = (dir === 'prev' || dir === -1) ? -1 : 1;
+        grid.scrollBy({ left: mul * amt, behavior: 'smooth' });
+        setTimeout(function () { paused = false; }, 900);
+    };
 })();

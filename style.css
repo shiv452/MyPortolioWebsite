@@ -319,8 +319,8 @@ nav .fas {
     padding-bottom: 8px;
     -webkit-overflow-scrolling: touch;
     /* Fade edge */
-    mask-image: linear-gradient(to right, transparent 0px, black 90px, black cal(100% - 90px), transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0px, black 90px, black cal(100% - 90px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0px, black 90px, black calc(100% - 90px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0px, black 90px, black calc(100% - 90px), transparent 100%);
 }
 .projects-grid::-webkit-scrollbar { display: none; }
 
