@@ -1,54 +1,28 @@
-// Below code is to spin 360 deg in rotation ----> working as expected
-// const logo = document.getElementById('logo');
+// ==========================================
+// logo.js - Logo 3-D spin / pop on click
+// Wraps the nav logo in #logoWrap and triggers
+// the logoPop keyframe animation on click.
+// ==========================================
+(function () {
+    var logo = document.getElementById('logo');
+    if (!logo) return;
 
-//         // Function to start spinning the logo
-//         function startSpin() {
-//             logo.style.transition = 'transform 0.1s linear';
-//             logo.style.transform = 'rotate(360deg)';
-//             logo.style.animation = 'spin 0.8s infinite linear';
-//         }
+    // Wrap logo in a centering flex div
+    var wrap = document.createElement('div');
+    wrap.id = 'logoWrap';
+    logo.parentNode.insertBefore(wrap, logo);
+    wrap.appendChild(logo);
 
-//         // Function to stop spinning the logo
-//         function stopSpin() {
-//             logo.style.transition = 'transform 0.5s ease';
-//             logo.style.transform = 'rotate(0deg)';
-//             logo.style.animation = '';
-//         }
+    // Trigger pop animation on click
+    logo.addEventListener('click', function () {
+        logo.classList.remove('logo-idle');
+        // Force reflow so re-adding the class restarts the animation
+        void logo.offsetWidth;
+        logo.classList.add('logo-idle');
+    });
 
-//         // Add mouseover and mouseout events to the logo
-//         logo.addEventListener('mouseover', startSpin);
-//         logo.addEventListener('mouseout', stopSpin);
-
-
-// Below code is to spin logo in X and Y direction 
-const logo = document.getElementById('logo');
-
-        // Function to start infinite 3D spinning
-        function startSpin() {
-            logo.style.animation = 'spin3D 7s infinite linear'; // 3D spin effect, infinite
-        }
-
-        // Function to stop spinning
-        function stopSpin() {
-            logo.style.animation = ''; // Remove the animation to stop spinning
-        }
-
-        // Add mouseover and mouseout events to the logo
-        logo.addEventListener('mouseover', startSpin);
-        logo.addEventListener('mouseout', stopSpin);
-
-        // Keyframes for 3D spin animation
-        const styleSheet = document.styleSheets[0];
-        styleSheet.insertRule(`
-            @keyframes spin3D {
-                10% {
-                    transform: rotateX(30deg) rotateY(20deg);
-                }
-                60% {
-                    transform: rotateY(160deg) rotateY(160deg);
-                }
-                100% {
-                    transform: rotateX(360deg) rotateY(360deg);
-                }
-            }
-        `, styleSheet.cssRules.length);
+    // Scroll to top on logo click
+    logo.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+})();
