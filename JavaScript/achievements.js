@@ -21,27 +21,31 @@ function switchAchTab(tab) {
 function openLightbox(src) {
     var lb = document.getElementById('certLightbox');
     var img = document.getElementById('certLbImg');
-    if(!lb || !img) return;
+    if (!lb || !img) return;
+    img.src = src;
+    img.alt = 'Certificate';
     lb.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
 function closeLightbox(e) {
-    if(e && e.target && e.target.closest && e.target.closest('.cert-lb-close')) return;
+    if (e && e.target && e.target.closest && e.target.closest('.cert-lb-close')) return;
     var lb = document.getElementById('certLightbox');
-    if(lb) lb.classList.remove('active');
+    if (lb) lb.classList.remove('active');
     document.body.style.overflow = '';
 }
 
 //Certificates Image Preview
 var certImageData = '';
 function previewCertImage(input) {
-    if(input.files && input.files[0]) {
+    if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
             certImageData = e.target.result;
-            document.getElementById('.cert-img-label').textContent = input.files[0].name;
-            document.getElementById('uploadArea').style.borderColor = 'var(--accent)';
+            var lbl = document.getElementById('cert-img-label');
+            if (lbl) lbl.textContent = input.files[0].name;
+            var up = document.getElementById('uploadArea');
+            if (up) up.style.borderColor = 'var(--accent)';
         };
         reader.readAsDataURL(input.files[0]);
     }
@@ -51,9 +55,9 @@ function previewCertImage(input) {
 // Award image preview
 var awardImageData = '';
 function previewAwardImage(input) {
-    if(input.files && input.files[0]) {
+    if (input.files && input.files[0]) {
         var reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             awardImageData = e.target.result;
             document.getElementById('award-img-label').textContent = input.files[0].name;
             document.getElementById('awardUploadArea').style.borderColor = 'var(--accent2, #22d3ee)';
@@ -66,11 +70,9 @@ function previewAwardImage(input) {
 //Icon Picker selection
 (function () {
     document.addEventListener('click', function (e) {
-        var opt = e.target.closest('#awardIconPicker .award-icon-opt');
-        if(!opt) return;
-        document.querySelectorAll('#awardIconPicker .award-icon-opt').forEach(function(o) {
-            o.classList.remove('selected');
-        });
+        var opt = e.target.closest('#awardiconPicker div');
+        if (!opt) return;
+        document.querySelectorAll('#awardiconPicker div').forEach(function (o) { o.classList.remove('selected'); });
         opt.classList.add('selected');
     });
 })();
@@ -79,19 +81,19 @@ function previewAwardImage(input) {
 // Add certificate
 // addCertificate() called from HTML onclick attribute.
 function addCertificate() {
-    var title = document.getElementById('cert-title').ariaValueMax.trim();
-    if(!title) { showToast('Certificate title is required.','error'); return; }
-    var imgSrc = certImageData || '/Image/website_images/software testing.png';
+    var titleEl = document.getElementById('cert-title');
+    var title = titleEl ? titleEl.value.trim() : '';
+    if (!title) { showToast('Certificate title is required.', 'error'); return; }
+    var imgSrc = certImageData || '/Images/website_images/software testing.png';
 
     var certGrid = document.getElementById('certsGrid');
-    if(certGrid) {
-        var thumb = document.getElementById('div');
+    if (certGrid) {
+        var thumb = document.createElement('div');
         thumb.className = 'cert-thumb';
         var src = imgSrc;
         thumb.setAttribute('onclick', "openLightbox('" + src.replace(/'/g, "\\'") + "')");
         thumb.innerHTML = '<img src="' + src + '" alt="' + title + '">';
-        var dBtn = addDelBtn(thumb, removeCert);
-        dBtn.className = 'cert-del-btn';
+        var dBtn = addDelBtn(thumb, removeCert, 'cert-del-btn');
         thumb.appendChild(dBtn);
         certGrid.insertBefore(thumb, certGrid.firstChild);
     }
@@ -112,33 +114,33 @@ function addCertificate() {
 // addAward() called from modal onclick
 function addAward() {
     var title = document.getElementById('award-title').value.trim();
-    if(!title) { showToast('Award title is required.', 'error'); return; }
+    if (!title) { showToast('Award title is required.', 'error'); return; }
 
     var org = document.getElementById('award-org').value.trim();
     var desc = document.getElementById('award-desc').value.trim();
 
     //get selected icon + color class from picker
-    var selected = document.querySelector('#awardIconPicker .award-icon-opt.selected');
+    var selected = document.querySelector('#awardiconPicker .selected');
     var icon = selected ? selected.getAttribute('data-icon') : 'fa-trophy';
     var cls = selected ? (selected.getAttribute('data-cls') || '') : '';
 
     var grid = document.querySelector('#achProf .ach-award-grid');
-    if(!grid) return;
+    if (!grid) return;
 
     var imgHTML = '';
-    if(awardImageData) {
+    if (awardImageData) {
         var safeData = awardImageData.replace(/'/g, "\\'");
-        '<div class="ach-award-img" onclick="openLightbox(\'' + safeData + '\')">' + '<img src="' + awardImageData + '" alt="' + title + '">' + '<span>VIEW</span></div>'; 
+        imgHTML = '<div class="ach-award-img" onclick="openLightbox(\'' + safeData + '\')"><img src="' + awardImageData + '" alt="' + title + '"><span>VIEW</span></div>';
     }
 
     var card = document.createElement('div');
     card.className = 'ach-award-card';
-    card.innerHTML = 
+    card.innerHTML =
         '<div class="ach-award-badge ' + cls + '"><i class="fas ' + icon + '"></i></div>' +
         '<div class="ach-award-info">' +
-                (org ? '<span class="ach-award-org">' + org + '</span>' : '') +
-                '<h4 class="ach-award-title">' + title + '</h4>' +
-                (desc ? '<p class="ach-award-desc">' + desc + '</p>' : '') +
+        (org ? '<span class="ach-award-org">' + org + '</span>' : '') +
+        '<h4 class="ach-award-title">' + title + '</h4>' +
+        (desc ? '<p class="ach-award-desc">' + desc + '</p>' : '') +
         '</div>' +
         imgHTML;
 
@@ -155,14 +157,14 @@ function addAward() {
     awardImageData = '';
 
     //Reset icon selection back to first option
-    document.querySelectorAll('#awardIconPicker .award-icon-opt').forEach(function (opt, i) {
+    document.querySelectorAll('#awardiconPicker div').forEach(function (opt, i) {
         opt.classList.toggle('selected', i === 0);
     });
 
     closeModal('addAwardModal');
     showToast('Award added!', 'success');
     //Recheck carousel after adding a new card
-    if(typeof window._checkAwardCarousel == 'function') {
+    if (typeof window._checkAwardCarousel == 'function') {
         setTimeout(window._checkAwardCarousel, 50);
     }
 }
@@ -174,7 +176,7 @@ function removeAward(card) {
     card.style.transform = 'scale(0.86)';
     setTimeout(function () {
         if (card.parentNode) card.remove();
-        if(typeof window._checkAwardCarousel === 'function') window._checkAwardCarousel();
+        if (typeof window._checkAwardCarousel === 'function') window._checkAwardCarousel();
     }, 310);
 }
 
@@ -193,7 +195,7 @@ function addDelBtn(parent, removeFn, cls) {
     btn.innerHTML = '&times;';
     btn.title = 'Remove';
     btn.className = cls || '';
-    btn.addEventListener('click', function(e) {
+    btn.addEventListener('click', function (e) {
         e.stopPropagation();
         removeFn(parent);
     });
@@ -206,7 +208,7 @@ function addDelBtn(parent, removeFn, cls) {
     document.querySelectorAll('#achProf .ach-award-grid .ach-award-card').forEach(function (card) {
         card.appendChild(addDelBtn(card, removeAward, 'ach-card-del'));
     });
-    document.querySelectorAll('#certGrid .cert-thumb').forEach(function (thumb) {
+    document.querySelectorAll('#certsGrid .cert-thumb').forEach(function (thumb) {
         thumb.appendChild(addDelBtn(thumb, removeCert, 'cert-del-btn'));
     });
 })();
@@ -232,7 +234,7 @@ function addDelBtn(parent, removeFn, cls) {
     //Count only real (non-clone) award cards whenever they live
     function realCount() {
         var grid = document.querySelector('#achProf .ach-award-grid');
-        if(!grid) return 0;
+        if (!grid) return 0;
         return grid.querySelectorAll('.ach-award-card:not(.ach-clone)').length;
     }
 
@@ -245,7 +247,7 @@ function addDelBtn(parent, removeFn, cls) {
     function enable() {
         _busy = true;
         var grid = document.querySelector('#achProf .ach-award-grid');
-        if(!grid) { _busy = false; return; }
+        if (!grid) { _busy = false; return; }
 
         //Gather originals (they may already be in strips if rebuilding)
         var cards = Array.from(grid.querySelectorAll('.ach-award-card:not(.ach-clone)'));
@@ -263,7 +265,7 @@ function addDelBtn(parent, removeFn, cls) {
         grid.appendChild(badge);
 
         //Slice cards into rows of `cols` and build one strip per row
-        for(var r = 0; r < cards.length; r += cols) {
+        for (var r = 0; r < cards.length; r += cols) {
             var rowCards = cards.slice(r, r + cols);
 
             var strip = document.createElement('div');
@@ -298,8 +300,8 @@ function addDelBtn(parent, removeFn, cls) {
         function disable() {
             _busy = true;
             var grid = document.querySelector('#achProf .ach-award-grid');
-            if(!grid) { _busy = false; return; }
-            
+            if (!grid) { _busy = false; return; }
+
             // Rescue originals from inside tracks before clearing
             var cards = Array.from(grid.querySelectorAll('.ach-award-card:not(.ach-clone)'));
 
@@ -314,13 +316,13 @@ function addDelBtn(parent, removeFn, cls) {
 
         //---- CHECK (called externally via window._checkAwardCarousel)
         function check() {
-            if(_busy) return;
+            if (_busy) return;
             var cols = colCount();
-            if(shouldEnable()) {
+            if (shouldEnable()) {
                 // Rebuilds if not active, or if columns changed (eg.resize)
                 var grid = document.querySelector('#achProf .ach-award-grid');
                 var prevCols = grid ? parseInt(grid.dataset.carouselCols || '0', 10) : 0;
-                if(!_active || prevCols !== cols) {
+                if (!_active || prevCols !== cols) {
                     enable();
                 }
             } else {

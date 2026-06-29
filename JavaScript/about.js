@@ -26,8 +26,8 @@
     fileInp.type = 'file';
     fileInp.accept = 'image/*';
     fileInp.style.display = 'none';
-    fileInp.onchange = function() {
-        if(!fileInp.files || !fileInp.files[0]) return;
+    fileInp.onchange = function () {
+        if (!fileInp.files || !fileInp.files[0]) return;
         var reader = new FileReader();
         reader.onload = function (ev) {
             var pic = document.getElementById('aboutProfilePic');
@@ -41,10 +41,10 @@
     wrap.appendChild(lb1);
 })();
 
-/* ================= About Panel Peek/Pin ============== */ 
+/* ================= About Panel Peek/Pin ============== */
 // Hover over a panel icon -> brief 2.2s peek
 // Click a panel icon -> pin open; click anywhere outside -> unpin all
-(function (){
+(function () {
     // Wrap non-header children in .panel-body for CSS height transition
     document.querySelectorAll('.about-panel').forEach(function (panel) {
         var header = panel.querySelector('.panel-header');

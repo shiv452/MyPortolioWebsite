@@ -7,17 +7,17 @@ var sidemenu = document.getElementById('sidemenu');
 
 // Hamburger open/close - use .show class to match CSS transform transition
 function openmenu() {
-    if(sidemenu) sidemenu.classList.add('show');
+    if (sidemenu) sidemenu.classList.add('show');
 }
 
 function closemenu() {
-    if(sidemenu) sidemenu.classList.remove('show');
+    if (sidemenu) sidemenu.classList.remove('show');
 }
 
 // Close drawer when a nav link is trapped on mobile
-if(sidemenu) {
+if (sidemenu) {
     sidemenu.querySelectorAll('a').forEach(function (link) {
-        link.addEventListener('click', function (){
+        link.addEventListener('click', function () {
             sidemenu.classList.remove('show');
         });
     });
@@ -25,7 +25,7 @@ if(sidemenu) {
 
 //=========== Active nav link on scroll
 //Highlights the nav link whose section is currently in view
-(function (){
+(function () {
     var navLinks = document.querySelectorAll('nav ul li a[href^="#"]');
     var sectionIds = [];
     navLinks.forEach(function (link) {
@@ -33,11 +33,11 @@ if(sidemenu) {
     });
 
     function activate() {
-        var scrollY = window.pageXOffset;
+        var scrollY = window.pageYOffset;
         var activeId = sectionIds[0];
         sectionIds.forEach(function (id) {
             var el = document.getElementById(id);
-            if(el && el.offsetTop - 100 <= scrollY) activeId = id;
+            if (el && el.offsetTop - 100 <= scrollY) activeId = id;
         });
         navLinks.forEach(function (link) {
             var isActive = link.getAttribute('href') === '#' + activeId;

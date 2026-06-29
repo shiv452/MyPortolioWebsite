@@ -8,302 +8,378 @@
     <link rel="shortcut icon" href="./Images/website_images/logo.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    :root {
-        --bg: #0a0a0f;
-        --bg2: #0f1117;
-        --card: #111827;
-        --accent: #6366f1;
-        --accent2: #22d3ee;
-        --text: #f1f5f9;
-        --muted: #94a3b8;
-        --border: rgba(255, 255, 255, 0.08);
-        --radius: 20px;
-    }
+        :root {
+            --bg: #0a0a0f;
+            --bg2: #0f1117;
+            --card: #111827;
+            --accent: #6366f1;
+            --accent2: #22d3ee;
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.08);
+            --radius: 20px;
+        }
 
-    body {
-        min-height: 100vh;
-        background: var(--bg);
-        font-family: 'Inter', sans-serif;
-        color: var(--text);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        overflow: hidden;
-        position: relative;
-    }
+        body {
+            min-height: 100vh;
+            background: var(--bg);
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            overflow: hidden;
+            position: relative;
+        }
 
-    /* Ambient background blobs */
-    .blob {
-        position: fixed;
-        border-radius: 50%;
-        filter: blur(100px);
-        opacity: 0.18;
-        pointer-events: none;
-        animation: blobDrift 12s ease-in-out infinite alternate;
-    }
+        /* Ambient background blobs */
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.18;
+            pointer-events: none;
+            animation: blobDrift 12s ease-in-out infinite alternate;
+        }
 
-    .blob1 {
-        width: 500px;
-        height: 500px;
-        background: var(--accent);
-        top: -120px;
-        left: -120px;
-        animation-delay: 0s;
-    }
-    .blob2 {
-        width: 420px;
-        height: 420px;
-        background: var(--accent2);
-        bottom: -100px;
-        right: -100px;
-        animation-delay: -4s;
-    }
-    .blob3 {
-        width: 300px;
-        height: 300px;
-        background: #8b5cf6;
-        top: 40%;
-        left: 55%;
-        animation-delay: -8s;
-    }
+        .blob1 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent);
+            top: -120px;
+            left: -120px;
+            animation-delay: 0s;
+        }
 
-    @keyframes blobDrift {
-        from { transform: translate(0, 0) scale(1);}
-        to { transform: translate(40px, 30px) scale(1.08);}
-    }
-    /* Card */
-    .ty-card {
-        position: relative;
-        z-index: 1;
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 56px 52px 48px;
-        max-width: 520px;
-        width: 100%;
-        text-align: center;
-        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(99,102,241, 0.08);
-        animation: cardIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
+        .blob2 {
+            width: 420px;
+            height: 420px;
+            background: var(--accent2);
+            bottom: -100px;
+            right: -100px;
+            animation-delay: -4s;
+        }
 
-    @keyframes cardIn {
-        from { opacity: 0; transform: translateY(32px) scale(0.97);}
-        to { opacity: 1; transform: translateY(0) scale(1);}
-    }
+        .blob3 {
+            width: 300px;
+            height: 300px;
+            background: #8b5cf6;
+            top: 40%;
+            left: 55%;
+            animation-delay: -8s;
+        }
 
-    /* Animated check circle */
-    .ty-check {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--accent), var(--accent2));
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 28px;
-        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.5);
-        animation: checkPulse 0.6s cubic-bezier(0.17, 0.89, 0.32, 1.49) 0.2s both, ringPulse 2.5s ease-out 0.8s infinite;
-    }
+        @keyframes blobDrift {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
 
-    @keyframes checkPulse {
-        from { transform: scale(0); opacity: 0;}
-        to { transform: scale(1); opacity: 1;}
-    }
+            to {
+                transform: translate(40px, 30px) scale(1.08);
+            }
+        }
 
-    @keyframes ringPulse {
-        0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);}
-        70% { box-shadow: 0 0 0 20px rgba(99, 102, 241, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
-    }
+        /* Card */
+        .ty-card {
+            position: relative;
+            z-index: 1;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 56px 52px 48px;
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(99, 102, 241, 0.08);
+            animation: cardIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
 
-    .ty-check svg {
-        width: 36px;
-        height: 36px;
-        stroke: #fff;
-        stroke-width: 3;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        stroke-dasharray: 50;
-        stroke-dashoffset: 50;  
-        animation: drawCheck 0.5s ease-out 0.6s forwards;
-    }
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(32px) scale(0.97);
+            }
 
-    @keyframes drawCheck {
-        to { stroke-dashoffset: 0;}
-    }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
 
-    /* Text */
-    .ty-tag{
-        display: inline-block;
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--accent2);
-        background: rgba(34, 211, 238, 0.1);
-        border: 1px solid rgba(34, 211, 238, 0.2);
-        border-radius: 99px;
-        padding: 4px 14px;
-        margin-bottom: 16px;
-    }
+        /* Animated check circle */
+        .ty-check {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 28px;
+            box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.5);
+            animation: checkPulse 0.6s cubic-bezier(0.17, 0.89, 0.32, 1.49) 0.2s both, ringPulse 2.5s ease-out 0.8s infinite;
+        }
 
-    .ty-title {
-        font-size: 2rem;
-        font-weight: 800;
-        line-height: 1.2;
-        background: linear-gradient(135deg, var(--text), var(--muted));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 12px;
-    }
+        @keyframes checkPulse {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
 
-    .ty-sub{
-        color: var(--muted);
-        font-size: 0.95rem;
-        line-height: 1.6;
-        margin-bottom: 36px;
-    }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
 
-    /* Steps */
-    .ty-steps {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        margin-bottom: 36px;
-        text-align: left;
-    }
+        @keyframes ringPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+            }
 
-    .ty-step {
-        display: flex;
-        align-items: flex-start;
-        gap: 14px;
-        position: relative;
-        margin-bottom: 20px;
-        animation: stepIn 0.4s ease both;
-    }
-    .ty-step:last-child { padding: 0; }
-    .ty-step:nth-child(1) { animation-delay: 0.5s;}
-    .ty-step:nth-child(2) { animation-delay: 0.65s;}
-    .ty-step:nth-child(3) { animation-delay: 0.8s;}
+            70% {
+                box-shadow: 0 0 0 20px rgba(99, 102, 241, 0);
+            }
 
-    @keyframes stepIn {
-        from { opacity: 0; transform: translateX(-12px);}
-        to { opacity: 1; transform: translateX(0);}
-    }
+            100% {
+                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+            }
+        }
 
-    .ty-step::before {
-        content: '';
-        position: absolute;
-        left: 17px;
-        top: 32px;
-        width: 2px;
-        height: calc(100% - 20px);
-        background: var(--border);
-    }
-    .ty-step:last-child::before { display: none; }
+        .ty-check svg {
+            width: 36px;
+            height: 36px;
+            stroke: #fff;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: drawCheck 0.5s ease-out 0.6s forwards;
+        }
 
-    .step-dot {
-        width: 36px;
-        height: 36px;
-        flex-shrink: 0;
-        border-radius: 50%;
-        background: rgba(99, 102, 241, 0.15);
-        border: 1px solid rgba(99, 102, 241, 0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.85rem;
-        color: var(--accent);
-    }
+        @keyframes drawCheck {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
 
-    .step-content {
-        display: block;
-        font-size: 0.88rem;
-        font-weight: 600;
-        color: var(--text);
-        margin-bottom: 2px;
-    }
-    .step-text span {
-        font-size: 0.8rem;
-        color: var(--muted);
-    }
+        /* Text */
+        .ty-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent2);
+            background: rgba(34, 211, 238, 0.1);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            border-radius: 99px;
+            padding: 4px 14px;
+            margin-bottom: 16px;
+        }
 
-    /* Divider */
-    .ty-divider {
-        height: 1px;
-        background: var(--border);
-        margin: 28px;
-    }
+        .ty-title {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--text), var(--muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
 
-    /* Actions */
-    .ty-actions {
-        display: flex;
-        gap: 12px;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
+        .ty-sub {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 36px;
+        }
 
-    .ty-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 12px 26px;
-        border-radius: 10px;
-        font-family: 'Inter', sans-serif;
-        font-size: 0.9rem;
-        font-weight: 600;
-        text-decoration: none;
-        cursor: pointer;
-        transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
-        border: none;
-    }
-    .ty-btn:hover { opacity: 0.88; transform: translateY(-2px); }
+        /* Steps */
+        .ty-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-bottom: 36px;
+            text-align: left;
+        }
 
-    .ty-btn-primary {
-        background: linear-gradient(135deg, var(--accent), var(--accent2));
-        color: #fff;
-        box-shadow: 0 6px 24px rgba(99, 102, 241, 0.38);
-    }
-    .ty-btn-ghost {
-        background: transparent;
-        color: var(--muted);
-        border: 1px solid var(--border);
-    }
-    .ty-btn-ghost:hover { color: var(--text); border-color: rgba(255, 255, 255, 0.2);}
+        .ty-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            position: relative;
+            margin-bottom: 20px;
+            animation: stepIn 0.4s ease both;
+        }
 
-    /* Countdown */
-    .ty-countdown {
-        margin-top: 20px;
-        font-size: 0.78rem;
-        color: var(--muted);
-    }
-    .ty-countdown span {
-        color: var(--accent2);
-        font-weight: 600;
-    }
+        .ty-step:last-child {
+            padding: 0;
+        }
 
-    /* Confetti canvas */
-    #confetti-canvas {
-        position: fixed;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 0;
-    }
+        .ty-step:nth-child(1) {
+            animation-delay: 0.5s;
+        }
 
-    @media (max-width: 500px) {
-        .ty-card { padding: 40px 24px 36px;}
-        .ty-title { font-size: 1.6rem; }
-    }
+        .ty-step:nth-child(2) {
+            animation-delay: 0.65s;
+        }
 
+        .ty-step:nth-child(3) {
+            animation-delay: 0.8s;
+        }
+
+        @keyframes stepIn {
+            from {
+                opacity: 0;
+                transform: translateX(-12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .ty-step::before {
+            content: '';
+            position: absolute;
+            left: 17px;
+            top: 32px;
+            width: 2px;
+            height: calc(100% - 20px);
+            background: var(--border);
+        }
+
+        .ty-step:last-child::before {
+            display: none;
+        }
+
+        .step-dot {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: var(--accent);
+        }
+
+        .step-content {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .step-text span {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        /* Divider */
+        .ty-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 28px;
+        }
+
+        /* Actions */
+        .ty-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .ty-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 26px;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+            border: none;
+        }
+
+        .ty-btn:hover {
+            opacity: 0.88;
+            transform: translateY(-2px);
+        }
+
+        .ty-btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            box-shadow: 0 6px 24px rgba(99, 102, 241, 0.38);
+        }
+
+        .ty-btn-ghost {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+        }
+
+        .ty-btn-ghost:hover {
+            color: var(--text);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Countdown */
+        .ty-countdown {
+            margin-top: 20px;
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        .ty-countdown span {
+            color: var(--accent2);
+            font-weight: 600;
+        }
+
+        /* Confetti canvas */
+        #confetti-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @media (max-width: 500px) {
+            .ty-card {
+                padding: 40px 24px 36px;
+            }
+
+            .ty-title {
+                font-size: 1.6rem;
+            }
+        }
     </style>
 
 </head>
@@ -345,8 +421,8 @@
                     <strong>Message received</strong>
                     <span>I personally read every message I receive.</span>
                 </div>
-            </div>   
-            
+            </div>
+
             <div class="ty-step">
                 <div class="step-dot">&#128172;</div>
                 <div class="step-text">
@@ -362,7 +438,8 @@
             <a href="/" class="ty-btn ty-btn-primary">
                 &#8592; Back to Portfolio
             </a>
-            <a href="https://www.Linkedin.com/in/shivamgoyal452/" target="_blank" rel="noopener noreferrer" class="ty-btn ty-btn-ghost">
+            <a href="https://www.Linkedin.com/in/shivamgoyal452/" target="_blank" rel="noopener noreferrer"
+                class="ty-btn ty-btn-ghost">
                 Connect on LinkedIn
             </a>
         </div>
@@ -373,10 +450,10 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
         // Confetti burst on load
-        (function() {
+        (function () {
             var end = Date.now() + 3000; //burst count
             var colors = ['#6366f1', '#22d3ee', '#8b5cf6', '#f472b6'];
-            
+
             (function burst() {
                 confetti({
                     particleCount: 4,
@@ -394,7 +471,7 @@
                     colors: colors,
                     zIndex: 0
                 });
-                
+
                 if (Date.now() < end) requestAnimationFrame(burst);
             })();
         })();

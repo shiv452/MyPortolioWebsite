@@ -6,7 +6,7 @@
 // ========= DOWNLOAD
 function downloadResume() {
     const selected = document.getElementById('resumeSelect').value;
-    if(!selected) {
+    if (!selected) {
         alert('Please select a resume first');
         return;
     }
@@ -17,7 +17,7 @@ function downloadResume() {
     link.download = filename;
     link.setAttribute('download', filename);
     document.body.appendChild(link);
-    link.click;
+    link.click();
     setTimeout(function () { document.body.removeChild(link); }, 100);
 }
 
@@ -37,17 +37,17 @@ function downloadResume() {
     syncDeleteBtn();
 
     var uploadInput = document.getElementById('resumeUploadInput');
-    if(uploadInput) {
+    if (uploadInput) {
         uploadInput.addEventListener('change', function (e) {
-            var file = e.target.file[0];
-            if(!file) return;
+            var file = e.target.files[0];
+            if (!file) return;
             if (file.size > 8 * 1024 * 1024) {
-                showToast('File too large (max 8 MB)','error'); this.value =''; return;
+                showToast('File too large (max 8 MB)', 'error'); this.value = ''; return;
             }
             var reader = new FileReader();
-            reader.onload = function(ev) {
+            reader.onload = function (ev) {
                 var name = file.name.replace(/\.pdf$/i, '');
-                if(sel) {
+                if (sel) {
                     var opt = document.createElement('option');
                     opt.value = ev.target.result;
                     opt.textContent = name + ' (uploaded)';
@@ -65,14 +65,14 @@ function downloadResume() {
 })();
 
 //=========== Delete Resume (session-only)=======
-function deleteUploadedResume() {
+function deleteUploadResume() {
     var sel = document.getElementById('resumeSelect');
     if (!sel) return;
     var opt = sel.options[sel.selectedIndex];
     if (!opt || !opt.value) return;
 
-    var name = opt.textContent.replace(/ \(uploaded)$/, '');
-    if(!confirm('Remove "' + name + '" from the list?')) return;
+    var name = opt.textContent.replace(/\s*\(uploaded\)$/, '');
+    if (!confirm('Remove "' + name + '" from the list?')) return;
 
     opt.remove();
     sel.value = '';

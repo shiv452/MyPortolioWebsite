@@ -1,331 +1,333 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Glimpse of Memories</title>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/MainPage/About/Hobbies/Pictures_Videos/memories.css">
-    </head>
 
-    <body>
-        
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Glimpse of Memories</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/MainPage/About/Hobbies/Pictures_Videos/memories.css">
+</head>
 
-        <canvas id="starCanvas"></canvas>
+<body>
 
-        <header class="hdr">
-            <a href="/index.html#about" class="back-btn">&#8592; Back</a>
-            <div class="hdr-mid">
-                <h1>&#128248; My Glimpse</h1>
-                <p>Hover to reveal &nbsp;&#183;&nabla; Click to pin &nbsp;&#182;&nabla; &#10005; to remove &nabla;&#183;&nabla; + to add</p>
-            </div>
+    <canvas id="starCanvas"></canvas>
 
-            <div class="hdr-right">
-                <div class="photo-count" id="photoCount">0 photos</div>
-                <button class="add-btn" title="Add Photos" onclick="document.getElementById('photoInput').click()">+</button>
-                <input type="file" id="photoInput" multiple accept="image/*" style="display: none;">
-            </div>
-        </header>
+    <header class="hdr">
+        <a href="/index.html#about" class="back-btn">&#8592; Back</a>
+        <div class="hdr-mid">
+            <h1>&#128248; My Glimpse</h1>
+            <p>Hover to reveal &nbsp;&#183;&nabla; Click to pin &nbsp;&#182;&nabla; &#10005; to remove
+                &nabla;&#183;&nabla; + to add</p>
+        </div>
 
-        <div class="mem-toast" id="memToast"></div>
+        <div class="hdr-right">
+            <div class="photo-count" id="photoCount">0 photos</div>
+            <button class="add-btn" title="Add Photos"
+                onclick="document.getElementById('photoInput').click()">+</button>
+            <input type="file" id="photoInput" multiple accept="image/*" style="display: none;">
+        </div>
+    </header>
 
-        <script>
-            (function() {
-                var SRCS = [
-                    '/Images/memories/1.jpg',
-                    '/Images/memories/2.jpg',
-                    '/Images/memories/4.jpg',
-                    '/Images/memories/5.jpg',
-                    '/Images/memories/6.jpg',
-                    '/Images/memories/7.jpg',
-                    '/Images/memories/8.jpg',
-                    '/Images/memories/9.jpg',
-                    '/Images/memories/11.jpg',
-                    '/Images/memories/12.jpg',
-                    '/Images/memories/13.jpg',
-                    '/Images/memories/14.jpg',
-                    '/Images/memories/15.jpg',
-                    '/Images/memories/16.jpg',
-                    '/Images/memories/17.jpg',
-                    '/Images/memories/18.jpg',
-                    '/Images/memories/19.jpg',
-                    '/Images/memories/20.jpg',
-                    '/Images/memories/21.jpg',
-                    '/Images/memories/img17.jpg',
-                    '/Images/memories/img24.webp',
-                    '/Images/memories/img25.webp',
-                    '/Images/memories/pic1.jpg',
-                    '/Images/memories/pic2.jpg',
-                    '/Images/memories/pic3.jpg',
-                    '/Images/memories/pic4.jpg',
-                    '/Images/memories/pic5.jpg',
-                    '/Images/memories/pic6.jpg',
-                    '/Images/memories/pic7.jpg',
-                    '/Images/memories/pic8.jpg',
-                    '/Images/memories/pic9.jpg',
-                    '/Images/memories/pic10.jpg',
-                    '/Images/memories/pic11.jpg'
-                ];
+    <div class="mem-toast" id="memToast"></div>
 
-                var EXPAND = 320; //expanded size of the photo when hovered/pinned
-                var HEADER_H = 64; // height of header to prevent photo from going under it when spawned.
-                var GLOWS = [
-                    {c:'#6366f1', s:'0 0 0 1px rgba(99,102,241,0.9), 0 0 8px 4px #6366f1, 0 0 22px 10px rgba(99,102,241,0.5)'},
-                    {c:'#22d3ee', s:'0 0 0 1px rgba(34,211,238,0.9), 0 0 8px 4px #22d3ee, 0 0 22px 10px rgba(34,211,238,0.5)'},
-                    {c:'#a78bfa', s:'0 0 0 1px rgba(167,139,250,0.9), 0 0 8px 4px #a78bfa, 0 0 22px 10px rgba(167,139,250,0.5)'},
-                    {c:'#f472b6', s:'0 0 0 1px rgba(244,114,182,0.9), 0 0 8px 4px #f472b6, 0 0 22px 10px rgba(244,114,182,0.5)'},
-                    {c:'#fbbf24', s:'0 0 0 1px rgba(251,191,36,0.9), 0 0 8px 4px #fbbf24, 0 0 22px 10px rgba(251,191,36,0.5)'},
-                    {c:'#34d399', s:'0 0 0 1px rgba(52,211,153,0.9), 0 0 8px 4px #34d399, 0 0 22px 10px rgba(52,211,153,0.5)'},
-                    {c:'#fb7185', s:'0 0 0 1px rgba(251,113,133,0.9), 0 0 8px 4px #fb7185, 0 0 22px 10px rgba(251,113,133,0.5)'},
-                    {c:'#06b6d4', s:'0 0 0 1px rgba(6,182,212,0.9), 0 0 8px 4px #06b6d4, 0 0 22px 10px rgba(6,182,212,0.5)'},
-                    {c:'#ec4899', s:'0 0 0 1px rgba(236,72,153,0.9), 0 0 8px 4px #ec4899, 0 0 22px 10px rgba(236,72,153,0.5)'},
-                    {c:'#8b5cf6', s:'0 0 0 1px rgba(139,92,246,0.9), 0 0 8px 4px #8b5cf6, 0 0 22px 10px rgba(139,92,246,0.5)'},
-                    {c:'#14b8a6', s:'0 0 0 1px rgba(20,184,166,0.9), 0 0 8px 4px #14b8a6, 0 0 22px 10px rgba(20,184,166,0.5)'},
-                    {c:'#f97316', s:'0 0 0 1px rgba(249,115,22,0.9), 0 0 8px 4px #f97316, 0 0 22px 10px rgba(249,115,22,0.5)'}
-                ];
+    <script>
+        (function () {
+            var SRCS = [
+                '/Images/memories/1.jpg',
+                '/Images/memories/2.jpg',
+                '/Images/memories/4.jpg',
+                '/Images/memories/5.jpg',
+                '/Images/memories/6.jpg',
+                '/Images/memories/7.jpg',
+                '/Images/memories/8.jpg',
+                '/Images/memories/9.jpg',
+                '/Images/memories/11.jpg',
+                '/Images/memories/12.jpg',
+                '/Images/memories/13.jpg',
+                '/Images/memories/14.jpg',
+                '/Images/memories/15.jpg',
+                '/Images/memories/16.jpg',
+                '/Images/memories/17.jpg',
+                '/Images/memories/18.jpg',
+                '/Images/memories/19.jpg',
+                '/Images/memories/20.jpg',
+                '/Images/memories/21.jpg',
+                '/Images/memories/img17.jpg',
+                '/Images/memories/img24.webp',
+                '/Images/memories/img25.webp',
+                '/Images/memories/pic1.jpg',
+                '/Images/memories/pic2.jpg',
+                '/Images/memories/pic3.jpg',
+                '/Images/memories/pic4.jpg',
+                '/Images/memories/pic5.jpg',
+                '/Images/memories/pic6.jpg',
+                '/Images/memories/pic7.jpg',
+                '/Images/memories/pic8.jpg',
+                '/Images/memories/pic9.jpg',
+                '/Images/memories/pic10.jpg',
+                '/Images/memories/pic11.jpg'
+            ];
 
-                var W = window.innerWidth, H = window.innerHeight;
-                var mx = -9999, my = -9999;
-                var bubbles = [];
+            var EXPAND = 320; //expanded size of the photo when hovered/pinned
+            var HEADER_H = 64; // height of header to prevent photo from going under it when spawned.
+            var GLOWS = [
+                { c: '#6366f1', s: '0 0 0 1px rgba(99,102,241,0.9), 0 0 8px 4px #6366f1, 0 0 22px 10px rgba(99,102,241,0.5)' },
+                { c: '#22d3ee', s: '0 0 0 1px rgba(34,211,238,0.9), 0 0 8px 4px #22d3ee, 0 0 22px 10px rgba(34,211,238,0.5)' },
+                { c: '#a78bfa', s: '0 0 0 1px rgba(167,139,250,0.9), 0 0 8px 4px #a78bfa, 0 0 22px 10px rgba(167,139,250,0.5)' },
+                { c: '#f472b6', s: '0 0 0 1px rgba(244,114,182,0.9), 0 0 8px 4px #f472b6, 0 0 22px 10px rgba(244,114,182,0.5)' },
+                { c: '#fbbf24', s: '0 0 0 1px rgba(251,191,36,0.9), 0 0 8px 4px #fbbf24, 0 0 22px 10px rgba(251,191,36,0.5)' },
+                { c: '#34d399', s: '0 0 0 1px rgba(52,211,153,0.9), 0 0 8px 4px #34d399, 0 0 22px 10px rgba(52,211,153,0.5)' },
+                { c: '#fb7185', s: '0 0 0 1px rgba(251,113,133,0.9), 0 0 8px 4px #fb7185, 0 0 22px 10px rgba(251,113,133,0.5)' },
+                { c: '#06b6d4', s: '0 0 0 1px rgba(6,182,212,0.9), 0 0 8px 4px #06b6d4, 0 0 22px 10px rgba(6,182,212,0.5)' },
+                { c: '#ec4899', s: '0 0 0 1px rgba(236,72,153,0.9), 0 0 8px 4px #ec4899, 0 0 22px 10px rgba(236,72,153,0.5)' },
+                { c: '#8b5cf6', s: '0 0 0 1px rgba(139,92,246,0.9), 0 0 8px 4px #8b5cf6, 0 0 22px 10px rgba(139,92,246,0.5)' },
+                { c: '#14b8a6', s: '0 0 0 1px rgba(20,184,166,0.9), 0 0 8px 4px #14b8a6, 0 0 22px 10px rgba(20,184,166,0.5)' },
+                { c: '#f97316', s: '0 0 0 1px rgba(249,115,22,0.9), 0 0 8px 4px #f97316, 0 0 22px 10px rgba(249,115,22,0.5)' }
+            ];
 
-                /* Removals are session only for now - Firebase will them permanent */
+            var W = window.innerWidth, H = window.innerHeight;
+            var mx = -9999, my = -9999;
+            var bubbles = [];
 
-                window.addEventListener('resize', function() { W = window.innerWidth; H = window.innerHeight; })
+            /* Removals are session only for now - Firebase will them permanent */
 
-                function rand(a, b) { return a + Math.random() * (b - a); }
+            window.addEventListener('resize', function () { W = window.innerWidth; H = window.innerHeight; })
 
-                /* ========= Star Canvas ========== */
-                (function() {
-                    var c = document.getElementById('starCanvas');
-                    var cta = c.getContext('2d');
-                    var stars = [], shoots = [], shootTimer = 0, nextShoot = 70;
-                    function resize() { c.width = window.innerWidth; c.height = window.innerHeight; }
-                    window.addEventListener('resize', resize); resize();
-                    for(var i = 0; i < 180; i++) 
-                    stars.push({ x: Math.random(), y: Math.random(), r:rand(0.25, 1.3), a: Math.random(), sp: rand(0.0003, 0.0006), d:Math.random()>0.5?1:-1 });
-                    function spawnShoot() {
-                        var ang = rand(30, 55) * Math.PI / 180, spd = rand(9, 16);
-                        shoots.push({ x: rand(-0.1, 1.1) * c.width, y: -15, vx: Math.cos(ang)*spd, vy: Math.sin(and)*spd, len:rand(80, 160), w: rand(1.2,2.2), life: 1, decay: rand(0.015, 0.028) });
+            function rand(a, b) { return a + Math.random() * (b - a); }
+
+            /* ========= Star Canvas ========== */
+            (function () {
+                var c = document.getElementById('starCanvas');
+                var cta = c.getContext('2d');
+                var stars = [], shoots = [], shootTimer = 0, nextShoot = 70;
+                function resize() { c.width = window.innerWidth; c.height = window.innerHeight; }
+                window.addEventListener('resize', resize); resize();
+                for (var i = 0; i < 180; i++)
+                    stars.push({ x: Math.random(), y: Math.random(), r: rand(0.25, 1.3), a: Math.random(), sp: rand(0.0003, 0.0006), d: Math.random() > 0.5 ? 1 : -1 });
+                function spawnShoot() {
+                    var ang = rand(30, 55) * Math.PI / 180, spd = rand(9, 16);
+                    shoots.push({ x: rand(-0.1, 1.1) * c.width, y: -15, vx: Math.cos(ang) * spd, vy: Math.sin(and) * spd, len: rand(80, 160), w: rand(1.2, 2.2), life: 1, decay: rand(0.015, 0.028) });
+                }
+                function draw() {
+                    ctx.clearReact(0, 0, c.width, c.height);
+                    var g = ctx.createRadialGradient(c.width * .5, c.height * .38, 0, c.width * .5, c.height * .28, c.width * .6);
+                    g.addColorStop(0, 'rgba(99,102,241,0.06)');
+                    g.addColorStop(1, 'transparent');
+                    ctx.fillStyle = g; ctx.fillRect(0, 0, c.width, c.height);
+                    stars.forEach(function (s) {
+                        s.a += a.sp * s.d; if (s.a > 1 || s.a < 0.08) s.d *= -1;
+                        ctx.beginPath(); ctx.arc(s.x * c.width, s.y * c.height, s.r, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(255,255,255,' + s.a + ')'; ctx.fill();
+                    });
+                    shootTimer++;
+                    if (shootTimer >= nextShoot) { spawnShoot(); shootTimer = 0; nextShoot = rand(55, 100); }
+                    for (var i = shoots.length - 1; i >= 0; i--) {
+                        var s = shoot[i];
+                        var tx = s.x - s.vx * (s.len / 10), ty = s.y - s / vy * (s.len / 10);
+                        var gr = ctx.createLinearGradient(tx, ty, s.x, s.y);
+                        gr.addColorStop(0, 'rgba(255,255,255,0)');
+                        gr.addColorStop(0.55, 'rgba(34,211,238,' + (s.life * 0.55) + ')');
+                        gr.addColorStop(1, 'rgba(255,255,255,' + s.life + ')');
+                        ctx.beginPath();
+                        ctx.lineWidth = s.w * s.life;
+                        ctx.lineCap = 'round';
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.arc(s.x, s.y, s.w * 2 * s.life, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(255,255,255,' + (s.life * 0.85) + ')';
+                        ctx.fill();
+                        s.x += c.vx;
+                        s.y += s.vy;
+                        s.life -= s.decay;
+
+                        if (s.life <= 0 || s.x > c.width + 80 || s.y > c.height + 80) shoots.splice(i, 1);
                     }
-                    function draw() {
-                        ctx.clearReact(0, 0, c.width, c.height);
-                        var g = ctx.createRadialGradient(c.width*.5,c.height*.38,0,c.width*.5,c.height*.28,c.width*.6);
-                        g.addColorStop(0,'rgba(99,102,241,0.06)');
-                        g.addColorStop(1,'transparent');
-                        ctx.fillStyle = g; ctx.fillRect(0,0,c.width,c.height);
-                        stars.forEach(function(s) {
-                            s.a += a.sp * s.d; if(s.a > 1 || s.a < 0.08) s.d *= -1;
-                            ctx.beginPath(); ctx.arc(s.x*c.width, s.y*c.height, s.r, 0, Math.PI*2);
-                            ctx.fillStyle = 'rgba(255,255,255,' + s.a + ')'; ctx.fill();
-                        });
-                        shootTimer++;
-                        if(shootTimer >= nextShoot) { spawnShoot(); shootTimer = 0; nextShoot = rand(55, 100); }
-                        for(var i = shoots.length-1; i >= 0; i--) {
-                            var s = shoot[i];
-                            var tx = s.x - s.vx*(s.len/10), ty = s.y - s/vy*(s.len/10);
-                            var gr = ctx.createLinearGradient(tx,ty,s.x,s.y);
-                            gr.addColorStop(0,'rgba(255,255,255,0)');
-                            gr.addColorStop(0.55,'rgba(34,211,238,'+(s.life*0.55)+')');
-                            gr.addColorStop(1,'rgba(255,255,255,'+s.life+')');
-                            ctx.beginPath();
-                            ctx.lineWidth = s.w * s.life;
-                            ctx.lineCap = 'round';
-                            ctx.stroke();
-                            ctx.beginPath();
-                            ctx.arc(s.x, s.y, s.w*2*s.life, 0, Math.PI*2);
-                            ctx.fillStyle = 'rgba(255,255,255,'+(s.life*0.85)+')';
-                            ctx.fill();
-                            s.x += c.vx;
-                            s.y += s.vy;
-                            s.life -= s.decay;
-                            
-                            if(s.life <= 0 || s.x > c.width+80 || s.y > c.height+80) shoots.splice(i, 1);
-                        }
-                        requestAnimationFrame(draw);
-                    }
-                    draw();
-                })();
-
-                /* ======== Create dot ====== */
-
-                function createDot(src, onScreen) {
-                    var dotSize = Math.floor(rand(7,14));
-                    var g = GLOWS[Math.floor(Math.random() * GLOWS.length)];
-
-                    var el = document.createElement('div');
-                    el.className = 'photo-dot';
-
-                    var img = document.createElement('img');
-                    img.src = src;
-                    img.alt = 'Memory';
-                    img.draggable = false;
-                    el.appendChild(img);
-
-                    var cap = document.createElement('div');
-                    cap.className = 'dot-cap';
-                    // cap.textContent = 'memory';
-                    el.appendChild(cap);
-
-                    var rmBtn = document.createElement('div');
-                    rmBtn.className = 'dot-remove';
-                    rmBtn.title = 'Remove photo';
-                    rmBtn.innerHTML = '&#10005';
-                    el.appendChild(rmBtn);
-
-                    document.body.appendChild(el);
-
-                    var b = {
-                        el: el, src: src,
-                        x: rand(20, W - 20),
-                        y: onScreen ? rand(HEADER_H + 10, H - 20) : rand(-H * 0.9, -10),
-                        vx: rand(-0.18, 0.18),
-                        vy: rand(0.32, 0.65),
-                        dotSize: dotSize, glow: g,
-                        expanded: false, pinned: false
-                    };
-
-                    var pulseDur = rand(1.6, 3.2).toFixed(2) + 's';
-                    el.style.cssText = 'width:' + dotSize + 'px;height:' + dotSize + 'px;' + '--dp:' + pulseDur + ';' + 'left:' + b.x + 'px;top:' + b.y + 'px;';
-
-                    rmBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        el.style.transition = 'opacity 0.3s, transform 0.3s';
-                        el.style.opacity = '0';
-                        el.style.transform = 'translate(-50%,-50%) scale(0.4)';
-                        setTimeout(function() {
-                            el.remove();
-                            var idx = bubbles.indexOf(b);
-                            if(idx !== -1) bubbles.splice(idx, 1);
-                            updateCount();
-                            showToast('Photo removed');
-                        }, 320);
-                    });
-
-                    el.addEventListener('click', function(e){
-                        s.stopPropagation();
-                        if(b.pinned) {
-                            b.pinned = false; el.classList.remove('pinned');
-                        } else {
-                            if(!b.expanded) expand(b);
-                            b.pinned = true; el.classList.add('pinned');
-                        }
-                    });
-
-                    bubbles.push(b);
-                    return b;
+                    requestAnimationFrame(draw);
                 }
-
-                function expand(b) {
-                    if(b.expanded) return;
-                    b.expanded = true;
-                    b.el.style.width = EXPAND + 'px';
-                    b.el.style.height = EXPAND + 'px';
-                    b.el.style.boxShadow = '0 0 0 2px rgba(34,211,238,0.4),0 12px 48px rgba(0,0,0,0.85),0 0 55px rgba(34,211,238,0.18)';
-                    b.el.classList.add('expanded');
-                }
-
-                function collapse(b) {
-                    if(!b.expanded) return;
-                    b.expanded = false; b.pinned = false;
-                    b.el.style.width = b.dotSize + 'px';
-                    b.el.style.height = b.dotSize + 'px';
-                    b.el.style.boxShadow = b.glow.s;
-                    b.el.classList.remove('expanded', 'pinned');
-                }
-
-                /* Populate all photo */
-                SRCS.forEach(function(src, i) { createDot(src, i % 2 === 0); });
-                updateCount();
-
-                /* ====== Physics Loop ====== */
-                function loop() {
-                    bubbles.forEach(function(b) {
-                        var dx = mx -b .x; dy = my - b.y;
-                        var dist = Math.sqrt(dx * dx + dy * dy);
-
-                        var exThresh = b.expanded ? EXPANDED * 0.68 : 46;
-                        var colThresh = exThresh + 38;
-
-                        if(!b.pinned) {
-                            if (dist < exThresh && !b.expanded) expand(b);
-                            if(dist > colThresh && b.expanded) collapse(b);
-                        }
-
-                        if(!b.expanded) {
-                            b.y += b.vy;
-                            b.x += b.vx;
-                            if(Math.random() < 0.004) {
-                                b.vx += rand(-0.07, 0.07);
-                                b.vx = Math.max(-0.38, Math.min(0.38, b.vx));
-                            }
-                            if(b.x < 10) { b.x = 10; b.vx = Math .abs(b.vx); }
-                            if(b.x > W - 10) { b.x = W -10; b.vx = -Math.abs(b.vx); }
-                            if(b.y > H + 30) {
-                                b.y = rand(-70, -8);
-                                b.x = rand(18, W - 18);
-                                b.vx = rand(-0.18, 0.18);
-                            }
-                        }
-
-                        b.el.style.left = b.x + 'px';
-                        b.el.style.top = b.y + 'px';
-                    });
-                    requestAnimationFrame(loop);
-                }
-                loop();
-
-                /* click outside = unpin all */
-                document.addEventListener('click', function(e) {
-                    if(!e.target.closest('.photo-dot')) {
-                        bubbles.forEach(function(b) {
-                            if(b.pinned) { 
-                                b.pinned = false; 
-                                b.el.classList.remove('pinned');
-                            }
-                        });
-                    }
-                });
-
-                /* Cursor / touch tracking */
-                document.addEventListener('mouse', function(e) { mx = e.clientX; my = e.clientY; });
-                document.addEventListener('mouseleave', function() { mx = -9999; my = -9999; });
-                document.addEventListener('touchmove', function(e) { mx = e.touches[0].clientX; my = e.touches[0].clientY; }, {passive:true});
-                document.addEventListener('touched', function(e) {
-                    var t = e.changedTouched[0]; mx = t.clientX; my = t.clientY;
-                    setTimeout(function() { mx = -9999; }, 1400);
-                });
-
-                /* Add Photo */
-                document.getElementById('photoInput').addEventListener('change', function(e) {
-                    var files = Array.from(e.target.files).filter(function(f) { return f.type.startsWith('image/'); });
-                    var loaded = 0;
-                    files.forEach(function(file) {
-                        var reader = new FileReader();
-                        reader.onload = function(ev) {
-                            createDot(ev.target.result, true);
-                            updateCount();
-                            loaded++;
-                            if(loaded === file.length) showToast(loaded + ' photo' + (loaded > 1 ? 's' : '') + ' added');
-                        };
-                        reader.readAsDataURL(file);
-                    });
-                    this.value = '';
-                });
-
-                function updateCount() {
-                    var el = document.getElementById('photoCount');
-                    if (el) el.textContent = bubbles.length + ' photo' + (bubbles.length !== 1 ? 's' : '');
-                }
-
-                function showToast(msg) {
-                    var t = document.getElementById('memToast');
-                    t.textContent = msg;
-                    t.classList.add('show');
-                    setTimeout(function() { t.classList.remove('show'); }, 3000);
-                }
+                draw();
             })();
-        </script>
 
+            /* ======== Create dot ====== */
 
-    </body>
+            function createDot(src, onScreen) {
+                var dotSize = Math.floor(rand(7, 14));
+                var g = GLOWS[Math.floor(Math.random() * GLOWS.length)];
+
+                var el = document.createElement('div');
+                el.className = 'photo-dot';
+
+                var img = document.createElement('img');
+                img.src = src;
+                img.alt = 'Memory';
+                img.draggable = false;
+                el.appendChild(img);
+
+                var cap = document.createElement('div');
+                cap.className = 'dot-cap';
+                // cap.textContent = 'memory';
+                el.appendChild(cap);
+
+                var rmBtn = document.createElement('div');
+                rmBtn.className = 'dot-remove';
+                rmBtn.title = 'Remove photo';
+                rmBtn.innerHTML = '&#10005';
+                el.appendChild(rmBtn);
+
+                document.body.appendChild(el);
+
+                var b = {
+                    el: el, src: src,
+                    x: rand(20, W - 20),
+                    y: onScreen ? rand(HEADER_H + 10, H - 20) : rand(-H * 0.9, -10),
+                    vx: rand(-0.18, 0.18),
+                    vy: rand(0.32, 0.65),
+                    dotSize: dotSize, glow: g,
+                    expanded: false, pinned: false
+                };
+
+                var pulseDur = rand(1.6, 3.2).toFixed(2) + 's';
+                el.style.cssText = 'width:' + dotSize + 'px;height:' + dotSize + 'px;' + '--dp:' + pulseDur + ';' + 'left:' + b.x + 'px;top:' + b.y + 'px;';
+
+                rmBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    el.style.transition = 'opacity 0.3s, transform 0.3s';
+                    el.style.opacity = '0';
+                    el.style.transform = 'translate(-50%,-50%) scale(0.4)';
+                    setTimeout(function () {
+                        el.remove();
+                        var idx = bubbles.indexOf(b);
+                        if (idx !== -1) bubbles.splice(idx, 1);
+                        updateCount();
+                        showToast('Photo removed');
+                    }, 320);
+                });
+
+                el.addEventListener('click', function (e) {
+                    s.stopPropagation();
+                    if (b.pinned) {
+                        b.pinned = false; el.classList.remove('pinned');
+                    } else {
+                        if (!b.expanded) expand(b);
+                        b.pinned = true; el.classList.add('pinned');
+                    }
+                });
+
+                bubbles.push(b);
+                return b;
+            }
+
+            function expand(b) {
+                if (b.expanded) return;
+                b.expanded = true;
+                b.el.style.width = EXPAND + 'px';
+                b.el.style.height = EXPAND + 'px';
+                b.el.style.boxShadow = '0 0 0 2px rgba(34,211,238,0.4),0 12px 48px rgba(0,0,0,0.85),0 0 55px rgba(34,211,238,0.18)';
+                b.el.classList.add('expanded');
+            }
+
+            function collapse(b) {
+                if (!b.expanded) return;
+                b.expanded = false; b.pinned = false;
+                b.el.style.width = b.dotSize + 'px';
+                b.el.style.height = b.dotSize + 'px';
+                b.el.style.boxShadow = b.glow.s;
+                b.el.classList.remove('expanded', 'pinned');
+            }
+
+            /* Populate all photo */
+            SRCS.forEach(function (src, i) { createDot(src, i % 2 === 0); });
+            updateCount();
+
+            /* ====== Physics Loop ====== */
+            function loop() {
+                bubbles.forEach(function (b) {
+                    var dx = mx - b.x; dy = my - b.y;
+                    var dist = Math.sqrt(dx * dx + dy * dy);
+
+                    var exThresh = b.expanded ? EXPANDED * 0.68 : 46;
+                    var colThresh = exThresh + 38;
+
+                    if (!b.pinned) {
+                        if (dist < exThresh && !b.expanded) expand(b);
+                        if (dist > colThresh && b.expanded) collapse(b);
+                    }
+
+                    if (!b.expanded) {
+                        b.y += b.vy;
+                        b.x += b.vx;
+                        if (Math.random() < 0.004) {
+                            b.vx += rand(-0.07, 0.07);
+                            b.vx = Math.max(-0.38, Math.min(0.38, b.vx));
+                        }
+                        if (b.x < 10) { b.x = 10; b.vx = Math.abs(b.vx); }
+                        if (b.x > W - 10) { b.x = W - 10; b.vx = -Math.abs(b.vx); }
+                        if (b.y > H + 30) {
+                            b.y = rand(-70, -8);
+                            b.x = rand(18, W - 18);
+                            b.vx = rand(-0.18, 0.18);
+                        }
+                    }
+
+                    b.el.style.left = b.x + 'px';
+                    b.el.style.top = b.y + 'px';
+                });
+                requestAnimationFrame(loop);
+            }
+            loop();
+
+            /* click outside = unpin all */
+            document.addEventListener('click', function (e) {
+                if (!e.target.closest('.photo-dot')) {
+                    bubbles.forEach(function (b) {
+                        if (b.pinned) {
+                            b.pinned = false;
+                            b.el.classList.remove('pinned');
+                        }
+                    });
+                }
+            });
+
+            /* Cursor / touch tracking */
+            document.addEventListener('mouse', function (e) { mx = e.clientX; my = e.clientY; });
+            document.addEventListener('mouseleave', function () { mx = -9999; my = -9999; });
+            document.addEventListener('touchmove', function (e) { mx = e.touches[0].clientX; my = e.touches[0].clientY; }, { passive: true });
+            document.addEventListener('touched', function (e) {
+                var t = e.changedTouched[0]; mx = t.clientX; my = t.clientY;
+                setTimeout(function () { mx = -9999; }, 1400);
+            });
+
+            /* Add Photo */
+            document.getElementById('photoInput').addEventListener('change', function (e) {
+                var files = Array.from(e.target.files).filter(function (f) { return f.type.startsWith('image/'); });
+                var loaded = 0;
+                files.forEach(function (file) {
+                    var reader = new FileReader();
+                    reader.onload = function (ev) {
+                        createDot(ev.target.result, true);
+                        updateCount();
+                        loaded++;
+                        if (loaded === file.length) showToast(loaded + ' photo' + (loaded > 1 ? 's' : '') + ' added');
+                    };
+                    reader.readAsDataURL(file);
+                });
+                this.value = '';
+            });
+
+            function updateCount() {
+                var el = document.getElementById('photoCount');
+                if (el) el.textContent = bubbles.length + ' photo' + (bubbles.length !== 1 ? 's' : '');
+            }
+
+            function showToast(msg) {
+                var t = document.getElementById('memToast');
+                t.textContent = msg;
+                t.classList.add('show');
+                setTimeout(function () { t.classList.remove('show'); }, 3000);
+            }
+        })();
+    </script>
+
+</body>
+
 </html>

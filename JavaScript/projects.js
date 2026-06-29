@@ -6,7 +6,7 @@
 // ------ Add project image preview
 var projImageData = '';
 function previewProjImage(input) {
-    if(input.files && input.files[0]) {
+    if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
             projImageData = e.target.result;
@@ -21,24 +21,24 @@ function previewProjImage(input) {
 // addProject() called form HTML onclick attribute
 function addProject() {
     var title = document.getElementById('proj-title').value.trim();
-    if(!title) { showToast('Project title is required.', 'error'); return; }
+    if (!title) { showToast('Project title is required.', 'error'); return; }
     var tagsRaw = document.getElementById('proj-tags').value.trim();
     var desc = document.getElementById('proj-desc').value.trim();
     var link = document.getElementById('proj-link').value.trim();
     var imgUrl = projImageData || '/Images/website_images/web-development.png';
     var tags = tagsRaw
-    ? tagsRaw.split(',').map(function (t) { return '<span class="tag">' + t.trim() + '</span>'; }).join('') : '';
-    var linkHtml = link? '<a href="' + link + '" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i></a>' : '';
+        ? tagsRaw.split(',').map(function (t) { return '<span class="tag">' + t.trim() + '</span>'; }).join('') : '';
+    var linkHtml = link ? '<a href="' + link + '" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i></a>' : '';
 
     var card = document.createElement('div');
     card.className = 'work';
-    card.innerHTML = 
+    card.innerHTML =
         '<img src="' + imgUrl + '" alt="' + title + '">' +
         '<div class="layer">' +
-            '<div class="layer-tags">' + tags + '</div>' +
-            '<h3>' + title + '</h3>' +
-            '<p>' + desc +'</p>' +
-            linkHtml +
+        '<div class="layer-tags">' + tags + '</div>' +
+        '<h3>' + title + '</h3>' +
+        '<p>' + desc + '</p>' +
+        linkHtml +
         '</div>';
 
     document.getElementById('workTrack').appendChild(card);
