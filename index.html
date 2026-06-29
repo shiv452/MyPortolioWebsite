@@ -259,24 +259,26 @@
                         </button>
                     </div>
 
-                    <div class="projects-grid" id="workTrace">
-                        <div class="work">
-                            <img src="/Images/website_images/software testing.png" alt="Test Automation Suit">
-                            <div class="layer">
-                                <div class="layer-tags">
-                                    <span class="tag">Selenium</span>
-                                    <span class="tag">Cucumber</span>
-                                    <span class="tag">Java</span>
+                    <div class="project-scroll-wrap">
+                        <button class="proj-arrow proj-prev" type="button" onclick="scrollProjects('prev')" aria-label="Scroll left">&#10094;</button>
+                        <div class="projects-grid" id="workTrace">
+                            <div class="work">
+                                <img src="/Images/website_images/software testing.png" alt="Test Automation Suit">
+                                <div class="layer">
+                                    <div class="layer-tags">
+                                        <span class="tag">Selenium</span>
+                                        <span class="tag">Cucumber</span>
+                                        <span class="tag">Java</span>
+                                    </div>
+                                    <h3>Test Automation Suit</h3>
+                                    <p>Automated end-to-end coverage for JalaAcademy web application. Structured using Page
+                                        Object. Model with BDD scenario; executable via CI pipeline.</p>
+                                    <a href="https://github.com/shiv452/JalaAcademyWebsite_Testing" target="_blank"
+                                        rel="noopener noreferrer">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
                                 </div>
-                                <h3>Test Automation Suit</h3>
-                                <p>Automated end-to-end coverage for JalaAcademy web application. Structured using Page
-                                    Object. Model with BDD scenario; executable via CI pipeline.</p>
-                                <a href="https://github.com/shiv452/JalaAcademyWebsite_Testing" target="_blank"
-                                    rel="noopener noreferrer">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
                             </div>
-                        </div>
 
                         <div class="work">
                             <img src="/Images/website_images/web-development.png" alt="Portfolio Website">
@@ -317,7 +319,8 @@
 
                         <a href="https://github.com/shiv452" class="btn btn-primary" target="_blank"
                             rel="noopener noreferrer">View All on GitHub</a>
-
+                        </div>
+                        <button class="proj-arrow proj-next" type="button" onclick="scrollProjects('next')" aria-label="Scroll right">&#10095;</button>
                     </div>
                 </div>
             </div>
@@ -340,14 +343,14 @@
                     </label>
                     <div class="modal-actions">
                         <button class="btn btn-primary" onclick="addProject()">Add Project</button>
-                        <button class="btn btn-outline" closeModal="('addProjectModal')">Cancel</button>
+                        <button class="btn btn-outline" onclick="closeModal('addProjectModal')">Cancel</button>
                     </div>
                 </div>
             </div>
 
             <!-- ========== ACHIEVEMENTS ============= -->
             <div id="carousel" class="achievements-sec">
-                <div class="conatiner">
+                <div class="container">
                     <div class="ach-hdr">
                         <h2 class="sub-title">Achievement</h2>
                         <div class="ach-tabs">
@@ -379,7 +382,6 @@
                                     <span>VIEW</span>
                                 </div>
                             </div>
-                        </div>
 
                         <div class="ach-award-card">
                             <div class="ach-award-badge kudos"><i class="fas fa-thumbs-up"></i></div>
@@ -459,37 +461,31 @@
                         <!-- ---- Certification Grid------ -->
                         <div class="ach-pane" id="achCerts">
                             <div class="certs-masonry" id="certsGrid">
-                                <div class="cert-thumb"
-                                    onclick="openLightbox('/Images/Certificates/ServiceAniversery.png')"><img
-                                        src="/Images/Certificates/ServiceAniversery.png" alt="Service Anniversary">
-                                </div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
-                                <div class="cert-thumb" onclick="openLightbox()"><img src="" alt=""></div>
+                            <div class="cert-thumb" onclick="openLightbox('/Images/Certificates/ServiceAniversery.png')">
+                                <img src="/Images/Certificates/ServiceAniversery.png" alt="Service Anniversary">
+                                <div class="cert-thumb-meta"><span>Service Anniversary</span></div>
                             </div>
+                            <div class="cert-thumb" onclick="openLightbox('/Images/Certificates/Certificate.png')">
+                                <img src="/Images/Certificates/Certificate.png" alt="Research Publication Certificate">
+                                <div class="cert-thumb-meta"><span>Research Publication</span></div>
+                            </div>
+                            <div class="cert-thumb" onclick="openLightbox('/Images/Certificates/PMCertificate.jpeg')">
+                                <img src="/Images/Certificates/PMCertificate.jpeg" alt="Product Management Certificate">
+                                <div class="cert-thumb-meta"><span>Product Management</span></div>
+                            </div>
+                            <div class="cert-thumb" onclick="openLightbox('/Images/Certificates/Bushra.jpg')">
+                                <img src="/Images/Certificates/Bushra.jpg" alt="Kudos Award Certificate">
+                                <div class="cert-thumb-meta"><span>Kudos Award</span></div>
+                            </div>
+                            <div class="cert-thumb" onclick="openLightbox('/Images/Certificates/Arpita.jpg')">
+                                <img src="/Images/Certificates/Arpita.jpg" alt="Excellence Award Certificate">
+                                <div class="cert-thumb-meta"><span>Excellence Award</span></div>
+                            </div>
+                            <div class="cert-thumb" onclick="openLightbox('/Images/Certificates/Rahul.jpg')">
+                                <img src="/Images/Certificates/Rahul.jpg" alt="Impact Award Certificate">
+                                <div class="cert-thumb-meta"><span>Impact Award</span></div>
+                            </div>
+                        </div>
                         </div>
                     </div>
 
@@ -523,7 +519,7 @@
                         <input type="text" id="cert-author" placeholder="Your Name (default: Shivam Goyal)">
                         <textarea id="cert-desc" placeholder="Description (optional)" rows="3"></textarea>
 
-                        <div class="file-upload-area" onclick="document.getElementById('cert-img').click"
+                        <div class="file-upload-area" onclick="document.getElementById('cert-img').click()"
                             id="uploadArea">
                             <i class="fas fa-cloud-upload-alt"></i>
                             <span id="cert-img-label">Click to upload certificate image</span>
@@ -588,118 +584,120 @@
                 <div id="contact">
                     <div class="container">
                         <h2 class="sub-title">Contact Me</h2>
-                        <div class="row"></div>
-                        <div class="contact-left">
-                            <p><i class="fas fa-paper-plane"></i> shivamgoyal452@gmail.com</p>
-                            <p><i class="fas fa-phone-square-alt"></i> +91 83441 91219</p>
+                        <div class="row contact-grid">
+                            <div class="contact-left">
+                                <div class="contact-card">
+                                    <p><i class="fas fa-paper-plane"></i> shivamgoyal452@gmail.com</p>
+                                    <p><i class="fas fa-phone-square-alt"></i> +91 83441 91219</p>
 
-                            <div class="social-icons">
-                                <a href="https://github.com/shiv452" target="_blank" rel="noopener noreferrer">
-                                    <i class="fab fa-github"></i>
-                                </a>
+                                    <div class="social-icons">
+                                        <a href="https://github.com/shiv452" target="_blank" rel="noopener noreferrer">
+                                            <i class="fab fa-github"></i>
+                                        </a>
 
-                                <a href="https://linkedin.con/in/shivamgoyal452/" target="_blank"
-                                    rel="noopener noreferrer">
-                                    <i class="fab fa-linkedin"></i>
-                                </a>
+                                        <a href="https://linkedin.com/in/shivamgoyal452/" target="_blank"
+                                            rel="noopener noreferrer">
+                                            <i class="fab fa-linkedin"></i>
+                                        </a>
 
-                                <a href="https://www.instagram.com/shiavmgoyal452/" target="_blank"
-                                    rel="noopener noreferrer">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
+                                        <a href="https://www.instagram.com/shiavmgoyal452/" target="_blank"
+                                            rel="noopener noreferrer">
+                                            <i class="fab fa-instagram"></i>
+                                        </a>
 
-                                <a href="https://twitter.com/Shivam45017152" target="_blank" rel="noopener noreferrer">
-                                    <i class="fab fa-twitter-suare"></i>
-                                </a>
+                                        <a href="https://twitter.com/Shivam45017152" target="_blank" rel="noopener noreferrer">
+                                            <i class="fab fa-twitter"></i>
+                                        </a>
 
-                                <a href="https://www.youtube.com/channel/UCljwr82bv6rJItmOI7TwD5g" target="_blank"
-                                    rel="noopener noreferrer">
-                                    <i class="fab fa-youtube"></i>
-                                </a>
-                            </div>
-
-                            <div class="resume-widget">
-                                <div class="rw-label"><i class="fas fa-file-alt"></i> Download Resume</div>
-                                <div class="rw-controls">
-                                    <div class="rw-select-wrap">
-                                        <i class="fas fa-file-pdf rw-pdf-icon"></i>
-                                        <select id="resumeSelect" class="rw-select">
-                                            <option value="">Choose a file&hellip;</option>
-                                            <option value="Documents/ShivamGoyal_APM.pdf">APM Resume</option>
-                                            <option value="Documents/ShivamGoyal_SDET.pdf">SDET QA Resume</option>
-                                            <option value="Documents/ShivamGoyal_BSA.pdf">BA Resume</option>
-                                            <option
-                                                value="Documents/Documents/Android Controlled Hovercraft for Space Mission.pdf">
-                                                B.E. - Final Year Project Paper</option>
-                                        </select>
+                                        <a href="https://www.youtube.com/channel/UCljwr82bv6rJItmOI7TwD5g" target="_blank"
+                                            rel="noopener noreferrer">
+                                            <i class="fab fa-youtube"></i>
+                                        </a>
                                     </div>
 
-                                    <button class="rw-dl-btn" onclick="downloadResume()">
-                                        <i class="fas fa-download"></i> Download
-                                    </button>
+                                    <div class="resume-widget">
+                                        <div class="rw-label"><i class="fas fa-file-alt"></i> Download Resume</div>
+                                        <div class="rw-controls">
+                                            <div class="rw-select-wrap">
+                                                <i class="fas fa-file-pdf rw-pdf-icon"></i>
+                                                <select id="resumeSelect" class="rw-select">
+                                                    <option value="">Choose a file&hellip;</option>
+                                                    <option value="Documents/ShivamGoyal_APM.pdf">APM Resume</option>
+                                                    <option value="Documents/ShivamGoyal_SDET.pdf">SDET QA Resume</option>
+                                                    <option value="Documents/ShivamGoyal_BSA.pdf">BA Resume</option>
+                                                    <option
+                                                        value="Documents/Documents/Android Controlled Hovercraft for Space Mission.pdf">
+                                                        B.E. - Final Year Project Paper</option>
+                                                </select>
+                                            </div>
 
-                                    <button class="rw-del-btn" id="resumeDeleteBtn" onclick="deleteUploadResume()"
-                                        title="Delete this uploaded resume" style="display: none;">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                                            <button class="rw-dl-btn" onclick="downloadResume()">
+                                                <i class="fas fa-download"></i> Download
+                                            </button>
 
-                                    <button class="rw-upload-btn"
-                                        onclick="document.getElementById('resumeUploadInput').click()">
-                                        <i class="fas fa-cloud-upload-alt"></i> Upload New Document
-                                    </button>
+                                            <button class="rw-del-btn" id="resumeDeleteBtn" onclick="deleteUploadResume()"
+                                                title="Delete this uploaded resume" style="display: none;">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
 
-                                    <input type="file" id="resumeUploadInput" accept=".pdf" style="display: none;">
+                                            <button class="rw-upload-btn"
+                                                onclick="document.getElementById('resumeUploadInput').click()">
+                                                <i class="fas fa-cloud-upload-alt"></i> Upload New Document
+                                            </button>
 
+                                            <input type="file" id="resumeUploadInput" accept=".pdf" style="display: none;">
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- =======Input Message Section ========= -->
-
                             <div class="contact-right">
-                                <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"
-                                    action="/thank-you.html" netlify id="contactForm">
-                                    <input type="hidden" name="form-name" value="contact" />
-                                    <p hidden>
-                                        <label>Don't fill this out: <input name="bot-field"></label>
-                                    </p>
+                                <div class="contact-card contact-form-card">
+                                    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"
+                                        action="/thank-you.html" netlify id="contactForm">
+                                        <input type="hidden" name="form-name" value="contact" />
+                                        <p hidden>
+                                            <label>Don't fill this out: <input name="bot-field"></label>
+                                        </p>
 
-                                    <div class="cf-field">
-                                        <input type="text" name="Name" id="cf-name" placeholder=" " required
-                                            autocomplete="name">
-                                        <label for="cf-name"><i class="fas fa-user"></i> Your Name</label>
+                                        <div class="cf-field">
+                                            <input type="text" name="Name" id="cf-name" placeholder=" " required
+                                                autocomplete="name">
+                                            <label for="cf-name"><i class="fas fa-user"></i> Your Name</label>
+                                        </div>
+
+                                        <div class="cf-field">
+                                            <input type="email" name="Email" id="cf-email" placeholder=" " required
+                                                autocomplete="email">
+                                            <label for="cf-email"><i class="fas fa-envelop"></i> Your Email</label>
+                                        </div>
+
+                                        <div class="cf-field cf-field--area">
+                                            <textarea name="Message" id="cf-msg" placeholder=" " rows="6" required
+                                                maxlength="2000"></textarea>
+                                            <label for="cf-msg"><i class="fas fa-comment-dots"></i> Your Message</label>
+                                            <span class="cf-char-count"><span id="cfCharUsed">0</span> / 2000</span>
+                                        </div>
+
+                                        <button type="submit" class="cf-submit-btn" id="cfSubmitBtn">
+                                            <span class="cf-btn-text">
+                                                <i class="fas fa-paper-plane"></i> Send Message
+                                            </span>
+
+                                            <span class="cf-btn-sending" aria-hidden="true">
+                                                <i class="fas fa-spinner fa-spin"></i> Sending...
+                                            </span>
+
+                                        </button>
+                                    </form>
+
+                                    <div class="cf-success" id="cfSuccess" aria-live="polite">
+                                        <div class="cf-success-icon"><i class="fas fa-check-circle"></i></div>
+                                        <h3>Message Sent!</h3>
+                                        <p>Thanks for reaching out, I'll get back to you soon.</p>
+                                        <button class="cf-success-reset" id="cfReset">Send Another</button>
                                     </div>
-
-                                    <div class="cf-field">
-                                        <input type="email" name="Email" id="cf-email" placeholder=" " required
-                                            autocomplete="email">
-                                        <label for="cf-email"><i class="fas fa-envelop"></i> Your Email</label>
-                                    </div>
-
-                                    <div class="cf-field cf-field--area">
-                                        <textarea name="Message" id="cf-msg" placeholder=" " rows="6" required
-                                            maxlength="2000"></textarea>
-                                        <label for="cf-msg"><i class="fas fa-comment-dots"></i> Your Message</label>
-                                        <span class="cf-char-count"><span id="cfCharUsed">0</span> / 2000</span>
-                                    </div>
-
-                                    <button type="submit" class="cf-submit-btn" id="cfSubmitBtn">
-                                        <span class="cf-btn-text">
-                                            <i class="fas fa-paper-plane"></i> Send Message
-                                        </span>
-
-                                        <span class="cf-btn-sending" aria-hidden="true">
-                                            <i class="fas fa-spinner fa-spin"></i> Sending...
-                                        </span>
-
-                                    </button>
-                                </form>
-
-                                <!-- Success Overlay shown on submit ====== -->
-                                <div class="cf-success" id="cfSuccess" aria-live="polite">
-                                    <div class="cf-success-icon"><i class="fas fa-check-circle"></i></div>
-                                    <h3>Message Sent!</h3>
-                                    <p>Thanks for reaching out, I'll get back to you soon.</p>
-                                    <button class="cf-success-reset" id="cfReset">Send Another</button>
                                 </div>
                             </div>
                         </div>
