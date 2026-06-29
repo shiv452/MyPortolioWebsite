@@ -11,7 +11,7 @@
   --accent: #6366f1;
   --accent2: #22d3ee;
   --text: #f1f5f9;
-  --muted: #f1f5f9;
+  --muted: #94a3b8;
   --border: rgba(225, 225, 225, 0.08);
   --radius: 12px;
 }
@@ -43,6 +43,18 @@ body {
   background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
+}
+
+/* Scroll progress bar */
+.scrollprogressbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  z-index: 9999;
+  transition: width 0.1s linear;
 }
 
 /* -------- Container ------ */
@@ -90,7 +102,7 @@ body {
   /* pop animation runs on click */
   animation: none;
   border-radius: 50%;
-  transform: filter 0.3s ease;
+  transition: filter 0.3s ease;
 }
 
 /* Idle : gentle float */
@@ -185,7 +197,7 @@ nav .fas {
 
 .home .home-content .text-1 {
   font-size: 1.1rem;
-  columns: var(--muted);
+  color: var(--muted);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-bottom: 8px;
@@ -326,7 +338,7 @@ nav .fas {
   padding: 80px 0;
   background: var(--bg2);
   border-top: 1px solid var(--border);
-  min-width: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -549,7 +561,7 @@ nav .fas {
 /* ----------- Professional award cards ------ */
 .ach-award-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 16px;
 }
 
@@ -585,7 +597,7 @@ nav .fas {
   transform: translateY(-3px);
 }
 
-.ach-award-card::before {
+.ach-award-card:hover::before {
   opacity: 1;
 }
 
@@ -710,7 +722,7 @@ nav .fas {
     transform: translateX(-50%);
   }
 }
-@keyframes traceScrollRight {
+@keyframes trackScrollRight {
   0% {
     transform: translateX(-50%);
   }
@@ -814,6 +826,16 @@ nav .fas {
   display: block;
   object-fit: cover;
 }
+.cert-thumb-meta {
+  padding: 8px 10px;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+}
+.cert-thumb-meta span {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 500;
+}
 
 /* ----Lightbox---- */
 .cert-lightbox.active {
@@ -891,6 +913,22 @@ nav .fas {
   color: var(--accent);
   font-size: 1.1rem;
   width: 20px;
+}
+
+.contact-left p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.contact-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 22px;
 }
 
 /* Social icons */
@@ -1063,7 +1101,7 @@ nav .fas {
   pointer-events: none;
   z-index: 0;
   background: radial-gradient(
-    600px circle at var(--lcx, -400px) var(--lc, -400px),
+    600px circle at var(--lcx, -400px) var(--lcy, -400px),
     var(--lc, transparent),
     transparent 60%
   );
@@ -1540,7 +1578,7 @@ nav .fas.fa-bars {
 .about-panels {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
-  gap: 240px;
+  gap: 24px;
 }
 
 .about-panel {
@@ -1573,7 +1611,7 @@ nav .fas.fa-bars {
   transition: border-color 0.3s;
 }
 .about-panel.pinned .panel-header,
-.about-panel.peeked .panel-header {
+.about-panel.peeking .panel-header {
   border-bottom-color: var(--border);
 }
 
@@ -1659,13 +1697,15 @@ nav .fas.fa-bars {
   text-decoration: underline;
 }
 
-/* Hobby Card */
-.hobby-card {
+/* Hobby List container */
+.hobby-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-top: 4px;
 }
 
+/* Hobby Card */
 .hobby-card {
   display: flex;
   align-items: center;
@@ -1675,6 +1715,8 @@ nav .fas.fa-bars {
   border: 1px solid var(--border);
   border-radius: 10px;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
   transition:
     border-color 0.25s,
     background 0.25s,
@@ -1924,10 +1966,10 @@ nav .fas.fa-bars {
 
 /* ------------ ADD CERTIFICATE FLOATING BUTTON --------- */
 .add-cert-btn {
-  position: absolute;
+  position: fixed;
   bottom: 110px;
   right: 32px;
-  z-index: 200;
+  z-index: 9999;
   width: 52px;
   height: 52px;
   border-radius: 50%;
@@ -1939,7 +1981,7 @@ nav .fas.fa-bars {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 40px 20px rgba(99, 102, 241, 0.55);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.55);
   transition:
     transform 0.3s,
     background 0.3s;
@@ -1954,11 +1996,11 @@ nav .fas.fa-bars {
 }
 
 /* Add Award button - stacked above the cert button */
-.ach-award-btn {
-  position: absolute;
+.add-award-btn {
+  position: fixed;
   bottom: 172px;
   right: 32px;
-  z-index: 200;
+  z-index: 9999;
   width: 52px;
   height: 52px;
   border-radius: 50%;
@@ -2010,6 +2052,36 @@ nav .fas.fa-bars {
   grid-template-columns: repeat(6, 1fr);
   gap: 8px;
   margin-bottom: 16px;
+}
+
+.award-icon-picker div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(99, 102, 241, 0.12);
+  border: 2px solid transparent;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: var(--accent);
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    transform 0.15s;
+}
+
+.award-icon-picker div:hover {
+  background: rgba(99, 102, 241, 0.22);
+  transform: scale(1.1);
+}
+
+.award-icon-picker div.selected {
+  border-color: var(--accent);
+  background: rgba(99, 102, 241, 0.25);
+  transform: scale(1.08);
+  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.4);
 }
 
 .award-icon-opt {
@@ -2467,10 +2539,6 @@ footer {
   background: rgba(99, 102, 241, 0.1);
 }
 
-.footer-social {
-  display: flex;
-  gap: 10px;
-}
 .footer-social {
   display: flex;
   gap: 10px;

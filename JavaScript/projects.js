@@ -41,13 +41,13 @@ function addProject() {
         linkHtml +
         '</div>';
 
-    document.getElementById('workTrack').appendChild(card);
+    document.getElementById('workTrace').appendChild(card);
 
     ['proj-title', 'proj-tags', 'proj-desc', 'proj-link'].forEach(function (id) {
         document.getElementById(id).value = '';
     });
     document.getElementById('proj-img-file').value = '';
-    document.getElementById('proj-img-label').textContent = 'Click to upload projects image (optional)';
+    document.getElementById('proj-img-label').textContent = 'Click to upload project image (optional)';
     document.getElementById('projImgUploadArea').style.borderColor = '';
     projImageData = '';
     closeModal('addProjectModal');
@@ -68,7 +68,7 @@ function addProject() {
         wrap.appendChild(grid);
     }
 
-    // Duplicate original cards for seamless infinite loop
+    // Duplicate original WORK CARDS ONLY for seamless infinite loop (exclude non-.work children like the GitHub btn)
     var origCards = Array.from(grid.querySelectorAll('.work'));
     origCards.forEach(function (card) {
         var clone = card.cloneNode(true);

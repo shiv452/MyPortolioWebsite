@@ -5,7 +5,7 @@
 // ==============================================
 
 // Tab switching 
-//switchAchTab() us called from HTML onclick attribute
+//switchAchTab() is called from HTML onclick attribute
 
 function switchAchTab(tab) {
     document.querySelectorAll('.ach-tab').forEach(function (btn) {
@@ -29,7 +29,14 @@ function openLightbox(src) {
 }
 
 function closeLightbox(e) {
-    if (e && e.target && e.target.closest && e.target.closest('.cert-lb-close')) return;
+    // Only close when clicking the overlay background OR the close button
+    // Don't close when clicking inside the image itself
+    if (e && e.target && e.target.closest) {
+        var inner = e.target.closest('.cert-lb-inner');
+        var closeBtn = e.target.closest('.cert-lb-close');
+        // Clicked inside the inner box but NOT on the close button → do nothing
+        if (inner && !closeBtn) return;
+    }
     var lb = document.getElementById('certLightbox');
     if (lb) lb.classList.remove('active');
     document.body.style.overflow = '';
@@ -292,55 +299,58 @@ function addDelBtn(parent, removeFn, cls) {
             grid.appendChild(strip);
         }
 
-        grid.dataset.carousel = String(cols);
+        // FIX: store cols under consistent key; was "carousel", read as "carouselCols"
+        grid.dataset.carouselCols = String(cols);
         _active = true;
-        _busy = true;
-
-        //----------------------- Disable
-        function disable() {
-            _busy = true;
-            var grid = document.querySelector('#achProf .ach-award-grid');
-            if (!grid) { _busy = false; return; }
-
-            // Rescue originals from inside tracks before clearing
-            var cards = Array.from(grid.querySelectorAll('.ach-award-card:not(.ach-clone)'));
-
-            grid.classList.remove('carousel-mode');
-            grid.innerHTML = '';
-
-            cards.forEach(function (c) { grid.appendChild(c); });
-
-            _active = false;
-            _busy = false;
-        }
-
-        //---- CHECK (called externally via window._checkAwardCarousel)
-        function check() {
-            if (_busy) return;
-            var cols = colCount();
-            if (shouldEnable()) {
-                // Rebuilds if not active, or if columns changed (eg.resize)
-                var grid = document.querySelector('#achProf .ach-award-grid');
-                var prevCols = grid ? parseInt(grid.dataset.carouselCols || '0', 10) : 0;
-                if (!_active || prevCols !== cols) {
-                    enable();
-                }
-            } else {
-                if (_active) disable();
-            }
-        }
-
-        //Expose so removeAward() and addAward() can trigger a recheck
-        window._checkAwardCarousel = check;
-
-        // Recheck on window resize (column count may change)
-        var _resizeTimer;
-        window.addEventListener('resize', function () {
-            clearTimeout(_resizeTimer);
-            _resizeTimer = setTimeout(check, 280);
-        });
-
-        //Initial check after DOM is settled
-        setTimeout(check, 0);
+        _busy = false; // FIX: was incorrectly set to true, permanently blocking all future checks
     }
+
+    //----------------------- DISABLE
+    function disable() {
+        _busy = true;
+        var grid = document.querySelector('#achProf .ach-award-grid');
+        if (!grid) { _busy = false; return; }
+
+        // Rescue originals from inside tracks before clearing
+        var cards = Array.from(grid.querySelectorAll('.ach-award-card:not(.ach-clone)'));
+
+        grid.classList.remove('carousel-mode');
+        grid.innerHTML = '';
+
+        cards.forEach(function (c) { grid.appendChild(c); });
+
+        _active = false;
+        _busy = false;
+    }
+
+    //---- CHECK (called externally via window._checkAwardCarousel)
+    // FIX: was nested inside enable(), so it was never defined until enable() ran,
+    // and window._checkAwardCarousel was never registered on page load.
+    function check() {
+        if (_busy) return;
+        var cols = colCount();
+        if (shouldEnable()) {
+            // Rebuilds if not active, or if columns changed (e.g. resize)
+            var grid = document.querySelector('#achProf .ach-award-grid');
+            var prevCols = grid ? parseInt(grid.dataset.carouselCols || '0', 10) : 0;
+            if (!_active || prevCols !== cols) {
+                enable();
+            }
+        } else {
+            if (_active) disable();
+        }
+    }
+
+    //Expose so removeAward() and addAward() can trigger a recheck
+    window._checkAwardCarousel = check;
+
+    // Recheck on window resize (column count may change)
+    var _resizeTimer;
+    window.addEventListener('resize', function () {
+        clearTimeout(_resizeTimer);
+        _resizeTimer = setTimeout(check, 280);
+    });
+
+    //Initial check after DOM is settled
+    setTimeout(check, 0);
 })();

@@ -34,7 +34,10 @@ body {
   left: 0;
   right: 0;
   height: 60px;
-  display: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
   z-index: 100;
   background: linear-gradient(to bottom, rgba(4, 5, 13, 0.96) 65%, transparent);
 }
@@ -171,7 +174,7 @@ body {
 .photo-dot::before {
   content: "";
   position: absolute;
-  inset: 15% 15% 15% 15% 15%;
+  inset: 15% 15% 15% 15%;
   border-radius: 50%;
   background: rgba(225, 225, 225, 0.82);
   filter: blur(1px);
@@ -237,7 +240,7 @@ body {
   transform: scale(1);
   pointer-events: auto;
 }
-.dot-remove::hover {
+.dot-remove:hover {
   background: rgba(239, 68, 68, 1);
   transform: scale(1.5) !important;
 }
@@ -286,5 +289,5 @@ body {
 }
 .mem-toast.show {
   opacity: 1;
-  transform: translateX(-50) translateY(0);
+  transform: translateX(-50%) translateY(0);
 }

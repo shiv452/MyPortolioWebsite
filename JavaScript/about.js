@@ -15,6 +15,8 @@
 
     var wrap = document.createElement('div');
     wrap.className = 'about-pic-wrap';
+    // Insert wrap at the same position col1img currently occupies, THEN move img inside
+    col1img.parentNode.insertBefore(wrap, col1img);
     wrap.appendChild(col1img);
 
     var lb1 = document.createElement('label');
@@ -32,7 +34,7 @@
         reader.onload = function (ev) {
             var pic = document.getElementById('aboutProfilePic');
             if (pic) pic.src = ev.target.result;
-            showToast('Profile photo update!', 'success');
+            showToast('Profile photo updated!', 'success');
         };
         reader.readAsDataURL(fileInp.files[0]);
     };

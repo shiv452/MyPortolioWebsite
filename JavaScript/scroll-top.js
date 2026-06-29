@@ -10,7 +10,7 @@ window.onscroll = function () {
     }
 
     // Scroll progress bar
-    var progress = document.getElementById('scrollProgress');
+    var progress = document.querySelector('.scrollprogressbar');
     if (progress) {
         var scrolled = document.documentElement.scrollTop || document.body.scrollTop;
         var total = document.documentElement.scrollHeight - document.documentElement.clientHeight;

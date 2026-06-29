@@ -5,7 +5,7 @@
 // ==============================================
 
 /* ============== Typed Hero text =======*/
-// Requires Typed.js (loaded via CDN before this field)
+// Requires Typed.js (loaded via CDN before this file)
 new Typed('.typed-role', {
     strings: [
         'Software Engineer in Test',
@@ -51,7 +51,7 @@ function showToast(msg, type) {
 }
 
 /* ========= Cursor color-grading spotlight ====== */
-// Ads a soft radial glow that follows tge mouse inside each section
+// Adds a soft radial glow that follows the mouse inside each section
 (function () {
     var sections = [
         { id: 'header', color: 'rgba(99,102,241,0.12)' },

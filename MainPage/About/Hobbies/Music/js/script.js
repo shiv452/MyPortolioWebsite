@@ -100,7 +100,7 @@ const setAnimationStyle = (val) => {
 //#endregion Custom dropdown- SETUP
 
 let musicIndex = Math.floor((Math.random() * allMusic.length) + 1);
-isMusicPaused = true;
+let isMusicPaused = true;
 
 window.addEventListener("load", () => {
   loadMusic(musicIndex);
@@ -123,8 +123,8 @@ volumeSlider.addEventListener("input", function (e) {
 
 //volume up/down with arrow keys function
 document.onkeydown = function (event) {
-  switch (parseInt(event.key)) {
-    case 38:
+  switch (event.key) {
+    case 'ArrowUp':
       event.preventDefault();
       audio_vol = mainAudio.volume;
       if (audio_vol != 1) {
@@ -136,7 +136,7 @@ document.onkeydown = function (event) {
         }
       }
       break;
-    case 40:
+    case 'ArrowDown':
       event.preventDefault();
       audio_vol = mainAudio.volume;
       if (audio_vol != 0) {
@@ -549,7 +549,7 @@ function drawVisualizer(choice, bufferLength, x, barWidth, barHeight, dataArray)
       }
 
       //IMPORTANT - To restore the canvas after rotation
-      ctx.globalCompositeOperation = '';
+      ctx.globalCompositeOperation = 'source-over';
       ctx.restore();
       break;
 
@@ -909,6 +909,3 @@ function clicked(element) {
   playMusic();
   playingSong();
 }
-
-
-
