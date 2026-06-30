@@ -1624,7 +1624,7 @@ nav .fas.fa-bars {
 .about-panels {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
-  gap: 240px;
+  gap: 24px;
 }
 
 .about-panel {
