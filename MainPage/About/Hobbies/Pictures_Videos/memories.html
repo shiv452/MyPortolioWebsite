@@ -17,8 +17,7 @@
         <a href="/index.html#about" class="back-btn">&#8592; Back</a>
         <div class="hdr-mid">
             <h1>&#128248; My Glimpse</h1>
-            <p>Hover to reveal &nbsp;&#183;&nabla; Click to pin &nbsp;&#182;&nabla; &#10005; to remove
-                &nabla;&#183;&nabla; + to add</p>
+            <p>Hover to reveal <span class="dot-sep">&middot;</span> Click to pin <span class="dot-sep">&middot;</span> &#10005; to remove <span class="dot-sep">&middot;</span> + to add</p>
         </div>
 
         <div class="hdr-right">
@@ -30,6 +29,27 @@
     </header>
 
     <div class="mem-toast" id="memToast"></div>
+
+    <div class="speed-dock" id="speedDock">
+        <div class="speed-dock-handle">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z" />
+            </svg>
+        </div>
+        <div class="speed-dock-panel">
+            <div class="speed-dock-top">
+                <span class="speed-dock-label">Float Speed</span>
+                <span class="speed-dock-value" id="speedValue">1.0&times;</span>
+            </div>
+            <input type="range" id="speedSlider" class="speed-slider" min="0" max="200" value="100" step="5">
+            <div class="speed-dock-scale">
+                <span>0&times;</span>
+                <span>1&times;</span>
+                <span>2&times;</span>
+            </div>
+        </div>
+    </div>
 
     <script>
         (function () {
@@ -69,26 +89,29 @@
                 '/Images/memories/pic11.jpg'
             ];
 
-            var EXPAND = 320; //expanded size of the photo when hovered/pinned
+            var EXPAND_W = 280; // expanded card width
+            var EXPAND_H = 360; // expanded card height (portrait, avoids cropping faces)
+            var EXPAND = EXPAND_W; // kept for proximity-threshold math below
             var HEADER_H = 64; // height of header to prevent photo from going under it when spawned.
             var GLOWS = [
-                { c: '#6366f1', s: '0 0 0 1px rgba(99,102,241,0.9), 0 0 8px 4px #6366f1, 0 0 22px 10px rgba(99,102,241,0.5)' },
-                { c: '#22d3ee', s: '0 0 0 1px rgba(34,211,238,0.9), 0 0 8px 4px #22d3ee, 0 0 22px 10px rgba(34,211,238,0.5)' },
-                { c: '#a78bfa', s: '0 0 0 1px rgba(167,139,250,0.9), 0 0 8px 4px #a78bfa, 0 0 22px 10px rgba(167,139,250,0.5)' },
-                { c: '#f472b6', s: '0 0 0 1px rgba(244,114,182,0.9), 0 0 8px 4px #f472b6, 0 0 22px 10px rgba(244,114,182,0.5)' },
-                { c: '#fbbf24', s: '0 0 0 1px rgba(251,191,36,0.9), 0 0 8px 4px #fbbf24, 0 0 22px 10px rgba(251,191,36,0.5)' },
-                { c: '#34d399', s: '0 0 0 1px rgba(52,211,153,0.9), 0 0 8px 4px #34d399, 0 0 22px 10px rgba(52,211,153,0.5)' },
-                { c: '#fb7185', s: '0 0 0 1px rgba(251,113,133,0.9), 0 0 8px 4px #fb7185, 0 0 22px 10px rgba(251,113,133,0.5)' },
-                { c: '#06b6d4', s: '0 0 0 1px rgba(6,182,212,0.9), 0 0 8px 4px #06b6d4, 0 0 22px 10px rgba(6,182,212,0.5)' },
-                { c: '#ec4899', s: '0 0 0 1px rgba(236,72,153,0.9), 0 0 8px 4px #ec4899, 0 0 22px 10px rgba(236,72,153,0.5)' },
-                { c: '#8b5cf6', s: '0 0 0 1px rgba(139,92,246,0.9), 0 0 8px 4px #8b5cf6, 0 0 22px 10px rgba(139,92,246,0.5)' },
-                { c: '#14b8a6', s: '0 0 0 1px rgba(20,184,166,0.9), 0 0 8px 4px #14b8a6, 0 0 22px 10px rgba(20,184,166,0.5)' },
-                { c: '#f97316', s: '0 0 0 1px rgba(249,115,22,0.9), 0 0 8px 4px #f97316, 0 0 22px 10px rgba(249,115,22,0.5)' }
+                { c: '#6366f1', s: '0 0 4px 1px #fff, 0 0 14px 5px #6366f1, 0 0 28px 12px rgba(99,102,241,0.7), 0 0 48px 20px rgba(99,102,241,0.4), 0 0 76px 30px rgba(99,102,241,0.18)' },
+                { c: '#22d3ee', s: '0 0 4px 1px #fff, 0 0 14px 5px #22d3ee, 0 0 28px 12px rgba(34,211,238,0.7), 0 0 48px 20px rgba(34,211,238,0.4), 0 0 76px 30px rgba(34,211,238,0.18)' },
+                { c: '#a78bfa', s: '0 0 4px 1px #fff, 0 0 14px 5px #a78bfa, 0 0 28px 12px rgba(167,139,250,0.7), 0 0 48px 20px rgba(167,139,250,0.4), 0 0 76px 30px rgba(167,139,250,0.18)' },
+                { c: '#f472b6', s: '0 0 4px 1px #fff, 0 0 14px 5px #f472b6, 0 0 28px 12px rgba(244,114,182,0.7), 0 0 48px 20px rgba(244,114,182,0.4), 0 0 76px 30px rgba(244,114,182,0.18)' },
+                { c: '#fbbf24', s: '0 0 4px 1px #fff, 0 0 14px 5px #fbbf24, 0 0 28px 12px rgba(251,191,36,0.7), 0 0 48px 20px rgba(251,191,36,0.4), 0 0 76px 30px rgba(251,191,36,0.18)' },
+                { c: '#34d399', s: '0 0 4px 1px #fff, 0 0 14px 5px #34d399, 0 0 28px 12px rgba(52,211,153,0.7), 0 0 48px 20px rgba(52,211,153,0.4), 0 0 76px 30px rgba(52,211,153,0.18)' },
+                { c: '#fb7185', s: '0 0 4px 1px #fff, 0 0 14px 5px #fb7185, 0 0 28px 12px rgba(251,113,133,0.7), 0 0 48px 20px rgba(251,113,133,0.4), 0 0 76px 30px rgba(251,113,133,0.18)' },
+                { c: '#06b6d4', s: '0 0 4px 1px #fff, 0 0 14px 5px #06b6d4, 0 0 28px 12px rgba(6,182,212,0.7), 0 0 48px 20px rgba(6,182,212,0.4), 0 0 76px 30px rgba(6,182,212,0.18)' },
+                { c: '#ec4899', s: '0 0 4px 1px #fff, 0 0 14px 5px #ec4899, 0 0 28px 12px rgba(236,72,153,0.7), 0 0 48px 20px rgba(236,72,153,0.4), 0 0 76px 30px rgba(236,72,153,0.18)' },
+                { c: '#8b5cf6', s: '0 0 4px 1px #fff, 0 0 14px 5px #8b5cf6, 0 0 28px 12px rgba(139,92,246,0.7), 0 0 48px 20px rgba(139,92,246,0.4), 0 0 76px 30px rgba(139,92,246,0.18)' },
+                { c: '#14b8a6', s: '0 0 4px 1px #fff, 0 0 14px 5px #14b8a6, 0 0 28px 12px rgba(20,184,166,0.7), 0 0 48px 20px rgba(20,184,166,0.4), 0 0 76px 30px rgba(20,184,166,0.18)' },
+                { c: '#f97316', s: '0 0 4px 1px #fff, 0 0 14px 5px #f97316, 0 0 28px 12px rgba(249,115,22,0.7), 0 0 48px 20px rgba(249,115,22,0.4), 0 0 76px 30px rgba(249,115,22,0.18)' }
             ];
 
             var W = window.innerWidth, H = window.innerHeight;
             var mx = -9999, my = -9999;
             var bubbles = [];
+            var speedMul = 1; // global float-speed multiplier, controlled by the speed dock slider
 
             /* Removals are session only for now - Firebase will make them permanent */
 
@@ -103,22 +126,93 @@
                 var stars = [], shoots = [], shootTimer = 0, nextShoot = 70;
                 function resize() { c.width = window.innerWidth; c.height = window.innerHeight; }
                 window.addEventListener('resize', resize); resize();
-                for (var i = 0; i < 180; i++)
-                    stars.push({ x: Math.random(), y: Math.random(), r: rand(0.25, 1.3), a: Math.random(), sp: rand(0.0003, 0.0006), d: Math.random() > 0.5 ? 1 : -1 });
+
+                /* Layered starfield for parallax depth: far (tiny, dim, slow twinkle),
+                   mid (small, medium twinkle), near (bigger, brighter, occasional color tint) */
+                var starLayers = [
+                    { count: 140, rMin: 0.2, rMax: 0.7, aMin: 0.15, aMax: 0.55, spMin: 0.0002, spMax: 0.0004, tint: false },
+                    { count: 90, rMin: 0.5, rMax: 1.1, aMin: 0.3, aMax: 0.8, spMin: 0.0003, spMax: 0.0006, tint: false },
+                    { count: 36, rMin: 0.9, rMax: 1.9, aMin: 0.45, aMax: 1.0, spMin: 0.0004, spMax: 0.0009, tint: true }
+                ];
+                var starTints = ['255,255,255', '199,210,254', '165,243,252', '253,224,196'];
+                starLayers.forEach(function (layer) {
+                    for (var i = 0; i < layer.count; i++) {
+                        stars.push({
+                            x: Math.random(), y: Math.random(),
+                            r: rand(layer.rMin, layer.rMax),
+                            a: Math.random(),
+                            sp: rand(layer.spMin, layer.spMax),
+                            d: Math.random() > 0.5 ? 1 : -1,
+                            tint: layer.tint && Math.random() < 0.35 ? starTints[Math.floor(Math.random() * starTints.length)] : '255,255,255'
+                        });
+                    }
+                });
+
+                /* Slow drifting cosmic dust specks - tiny, very faint, adds atmospheric depth */
+                var dust = [];
+                for (var i = 0; i < 60; i++) {
+                    dust.push({
+                        x: Math.random(), y: Math.random(),
+                        r: rand(0.4, 1.1), a: rand(0.03, 0.10),
+                        dx: rand(-0.00006, 0.00006), dy: rand(0.00002, 0.00009)
+                    });
+                }
+
+                /* Slow-drifting nebula clouds for a "living" galaxy backdrop */
+                var nebulae = [
+                    { x: 0.22, y: 0.30, r: 0.42, c: '99,102,241', a: 0.12, dx: 0.000018, dy: 0.000009, t: 0 },
+                    { x: 0.78, y: 0.62, r: 0.46, c: '34,211,238', a: 0.10, dx: -0.000014, dy: 0.000012, t: 2.1 },
+                    { x: 0.50, y: 0.85, r: 0.38, c: '167,139,250', a: 0.11, dx: 0.000010, dy: -0.000016, t: 4.4 },
+                    { x: 0.12, y: 0.78, r: 0.34, c: '244,114,182', a: 0.08, dx: 0.000016, dy: -0.000007, t: 1.3 },
+                    { x: 0.88, y: 0.18, r: 0.36, c: '52,211,153', a: 0.09, dx: -0.000011, dy: 0.000013, t: 3.2 },
+                    { x: 0.40, y: 0.12, r: 0.30, c: '251,191,36', a: 0.06, dx: 0.000013, dy: 0.000008, t: 5.0 },
+                    { x: 0.65, y: 0.92, r: 0.32, c: '236,72,153', a: 0.07, dx: -0.000009, dy: -0.000011, t: 0.7 }
+                ];
+
                 function spawnShoot() {
                     var ang = rand(30, 55) * Math.PI / 180, spd = rand(9, 16);
                     shoots.push({ x: rand(-0.1, 1.1) * c.width, y: -15, vx: Math.cos(ang) * spd, vy: Math.sin(ang) * spd, len: rand(80, 160), w: rand(1.2, 2.2), life: 1, decay: rand(0.015, 0.028) });
                 }
                 function draw() {
                     ctx.clearRect(0, 0, c.width, c.height);
+
+                    /* Base radial vignette glow */
                     var g = ctx.createRadialGradient(c.width * .5, c.height * .38, 0, c.width * .5, c.height * .28, c.width * .6);
-                    g.addColorStop(0, 'rgba(99,102,241,0.06)');
+                    g.addColorStop(0, 'rgba(99,102,241,0.07)');
                     g.addColorStop(1, 'transparent');
                     ctx.fillStyle = g; ctx.fillRect(0, 0, c.width, c.height);
+
+                    /* Drifting nebula clouds - slowly wander and gently breathe in opacity */
+                    nebulae.forEach(function (n) {
+                        n.x += n.dx; n.y += n.dy; n.t += 0.0035;
+                        if (n.x < -0.2) n.x = 1.2; if (n.x > 1.2) n.x = -0.2;
+                        if (n.y < -0.2) n.y = 1.2; if (n.y > 1.2) n.y = -0.2;
+                        var breathe = n.a * (0.75 + 0.25 * Math.sin(n.t));
+                        var ng = ctx.createRadialGradient(
+                            n.x * c.width, n.y * c.height, 0,
+                            n.x * c.width, n.y * c.height, n.r * Math.max(c.width, c.height)
+                        );
+                        ng.addColorStop(0, 'rgba(' + n.c + ',' + breathe + ')');
+                        ng.addColorStop(1, 'transparent');
+                        ctx.fillStyle = ng;
+                        ctx.fillRect(0, 0, c.width, c.height);
+                    });
+
+                    /* Cosmic dust - tiny, near-invisible specks drifting slowly for atmosphere */
+                    dust.forEach(function (d) {
+                        d.x += d.dx; d.y += d.dy;
+                        if (d.x < -0.05) d.x = 1.05; if (d.x > 1.05) d.x = -0.05;
+                        if (d.y > 1.05) d.y = -0.05;
+                        ctx.beginPath();
+                        ctx.arc(d.x * c.width, d.y * c.height, d.r, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(255,255,255,' + d.a + ')';
+                        ctx.fill();
+                    });
+
                     stars.forEach(function (s) {
                         s.a += s.sp * s.d; if (s.a > 1 || s.a < 0.08) s.d *= -1;
                         ctx.beginPath(); ctx.arc(s.x * c.width, s.y * c.height, s.r, 0, Math.PI * 2);
-                        ctx.fillStyle = 'rgba(255,255,255,' + s.a + ')'; ctx.fill();
+                        ctx.fillStyle = 'rgba(' + s.tint + ',' + s.a + ')'; ctx.fill();
                     });
                     shootTimer++;
                     if (shootTimer >= nextShoot) { spawnShoot(); shootTimer = 0; nextShoot = rand(55, 100); }
@@ -183,14 +277,14 @@
                     el: el, src: src,
                     x: rand(20, W - 20),
                     y: onScreen ? rand(HEADER_H + 10, H - 20) : rand(-H * 0.9, -10),
-                    vx: rand(-0.18, 0.18),
-                    vy: rand(0.32, 0.65),
+                    vx: rand(-0.32, 0.32),
+                    vy: rand(0.6, 1.15),
                     dotSize: dotSize, glow: g,
                     expanded: false, pinned: false
                 };
 
                 var pulseDur = rand(1.6, 3.2).toFixed(2) + 's';
-                el.style.cssText = 'width:' + dotSize + 'px;height:' + dotSize + 'px;' + '--dp:' + pulseDur + ';' + 'left:' + b.x + 'px;top:' + b.y + 'px;';
+                el.style.cssText = 'width:' + dotSize + 'px;height:' + dotSize + 'px;' + '--dp:' + pulseDur + ';' + '--dc:' + g.c + ';' + 'left:' + b.x + 'px;top:' + b.y + 'px;' + 'box-shadow:' + g.s + ';';
 
                 rmBtn.addEventListener('click', function (e) {
                     e.stopPropagation();
@@ -223,8 +317,8 @@
             function expand(b) {
                 if (b.expanded) return;
                 b.expanded = true;
-                b.el.style.width = EXPAND + 'px';
-                b.el.style.height = EXPAND + 'px';
+                b.el.style.width = EXPAND_W + 'px';
+                b.el.style.height = EXPAND_H + 'px';
                 b.el.style.boxShadow = '0 0 0 2px rgba(34,211,238,0.4),0 12px 48px rgba(0,0,0,0.85),0 0 55px rgba(34,211,238,0.18)';
                 b.el.classList.add('expanded');
             }
@@ -257,18 +351,18 @@
                     }
 
                     if (!b.expanded) {
-                        b.y += b.vy;
-                        b.x += b.vx;
+                        b.y += b.vy * speedMul;
+                        b.x += b.vx * speedMul;
                         if (Math.random() < 0.004) {
-                            b.vx += rand(-0.07, 0.07);
-                            b.vx = Math.max(-0.38, Math.min(0.38, b.vx));
+                            b.vx += rand(-0.12, 0.12);
+                            b.vx = Math.max(-0.65, Math.min(0.65, b.vx));
                         }
                         if (b.x < 10) { b.x = 10; b.vx = Math.abs(b.vx); }
                         if (b.x > W - 10) { b.x = W - 10; b.vx = -Math.abs(b.vx); }
                         if (b.y > H + 30) {
                             b.y = rand(-70, -8);
                             b.x = rand(18, W - 18);
-                            b.vx = rand(-0.18, 0.18);
+                            b.vx = rand(-0.32, 0.32);
                         }
                     }
 
@@ -321,6 +415,18 @@
                 var el = document.getElementById('photoCount');
                 if (el) el.textContent = bubbles.length + ' photo' + (bubbles.length !== 1 ? 's' : '');
             }
+
+            /* Speed control dock */
+            (function () {
+                var slider = document.getElementById('speedSlider');
+                var valueLabel = document.getElementById('speedValue');
+                if (!slider) return;
+                slider.addEventListener('input', function () {
+                    var pct = parseInt(slider.value, 10); // 0-200
+                    speedMul = pct / 100; // 0x - 2x
+                    valueLabel.textContent = speedMul.toFixed(1) + '\u00d7';
+                });
+            })();
 
             function showToast(msg) {
                 var t = document.getElementById('memToast');

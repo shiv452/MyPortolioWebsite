@@ -518,9 +518,11 @@
                 </div>
 
             </div>
+        </div>
+    </div>
 
-            <!-- Add Certificate Modal -->
-            <div class="modal-overlay" id="addCertModal" onclick="handleOverlayClick(event,'addCertModal')">
+    <!-- Add Certificate Modal -->
+    <div class="modal-overlay" id="addCertModal" onclick="handleOverlayClick(event,'addCertModal')">
                 <div class="modal-card">
                     <button class="modal-close" onclick="closeModal('addCertModal')">&times;</button>
                     <h3><i class="fas fa-certificate"></i> Add Certificate</h3>
@@ -540,11 +542,11 @@
                         <button class="btn btn-outline" onclick="closeModal('addCertModal')">Cancel</button>
                     </div>
 
-                </div>
             </div>
+    </div>
 
-            <!-- Add Award Modal -->
-            <div class="modal-overlay" id="addAwardModal" onclick="handleOverlayClick(event,'addAwardModal')">
+    <!-- Add Award Modal -->
+    <div class="modal-overlay" id="addAwardModal" onclick="handleOverlayClick(event,'addAwardModal')">
                 <div class="modal-card">
                     <button class="modal-close" onclick="closeModal('addAwardModal')">&times;</button>
                     <h3><i class="fas fa-trophy"></i> Add Award</h3>
@@ -586,16 +588,16 @@
                         <button class="btn btn-outline" onclick="closeModal('addAwardModal')">Cancel</button>
                     </div>
 
-                </div>
             </div>
+    </div>
 
-            <!-- ====== CONTACT ======== -->
-            <div id="contact">
-                <div class="container">
-                    <h2 class="sub-title">Contact Me</h2>
-                    <div class="row contact-grid">
-                        <div class="contact-left">
-                            <div class="contact-card">
+    <!-- ====== CONTACT ======== -->
+    <div id="contact">
+        <div class="container">
+            <h2 class="sub-title">Contact Me</h2>
+            <div class="row contact-grid">
+                <div class="contact-left">
+                    <div class="contact-card">
                                 <p><i class="fas fa-paper-plane"></i> shivamgoyal452@gmail.com</p>
                                 <p><i class="fas fa-phone-square-alt"></i> +91 83441 91219</p>
 
@@ -660,10 +662,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                    </div>
 
-                        <div class="contact-right">
-                            <div class="contact-card contact-form-card">
+                <div class="contact-right">
+                    <div class="contact-card contact-form-card">
                                 <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"
                                     action="/thank-you.html" netlify id="contactForm">
                                     <input type="hidden" name="form-name" value="contact" />
@@ -708,15 +710,13 @@
                                     <p>Thanks for reaching out, I'll get back to you soon.</p>
                                     <button class="cf-success-reset" id="cfReset">Send Another</button>
                                 </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="back-to-top" id="backToTop">&#x25B2;</div>
         </div>
     </div>
+
+    <div class="back-to-top" id="backToTop">&#x25B2;</div>
 
 
     <footer>
@@ -770,7 +770,7 @@
 
 
     <!-- ======= JS Script =========== -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
     <!-- Navigation hamburger -->
     <script src="/JavaScript/nav.js"></script>
@@ -778,10 +778,10 @@
     <script src="/JavaScript/logo.js"></script>
     <!-- Back-to-top button -->
     <script src="/JavaScript/scroll-top.js"></script>
-    <!-- Resume download + upload manger -->
-    <script src="/JavaScript/resume.js"></script>
-    <!-- Typed hero text, modals, toast, cursor spotlight -->
+    <!-- Typed hero text, modals, toast, cursor spotlight - MUST be first -->
     <script src="/JavaScript/ui.js"></script>
+    <!-- Resume download + upload manager -->
+    <script src="/JavaScript/resume.js"></script>
     <!-- About profile picture + collapsible panels -->
     <script src="/JavaScript/about.js"></script>
     <!-- Achievement tabs, lightbox, add/remove cert & award -->

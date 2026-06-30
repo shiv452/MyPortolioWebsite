@@ -48,3 +48,36 @@ if (sidemenu) {
     window.addEventListener('scroll', activate, { passive: true });
     activate(); // run once on load
 })();
+// =========== Sticky nav on scroll ===========
+// Shows a fixed nav bar once user scrolls past the hero section
+(function () {
+    var header = document.getElementById('header');
+    var navEl = document.querySelector('nav');
+    var stickyNav = null;
+
+    function buildStickyNav() {
+        if (stickyNav) return;
+        stickyNav = document.createElement('div');
+        stickyNav.className = 'nav-sticky';
+        stickyNav.innerHTML = navEl.outerHTML;
+        stickyNav.style.transform = 'translateY(-100%)';
+        stickyNav.style.opacity = '0';
+        document.body.appendChild(stickyNav);
+    }
+
+    function handleScroll() {
+        if (!header) return;
+        buildStickyNav();
+        var heroBottom = header.offsetTop + header.offsetHeight;
+        var scrolled = window.pageYOffset;
+        if (scrolled > heroBottom - 80) {
+            stickyNav.style.transform = 'translateY(0)';
+            stickyNav.style.opacity = '1';
+        } else {
+            stickyNav.style.transform = 'translateY(-100%)';
+            stickyNav.style.opacity = '0';
+        }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+})();
