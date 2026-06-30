@@ -53,7 +53,7 @@ body {
   height: 3px;
   width: 0%;
   background: linear-gradient(90deg, var(--accent), var(--accent2));
-  z-index: 9999;
+  z-index: 10000;
   transition: width 0.1s linear;
 }
 
@@ -838,6 +838,15 @@ nav .fas {
 }
 
 /* ----Lightbox---- */
+.cert-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 9000;
+  align-items: center;
+  justify-content: center;
+}
 .cert-lightbox.active {
   display: flex;
 }
@@ -929,6 +938,13 @@ nav .fas {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 24px 22px;
+}
+
+.contact-form-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 26px;
 }
 
 /* Social icons */
@@ -2054,36 +2070,7 @@ nav .fas.fa-bars {
   margin-bottom: 16px;
 }
 
-.award-icon-picker div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: rgba(99, 102, 241, 0.12);
-  border: 2px solid transparent;
-  cursor: pointer;
-  font-size: 0.95rem;
-  color: var(--accent);
-  transition:
-    border-color 0.2s,
-    background 0.2s,
-    transform 0.15s;
-}
-
-.award-icon-picker div:hover {
-  background: rgba(99, 102, 241, 0.22);
-  transform: scale(1.1);
-}
-
-.award-icon-picker div.selected {
-  border-color: var(--accent);
-  background: rgba(99, 102, 241, 0.25);
-  transform: scale(1.08);
-  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.4);
-}
-
+.award-icon-picker div,
 .award-icon-opt {
   display: flex;
   align-items: center;
@@ -2098,6 +2085,7 @@ nav .fas.fa-bars {
     transform 0.15s;
 }
 
+.award-icon-picker div.selected,
 .award-icon-opt.selected {
   border-color: var(--accent);
   background: rgba(99, 102, 241, 0.12);

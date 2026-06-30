@@ -65,23 +65,35 @@ body {
 .hdr-mid {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
   pointer-events: none;
 }
 .hdr-mid h1 {
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   font-weight: 800;
-  letter-spacing: -0.2em;
-  background: linear-gradient(135deg, #fff 0%, #22d3ee 55%, #f472b6 100%);
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  color: #22d3ee;
+  background: linear-gradient(90deg, #ffffff 0%, #22d3ee 45%, #a78bfa 75%, #f472b6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  filter: drop-shadow(0 0 12px rgba(34, 211, 238, 0.45));
+  white-space: nowrap;
 }
 .hdr-mid p {
   color: var(--muted);
-  font-size: 0.67rem;
-  margin-top: 1px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  margin-top: 3px;
+  white-space: nowrap;
+}
+.hdr-mid p .dot-sep {
+  margin: 0 6px;
+  color: rgba(100, 116, 139, 0.55);
 }
 .hdr-right {
   display: flex;
@@ -116,8 +128,7 @@ body {
 }
 
 .add-btn:hover {
-  transform: scale(1.4);
-  rotate: 90deg;
+  transform: scale(1.14) rotate(90deg);
 }
 @keyframes fabPulse {
   0%,
@@ -162,30 +173,54 @@ body {
   overflow: visible;
   cursor: pointer;
   z-index: 10;
+  background: radial-gradient(circle at 50% 50%,
+    #ffffff 0%,
+    var(--dc, #22d3ee) 28%,
+    var(--dc, #22d3ee) 55%,
+    transparent 78%);
   animation: dotPulse var(--dp, 2.4s) ease-in-out infinite;
   transition:
     width 0.5s cubic-bezier(0.34, 1.4, 0.64, 1),
     height 0.5s cubic-bezier(0.34, 1.4, 0.64, 1),
     border-radius 0.42s ease,
-    box-shadow 0.35s ease;
+    box-shadow 0.35s ease,
+    background 0.35s ease;
 }
 
 /* bright core sparkle */
 .photo-dot::before {
   content: "";
   position: absolute;
-  inset: 15% 15% 15% 15%;
+  inset: 32%;
   border-radius: 50%;
-  background: rgba(225, 225, 225, 0.82);
-  filter: blur(1px);
+  background: rgba(255, 255, 255, 0.95);
+  filter: blur(0.8px);
   animation: dotCoreFlash var(--dp, 2.4s) ease-in-out infinite;
   pointer-events: none;
+  z-index: 1;
 }
+
+/* the photo itself - hidden/tiny while collapsed, fills the card when expanded */
+.photo-dot img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #0a0c14;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  border-radius: inherit;
+  -webkit-user-drag: none;
+}
+
 .photo-dot.expanded {
   overflow: hidden;
   border-radius: 14px;
   z-index: 80;
   animation: none;
+  background: #0a0c14;
 }
 .photo-dot.expanded::before {
   display: none;
@@ -263,6 +298,131 @@ body {
 }
 .photo-dot.expanded .dot-cap {
   opacity: 1;
+}
+
+/* ============ Speed Control Dock ============ */
+.speed-dock {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 150;
+  display: flex;
+  align-items: center;
+}
+
+.speed-dock-handle {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 0 50% 50% 0;
+  background: rgba(99, 102, 241, 0.16);
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  border-left: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a5b4fc;
+  cursor: pointer;
+  transition:
+    background 0.25s,
+    color 0.25s,
+    box-shadow 0.25s;
+  box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+}
+
+.speed-dock-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(10, 12, 20, 0.85);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  border-left: none;
+  border-radius: 0 14px 14px 0;
+  padding: 10px 16px 10px 14px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  white-space: nowrap;
+  transition:
+    max-width 0.4s cubic-bezier(0.34, 1.1, 0.64, 1),
+    opacity 0.3s ease,
+    padding 0.4s ease;
+  margin-left: -1px;
+}
+
+.speed-dock:hover .speed-dock-handle {
+  background: rgba(99, 102, 241, 0.3);
+  color: #fff;
+  box-shadow: 0 0 18px 2px rgba(99, 102, 241, 0.45);
+}
+
+.speed-dock:hover .speed-dock-panel {
+  max-width: 220px;
+  opacity: 1;
+  padding: 10px 18px 10px 14px;
+}
+
+.speed-dock-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.speed-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 110px;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #6366f1, #22d3ee);
+  outline: none;
+  cursor: pointer;
+}
+.speed-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #6366f1;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.8);
+  transition: transform 0.15s;
+}
+.speed-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+.speed-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #6366f1;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.8);
+}
+
+.speed-dock-value {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #22d3ee;
+  min-width: 30px;
+}
+
+@media (max-width: 640px) {
+  .speed-dock-handle {
+    width: 34px;
+    height: 34px;
+  }
+  .speed-slider {
+    width: 80px;
+  }
 }
 
 /* Toast */
