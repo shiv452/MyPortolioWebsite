@@ -86,6 +86,19 @@ if (sidemenu) {
             inner.appendChild(listClone);
         }
 
+        // Add a hamburger trigger for mobile/tablet widths, where the cloned
+        // link list above gets hidden by CSS. Opens the SAME #sidemenu drawer
+        // used by the hero nav (via the existing openmenu() function) instead
+        // of building a second, separate menu system.
+        var stickyBars = document.createElement('i');
+        stickyBars.className = 'fas fa-bars nav-sticky-bars';
+        stickyBars.setAttribute('aria-label', 'Open menu');
+        stickyBars.setAttribute('role', 'button');
+        stickyBars.onclick = function () {
+            if (typeof openmenu === 'function') openmenu();
+        };
+        inner.appendChild(stickyBars);
+
         stickyNav.appendChild(inner);
         document.body.appendChild(stickyNav);
     }

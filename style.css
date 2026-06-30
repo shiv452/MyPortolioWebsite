@@ -233,9 +233,21 @@ nav .fas {
   display: none;
 }
 
+/* Sticky nav's own hamburger trigger - hidden by default (link list is visible
+   above the mobile/tablet breakpoint), shown only when the link list hides. */
+.nav-sticky-bars {
+  display: none;
+  font-size: 20px;
+  color: var(--text);
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .nav-sticky-inner ul {
     display: none;
+  }
+  .nav-sticky-bars {
+    display: block;
   }
 }
 
@@ -795,7 +807,7 @@ nav .fas {
 
 /* Cards inside carousel: fixed width, no hover lift (strip handles hover) */
 .carousel-mode .ach-award-card {
-  width: clamp(300px, 40vw, 460px);
+  width: clamp(260px, 80vw, 460px);
   flex-shrink: 0;
   transform: none !important; /* disable card hover lift while scrolling */
   transition: border-color 0.25s;
@@ -1545,10 +1557,6 @@ nav .fas.fa-bars {
 
 /* Mobile */
 @media (max-width: 600px) {
-  #header {
-    background-image: url(/Images/website_images/sky.jpeg);
-  }
-
   .home .home-content .text-2 {
     font-size: 2.2rem;
   }
