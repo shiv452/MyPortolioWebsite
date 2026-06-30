@@ -25,6 +25,8 @@ if (sidemenu) {
 
 //=========== Active nav link on scroll
 //Highlights the nav link whose section is currently in view
+//(updates both the original hero nav AND the cloned sticky-nav, since
+// the sticky nav is a one-time clone that doesn't auto-sync otherwise)
 (function () {
     var navLinks = document.querySelectorAll('nav ul li a[href^="#"]');
     var sectionIds = [];
@@ -39,7 +41,9 @@ if (sidemenu) {
             var el = document.getElementById(id);
             if (el && el.offsetTop - 100 <= scrollY) activeId = id;
         });
-        navLinks.forEach(function (link) {
+        // Target both the original nav links and any sticky-nav clone links
+        var allLinks = document.querySelectorAll('nav ul li a[href^="#"], .nav-sticky-inner ul li a[href^="#"]');
+        allLinks.forEach(function (link) {
             var isActive = link.getAttribute('href') === '#' + activeId;
             link.classList.toggle('active', isActive);
         });
@@ -56,27 +60,43 @@ if (sidemenu) {
     var stickyNav = null;
 
     function buildStickyNav() {
-        if (stickyNav) return;
+        if (stickyNav || !navEl) return;
         stickyNav = document.createElement('div');
         stickyNav.className = 'nav-sticky';
-        stickyNav.innerHTML = navEl.outerHTML;
-        stickyNav.style.transform = 'translateY(-100%)';
-        stickyNav.style.opacity = '0';
+
+        var inner = document.createElement('div');
+        inner.className = 'nav-sticky-inner';
+
+        // Clone the logo, but give the clone a unique id so it never collides
+        // with the real #logo in the hero (avoids duplicate-id bugs in logo.js
+        // and anything else relying on getElementById('logo')).
+        var logoImg = navEl.querySelector('.logo');
+        if (logoImg) {
+            var logoClone = logoImg.cloneNode(true);
+            logoClone.removeAttribute('id');
+            logoClone.classList.add('nav-sticky-logo');
+            inner.appendChild(logoClone);
+        }
+
+        // Clone just the link list (not the hamburger icons, not the real #sidemenu id)
+        var menuList = navEl.querySelector('ul');
+        if (menuList) {
+            var listClone = menuList.cloneNode(true);
+            listClone.removeAttribute('id');
+            inner.appendChild(listClone);
+        }
+
+        stickyNav.appendChild(inner);
         document.body.appendChild(stickyNav);
     }
 
     function handleScroll() {
         if (!header) return;
         buildStickyNav();
+        if (!stickyNav) return;
         var heroBottom = header.offsetTop + header.offsetHeight;
         var scrolled = window.pageYOffset;
-        if (scrolled > heroBottom - 80) {
-            stickyNav.style.transform = 'translateY(0)';
-            stickyNav.style.opacity = '1';
-        } else {
-            stickyNav.style.transform = 'translateY(-100%)';
-            stickyNav.style.opacity = '0';
-        }
+        stickyNav.classList.toggle('visible', scrolled > heroBottom - 80);
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true });

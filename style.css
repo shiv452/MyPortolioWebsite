@@ -45,18 +45,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Scroll progress bar */
-.scrollprogressbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  width: 0%;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  z-index: 10000;
-  transition: width 0.1s linear;
-}
-
 /* -------- Container ------ */
 .container {
   max-width: 1200px;
@@ -177,6 +165,78 @@ nav .fas {
   font-size: 22px;
   color: var(--text);
   cursor: pointer;
+}
+
+/* ------- Sticky nav bar (appears after scrolling past hero) ------ */
+.nav-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  background: rgba(4, 5, 13, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.35s ease,
+    opacity 0.35s ease;
+}
+.nav-sticky.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.nav-sticky-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.nav-sticky-logo {
+  height: 36px;
+  width: auto;
+}
+.nav-sticky-inner ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-sticky-inner ul li {
+  margin: 0 8px;
+}
+.nav-sticky-inner ul li a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition:
+    color 0.3s,
+    background 0.3s;
+}
+.nav-sticky-inner ul li a:hover,
+.nav-sticky-inner ul li a.active {
+  color: var(--accent);
+  background: rgba(99, 102, 241, 0.1);
+}
+/* Hide the mobile hamburger/close icons that got cloned along with the <ul> */
+.nav-sticky-inner ul li .fas {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nav-sticky-inner ul {
+    display: none;
+  }
 }
 
 /* ------- HERO SECTION ------ */
@@ -488,19 +548,21 @@ nav .fas {
 }
 
 /* Center the "View All on GitHub" btn */
+.project-view-all {
+  text-align: center;
+  margin-top: 32px;
+}
 #portfolio .btn-primary {
-  display: block;
+  display: inline-block;
   width: fit-content;
-  margin: 40px auto 0;
 }
 
 /* ----------- ACHIEVEMENTS SECTION ---------- */
 .achievements-sec {
-  padding: 80px 0 60px;
+  padding: 80px 0 100px;
   position: relative;
   background: var(--bg);
   border-top: 1px solid var(--border);
-  min-height: 100vh;
 }
 
 .ach-hdr {
@@ -826,26 +888,17 @@ nav .fas {
   display: block;
   object-fit: cover;
 }
-.cert-thumb-meta {
-  padding: 8px 10px;
-  background: var(--card);
-  border-top: 1px solid var(--border);
-}
-.cert-thumb-meta span {
-  font-size: 0.75rem;
-  color: var(--muted);
-  font-weight: 500;
-}
 
 /* ----Lightbox---- */
 .cert-lightbox {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0, 0, 0, 0.88);
   z-index: 9000;
   align-items: center;
   justify-content: center;
+  padding: 24px;
 }
 .cert-lightbox.active {
   display: flex;
@@ -911,6 +964,7 @@ nav .fas {
 .contact-left {
   flex-basis: 35%;
   min-height: 240px;
+  min-width: 0;
 }
 
 .contact-right {
@@ -922,29 +976,6 @@ nav .fas {
   color: var(--accent);
   font-size: 1.1rem;
   width: 20px;
-}
-
-.contact-left p {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--muted);
-  font-size: 0.95rem;
-  margin-bottom: 10px;
-}
-
-.contact-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 24px 22px;
-}
-
-.contact-form-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 28px 26px;
 }
 
 /* Social icons */
@@ -995,6 +1026,7 @@ nav .fas {
 }
 .rw-controls {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   align-items: center;
 }
@@ -1117,7 +1149,7 @@ nav .fas {
   pointer-events: none;
   z-index: 0;
   background: radial-gradient(
-    600px circle at var(--lcx, -400px) var(--lcy, -400px),
+    600px circle at var(--lcx, -400px) var(--lc, -400px),
     var(--lc, transparent),
     transparent 60%
   );
@@ -1627,7 +1659,7 @@ nav .fas.fa-bars {
   transition: border-color 0.3s;
 }
 .about-panel.pinned .panel-header,
-.about-panel.peeking .panel-header {
+.about-panel.peeked .panel-header {
   border-bottom-color: var(--border);
 }
 
@@ -1713,15 +1745,13 @@ nav .fas.fa-bars {
   text-decoration: underline;
 }
 
-/* Hobby List container */
-.hobby-list {
+/* Hobby Card */
+.hobby-card {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 4px;
 }
 
-/* Hobby Card */
 .hobby-card {
   display: flex;
   align-items: center;
@@ -1731,8 +1761,6 @@ nav .fas.fa-bars {
   border: 1px solid var(--border);
   border-radius: 10px;
   text-decoration: none;
-  position: relative;
-  overflow: hidden;
   transition:
     border-color 0.25s,
     background 0.25s,
@@ -1982,10 +2010,10 @@ nav .fas.fa-bars {
 
 /* ------------ ADD CERTIFICATE FLOATING BUTTON --------- */
 .add-cert-btn {
-  position: fixed;
-  bottom: 110px;
+  position: absolute;
+  bottom: 24px;
   right: 32px;
-  z-index: 9999;
+  z-index: 200;
   width: 52px;
   height: 52px;
   border-radius: 50%;
@@ -2013,10 +2041,10 @@ nav .fas.fa-bars {
 
 /* Add Award button - stacked above the cert button */
 .add-award-btn {
-  position: fixed;
-  bottom: 172px;
+  position: absolute;
+  bottom: 86px;
   right: 32px;
-  z-index: 9999;
+  z-index: 200;
   width: 52px;
   height: 52px;
   border-radius: 50%;
@@ -2070,7 +2098,6 @@ nav .fas.fa-bars {
   margin-bottom: 16px;
 }
 
-.award-icon-picker div,
 .award-icon-opt {
   display: flex;
   align-items: center;
@@ -2085,7 +2112,6 @@ nav .fas.fa-bars {
     transform 0.15s;
 }
 
-.award-icon-picker div.selected,
 .award-icon-opt.selected {
   border-color: var(--accent);
   background: rgba(99, 102, 241, 0.12);
@@ -2157,14 +2183,14 @@ nav .fas.fa-bars {
     flex-basis: 100%;
   }
   .add-cert-btn {
-    bottom: 80px;
+    bottom: 20px;
     right: 16px;
     width: 44px;
     height: 44px;
     font-size: 1rem;
   }
   .add-award-btn {
-    bottom: 134px;
+    bottom: 74px;
     right: 16px;
     width: 44px;
     height: 44px;
@@ -2296,6 +2322,9 @@ nav .fas.fa-bars {
   position: absolute;
   top: 8px;
   right: 8px;
+  width: 26px;
+  height: 26px;
+  padding: 0;
   border-radius: 50%;
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.3);
@@ -2307,6 +2336,7 @@ nav .fas.fa-bars {
   align-items: center;
   justify-content: center;
   opacity: 0;
+  pointer-events: none;
   transition:
     opacity 0.2s,
     background 0.2s,
@@ -2314,6 +2344,7 @@ nav .fas.fa-bars {
 }
 .ach-award-card:hover .ach-card-del {
   opacity: 1;
+  pointer-events: auto;
 }
 .ach-card-del:hover {
   background: rgba(239, 68, 68, 0.28);
@@ -2345,9 +2376,11 @@ nav .fas.fa-bars {
     opacity 0.2s,
     transform 0.2s;
   z-index: 2;
+  pointer-events: none;
 }
 .cert-thumb:hover .cert-del-btn {
   opacity: 1;
+  pointer-events: auto;
 }
 .cert-del-btn:hover {
   transform: scale(1.14);
@@ -2857,14 +2890,14 @@ footer {
 
   /* Add cert btn */
   .add-cert-btn {
-    bottom: 72px;
+    bottom: 18px;
     right: 14px;
     width: 44px;
     height: 44px;
     font-size: 1rem;
   }
   .add-award-btn {
-    bottom: 126px;
+    bottom: 70px;
     right: 14px;
     width: 44px;
     height: 44px;
