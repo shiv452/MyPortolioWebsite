@@ -119,7 +119,7 @@
 
             function rand(a, b) { return a + Math.random() * (b - a); }
 
-            /* ========= Star Canvas ========== */
+            /* ========= Galaxy Canvas ========== */
             (function () {
                 var c = document.getElementById('starCanvas');
                 var ctx = c.getContext('2d');
@@ -127,78 +127,162 @@
                 function resize() { c.width = window.innerWidth; c.height = window.innerHeight; }
                 window.addEventListener('resize', resize); resize();
 
-                /* Layered starfield for parallax depth: far (tiny, dim, slow twinkle),
-                   mid (small, medium twinkle), near (bigger, brighter, occasional color tint) */
-                var starLayers = [
-                    { count: 140, rMin: 0.2, rMax: 0.7, aMin: 0.15, aMax: 0.55, spMin: 0.0002, spMax: 0.0004, tint: false },
-                    { count: 90, rMin: 0.5, rMax: 1.1, aMin: 0.3, aMax: 0.8, spMin: 0.0003, spMax: 0.0006, tint: false },
-                    { count: 36, rMin: 0.9, rMax: 1.9, aMin: 0.45, aMax: 1.0, spMin: 0.0004, spMax: 0.0009, tint: true }
-                ];
-                var starTints = ['255,255,255', '199,210,254', '165,243,252', '253,224,196'];
-                starLayers.forEach(function (layer) {
-                    for (var i = 0; i < layer.count; i++) {
+                /* Galaxy core anchor point - off-center so it reads as looking across
+                   a galaxy disc rather than dead-center at a logo-like spiral. */
+                var coreX = 0.66, coreY = 0.30;
+
+                /* ---- Spiral-arm star field ----
+                   Two logarithmic arms wind out from the core with random scatter so they
+                   read as fuzzy bands of stars, not drawn lines. Density + brightness fall
+                   off with distance from the core, which is what actually sells "galaxy". */
+                var ARMS = 2;
+                var ARM_STARS = 280;
+                var BG_STARS = 150;
+                var starTints = ['255,255,255', '199,210,254', '165,243,252', '253,224,196', '216,180,254'];
+
+                function pickTint(nearCore) {
+                    if (Math.random() > 0.45) return '255,255,255';
+                    return nearCore
+                        ? starTints[Math.random() < 0.55 ? 3 : 0]
+                        : starTints[Math.floor(Math.random() * starTints.length)];
+                }
+
+                for (var arm = 0; arm < ARMS; arm++) {
+                    var armOffset = (arm / ARMS) * Math.PI * 2;
+                    for (var i = 0; i < ARM_STARS; i++) {
+                        var t = Math.pow(Math.random(), 0.65);
+                        var angle = armOffset + t * Math.PI * 2.6;
+                        var radius = t * 0.62;
+                        var scatter = rand(-1, 1) * (0.025 + t * 0.05);
+                        var sx = coreX + Math.cos(angle) * radius + Math.cos(angle + Math.PI / 2) * scatter;
+                        var sy = coreY + Math.sin(angle) * radius * 0.55 + Math.sin(angle + Math.PI / 2) * scatter * 0.55;
+
+                        var nearCore = t < 0.35;
+                        var baseAlpha = (1 - t * 0.7) * rand(0.35, 0.95);
                         stars.push({
-                            x: Math.random(), y: Math.random(),
-                            r: rand(layer.rMin, layer.rMax),
-                            a: Math.random(),
-                            sp: rand(layer.spMin, layer.spMax),
+                            x: sx, y: sy,
+                            r: nearCore ? rand(0.6, 1.9) : rand(0.3, 1.15),
+                            a: baseAlpha, baseA: baseAlpha,
+                            sp: rand(0.00012, 0.00028), // slow, gentle twinkle only - no large swings
                             d: Math.random() > 0.5 ? 1 : -1,
-                            tint: layer.tint && Math.random() < 0.35 ? starTints[Math.floor(Math.random() * starTints.length)] : '255,255,255'
+                            tint: pickTint(nearCore)
                         });
                     }
-                });
-
-                /* Slow drifting cosmic dust specks - tiny, very faint, adds atmospheric depth */
-                var dust = [];
-                for (var i = 0; i < 60; i++) {
-                    dust.push({
+                }
+                for (var i = 0; i < BG_STARS; i++) {
+                    stars.push({
                         x: Math.random(), y: Math.random(),
-                        r: rand(0.4, 1.1), a: rand(0.03, 0.10),
-                        dx: rand(-0.00006, 0.00006), dy: rand(0.00002, 0.00009)
+                        r: rand(0.2, 0.7), a: rand(0.1, 0.5), baseA: rand(0.1, 0.5),
+                        sp: rand(0.00008, 0.0002), d: Math.random() > 0.5 ? 1 : -1,
+                        tint: '255,255,255'
                     });
                 }
 
-                /* Slow-drifting nebula clouds for a "living" galaxy backdrop */
+                /* A handful of stars get a real diffraction-spike sparkle (the plus-shaped
+                   flare seen on the brightest stars in real astrophotography). */
+                var flareStars = [];
+                for (var i = 0; i < 6; i++) {
+                    var src = stars[Math.floor(rand(0, ARM_STARS * ARMS * 0.3))];
+                    if (src) { src.r = Math.max(src.r, rand(1.6, 2.2)); src.a = Math.max(src.a, 0.85); flareStars.push(src); }
+                }
+
+                /* Cosmic dust specks - barely-visible, extremely slow drift, pure atmosphere */
+                var dust = [];
+                for (var i = 0; i < 70; i++) {
+                    dust.push({
+                        x: Math.random(), y: Math.random(),
+                        r: rand(0.4, 1.1), a: rand(0.025, 0.08),
+                        dx: rand(-0.000012, 0.000012), dy: rand(0.000004, 0.000016)
+                    });
+                }
+
+                /* ---- Nebula clouds ----
+                   Each "cloud" is built from 3-4 overlapping offset blobs instead of one
+                   perfect circle - this breaks up the telltale flat-gradient look and
+                   reads as a wispy, organic gas cloud instead. Drift is glacially slow
+                   and purely time-based (no input reactivity at all). */
+                function makeCloud(cx, cy, r, color, alpha) {
+                    var blobs = [];
+                    var n = 3 + Math.floor(Math.random() * 2);
+                    for (var i = 0; i < n; i++) {
+                        blobs.push({
+                            ox: rand(-0.35, 0.35) * r, oy: rand(-0.3, 0.3) * r,
+                            r: r * rand(0.55, 1), a: alpha * rand(0.55, 1)
+                        });
+                    }
+                    return { x: cx, y: cy, color: color, blobs: blobs, t: rand(0, 6) };
+                }
                 var nebulae = [
-                    { x: 0.22, y: 0.30, r: 0.42, c: '99,102,241', a: 0.12, dx: 0.000018, dy: 0.000009, t: 0 },
-                    { x: 0.78, y: 0.62, r: 0.46, c: '34,211,238', a: 0.10, dx: -0.000014, dy: 0.000012, t: 2.1 },
-                    { x: 0.50, y: 0.85, r: 0.38, c: '167,139,250', a: 0.11, dx: 0.000010, dy: -0.000016, t: 4.4 },
-                    { x: 0.12, y: 0.78, r: 0.34, c: '244,114,182', a: 0.08, dx: 0.000016, dy: -0.000007, t: 1.3 },
-                    { x: 0.88, y: 0.18, r: 0.36, c: '52,211,153', a: 0.09, dx: -0.000011, dy: 0.000013, t: 3.2 },
-                    { x: 0.40, y: 0.12, r: 0.30, c: '251,191,36', a: 0.06, dx: 0.000013, dy: 0.000008, t: 5.0 },
-                    { x: 0.65, y: 0.92, r: 0.32, c: '236,72,153', a: 0.07, dx: -0.000009, dy: -0.000011, t: 0.7 }
+                    Object.assign(makeCloud(coreX, coreY, 0.30, '253,224,196', 0.15), { dx: 0, dy: 0 }),
+                    Object.assign(makeCloud(0.20, 0.28, 0.40, '99,102,241', 0.10), { dx: 0.0000035, dy: 0.0000018 }),
+                    Object.assign(makeCloud(0.80, 0.62, 0.44, '34,211,238', 0.085), { dx: -0.0000028, dy: 0.0000022 }),
+                    Object.assign(makeCloud(0.46, 0.86, 0.36, '167,139,250', 0.095), { dx: 0.0000020, dy: -0.0000030 }),
+                    Object.assign(makeCloud(0.08, 0.80, 0.32, '244,114,182', 0.065), { dx: 0.0000030, dy: -0.0000012 }),
+                    Object.assign(makeCloud(0.92, 0.14, 0.34, '52,211,153', 0.075), { dx: -0.0000022, dy: 0.0000026 }),
+                    Object.assign(makeCloud(0.60, 0.94, 0.30, '236,72,153', 0.06), { dx: -0.0000016, dy: -0.0000020 })
+                ];
+
+                /* Dust lanes - dark wisps crossing the bright core/arms for photographic contrast */
+                var dustLanes = [
+                    { x: coreX - 0.10, y: coreY + 0.06, len: 0.46, w: 0.085, ang: 0.55, a: 0.22 },
+                    { x: coreX + 0.05, y: coreY - 0.10, len: 0.38, w: 0.07, ang: -0.95, a: 0.16 },
+                    { x: coreX - 0.22, y: coreY - 0.14, len: 0.30, w: 0.06, ang: 2.3, a: 0.14 }
                 ];
 
                 function spawnShoot() {
                     var ang = rand(30, 55) * Math.PI / 180, spd = rand(9, 16);
                     shoots.push({ x: rand(-0.1, 1.1) * c.width, y: -15, vx: Math.cos(ang) * spd, vy: Math.sin(ang) * spd, len: rand(80, 160), w: rand(1.2, 2.2), life: 1, decay: rand(0.015, 0.028) });
                 }
+
+                function drawFlare(x, y, r, alpha) {
+                    /* diffraction-spike sparkle: a soft round core + 4 thin crossed rays */
+                    var grad = ctx.createRadialGradient(x, y, 0, x, y, r * 5);
+                    grad.addColorStop(0, 'rgba(255,255,255,' + alpha + ')');
+                    grad.addColorStop(1, 'transparent');
+                    ctx.fillStyle = grad;
+                    ctx.beginPath(); ctx.arc(x, y, r * 5, 0, Math.PI * 2); ctx.fill();
+
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.strokeStyle = 'rgba(255,255,255,' + (alpha * 0.5) + ')';
+                    ctx.lineWidth = 0.6;
+                    [0, Math.PI / 2].forEach(function (rot) {
+                        ctx.beginPath();
+                        ctx.moveTo(-r * 9 * Math.cos(rot), -r * 9 * Math.sin(rot));
+                        ctx.lineTo(r * 9 * Math.cos(rot), r * 9 * Math.sin(rot));
+                        ctx.stroke();
+                    });
+                    ctx.restore();
+                }
+
                 function draw() {
                     ctx.clearRect(0, 0, c.width, c.height);
 
-                    /* Base radial vignette glow */
-                    var g = ctx.createRadialGradient(c.width * .5, c.height * .38, 0, c.width * .5, c.height * .28, c.width * .6);
-                    g.addColorStop(0, 'rgba(99,102,241,0.07)');
+                    /* Base radial vignette, anchored to the galaxy core */
+                    var g = ctx.createRadialGradient(c.width * coreX, c.height * coreY, 0, c.width * coreX, c.height * coreY, c.width * .68);
+                    g.addColorStop(0, 'rgba(180,150,255,0.07)');
                     g.addColorStop(1, 'transparent');
                     ctx.fillStyle = g; ctx.fillRect(0, 0, c.width, c.height);
 
-                    /* Drifting nebula clouds - slowly wander and gently breathe in opacity */
+                    /* Nebula clouds - layered blobs, ultra-slow ambient drift only */
                     nebulae.forEach(function (n) {
-                        n.x += n.dx; n.y += n.dy; n.t += 0.0035;
-                        if (n.x < -0.2) n.x = 1.2; if (n.x > 1.2) n.x = -0.2;
-                        if (n.y < -0.2) n.y = 1.2; if (n.y > 1.2) n.y = -0.2;
-                        var breathe = n.a * (0.75 + 0.25 * Math.sin(n.t));
-                        var ng = ctx.createRadialGradient(
-                            n.x * c.width, n.y * c.height, 0,
-                            n.x * c.width, n.y * c.height, n.r * Math.max(c.width, c.height)
-                        );
-                        ng.addColorStop(0, 'rgba(' + n.c + ',' + breathe + ')');
-                        ng.addColorStop(1, 'transparent');
-                        ctx.fillStyle = ng;
-                        ctx.fillRect(0, 0, c.width, c.height);
+                        n.x += n.dx; n.y += n.dy; n.t += 0.0012;
+                        if (n.x < -0.25) n.x = 1.25; if (n.x > 1.25) n.x = -0.25;
+                        if (n.y < -0.25) n.y = 1.25; if (n.y > 1.25) n.y = -0.25;
+                        var breathe = 0.85 + 0.15 * Math.sin(n.t);
+                        n.blobs.forEach(function (b) {
+                            var bx = n.x * c.width + b.ox * Math.max(c.width, c.height);
+                            var by = n.y * c.height + b.oy * Math.max(c.width, c.height);
+                            var br = b.r * Math.max(c.width, c.height);
+                            var ng = ctx.createRadialGradient(bx, by, 0, bx, by, br);
+                            ng.addColorStop(0, 'rgba(' + n.color + ',' + (b.a * breathe) + ')');
+                            ng.addColorStop(1, 'transparent');
+                            ctx.fillStyle = ng;
+                            ctx.fillRect(0, 0, c.width, c.height);
+                        });
                     });
 
-                    /* Cosmic dust - tiny, near-invisible specks drifting slowly for atmosphere */
+                    /* Cosmic dust - near-invisible specks, slow drift, pure atmosphere */
                     dust.forEach(function (d) {
                         d.x += d.dx; d.y += d.dy;
                         if (d.x < -0.05) d.x = 1.05; if (d.x > 1.05) d.x = -0.05;
@@ -209,11 +293,37 @@
                         ctx.fill();
                     });
 
+                    /* Spiral-arm + background stars - gentle twinkle only, no positional motion */
                     stars.forEach(function (s) {
-                        s.a += s.sp * s.d; if (s.a > 1 || s.a < 0.08) s.d *= -1;
+                        s.a += s.sp * s.d;
+                        if (s.a > s.baseA * 1.25 || s.a < s.baseA * 0.7) s.d *= -1;
                         ctx.beginPath(); ctx.arc(s.x * c.width, s.y * c.height, s.r, 0, Math.PI * 2);
-                        ctx.fillStyle = 'rgba(' + s.tint + ',' + s.a + ')'; ctx.fill();
+                        ctx.fillStyle = 'rgba(' + s.tint + ',' + Math.max(0, s.a) + ')'; ctx.fill();
                     });
+
+                    /* Diffraction-spike flares on the brightest few stars */
+                    flareStars.forEach(function (s) {
+                        drawFlare(s.x * c.width, s.y * c.height, s.r, s.a * 0.5);
+                    });
+
+                    /* Dust lanes - dark streaks crossing the bright core/arms for contrast */
+                    dustLanes.forEach(function (l) {
+                        var cx = l.x * c.width, cy = l.y * c.height;
+                        var dx = Math.cos(l.ang) * l.len * c.width, dy = Math.sin(l.ang) * l.len * c.height;
+                        var lg = ctx.createLinearGradient(cx - dx / 2, cy - dy / 2, cx + dx / 2, cy + dy / 2);
+                        lg.addColorStop(0, 'rgba(4,5,13,0)');
+                        lg.addColorStop(0.5, 'rgba(4,5,13,' + l.a + ')');
+                        lg.addColorStop(1, 'rgba(4,5,13,0)');
+                        ctx.save();
+                        ctx.translate(cx, cy);
+                        ctx.rotate(l.ang);
+                        ctx.fillStyle = lg;
+                        ctx.beginPath();
+                        ctx.ellipse(0, 0, l.len * c.width / 2, l.w * c.height, 0, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.restore();
+                    });
+
                     shootTimer++;
                     if (shootTimer >= nextShoot) { spawnShoot(); shootTimer = 0; nextShoot = rand(55, 100); }
                     for (var i = shoots.length - 1; i >= 0; i--) {
@@ -244,6 +354,7 @@
                 }
                 draw();
             })();
+
 
             /* ======== Create dot ====== */
 
