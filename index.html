@@ -324,12 +324,13 @@
                             </a>
                         </div>
                     </div>
-
-                    <a href="https://github.com/shiv452" class="btn btn-primary" target="_blank"
-                        rel="noopener noreferrer">View All on GitHub</a>
                 </div>
                 <button class="proj-arrow proj-next" type="button" onclick="scrollProjects('next')"
                     aria-label="Scroll right">&#10095;</button>
+            </div>
+            <div class="project-view-all">
+                <a href="https://github.com/shiv452" class="btn btn-primary" target="_blank"
+                    rel="noopener noreferrer">View All on GitHub</a>
             </div>
         </div>
     </div>
@@ -519,86 +520,83 @@
 
             </div>
         </div>
-    </div>
 
-    <!-- Add Certificate Modal -->
-    <div class="modal-overlay" id="addCertModal" onclick="handleOverlayClick(event,'addCertModal')">
-                <div class="modal-card">
-                    <button class="modal-close" onclick="closeModal('addCertModal')">&times;</button>
-                    <h3><i class="fas fa-certificate"></i> Add Certificate</h3>
-                    <input type="text" id="cert-title" placeholder="Certificate Title *">
-                    <input type="text" id="cert-topic" placeholder="Issuer / Organization">
-                    <input type="text" id="cert-author" placeholder="Your Name (default: Shivam Goyal)">
-                    <textarea id="cert-desc" placeholder="Description (optional)" rows="3"></textarea>
+        <!-- Add Certificate Modal -->
+        <div class="modal-overlay" id="addCertModal" onclick="handleOverlayClick(event,'addCertModal')">
+            <div class="modal-card">
+                <button class="modal-close" onclick="closeModal('addCertModal')">&times;</button>
+                <h3><i class="fas fa-certificate"></i> Add Certificate</h3>
+                <input type="text" id="cert-title" placeholder="Certificate Title *">
+                <input type="text" id="cert-topic" placeholder="Issuer / Organization">
+                <input type="text" id="cert-author" placeholder="Your Name (default: Shivam Goyal)">
+                <textarea id="cert-desc" placeholder="Description (optional)" rows="3"></textarea>
 
-                    <div class="file-upload-area" onclick="document.getElementById('cert-img').click()" id="uploadArea">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <span id="cert-img-label">Click to upload certificate image</span>
-                        <input type="file" id="cert-img" accept="image/*" style="display: none;"
-                            onchange="previewCertImage(this)">
-                    </div>
-                    <div class="modal-actions">
-                        <button class="btn btn-primary" onclick="addCertificate()">Add Certificate</button>
-                        <button class="btn btn-outline" onclick="closeModal('addCertModal')">Cancel</button>
-                    </div>
-
+                <div class="file-upload-area" onclick="document.getElementById('cert-img').click()" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span id="cert-img-label">Click to upload certificate image</span>
+                    <input type="file" id="cert-img" accept="image/*" style="display: none;"
+                        onchange="previewCertImage(this)">
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" onclick="addCertificate()">Add Certificate</button>
+                    <button class="btn btn-outline" onclick="closeModal('addCertModal')">Cancel</button>
+                </div>
             </div>
-    </div>
+        </div>
 
-    <!-- Add Award Modal -->
-    <div class="modal-overlay" id="addAwardModal" onclick="handleOverlayClick(event,'addAwardModal')">
-                <div class="modal-card">
-                    <button class="modal-close" onclick="closeModal('addAwardModal')">&times;</button>
-                    <h3><i class="fas fa-trophy"></i> Add Award</h3>
+        <!-- Add Award Modal -->
+        <div class="modal-overlay" id="addAwardModal" onclick="handleOverlayClick(event,'addAwardModal')">
+            <div class="modal-card">
+                <button class="modal-close" onclick="closeModal('addAwardModal')">&times;</button>
+                <h3><i class="fas fa-trophy"></i> Add Award</h3>
 
                     <p class="modal-label">Choose Icon</p>
                     <div class="award-icon-picker" id="awardiconPicker">
-                        <div data-icon="fa-trophy" data-cls=""><i class="fas fa-trophy"></i></div>
-                        <div data-icon="fa-star" data-cls="excel"><i class="fas fa-star"></i></div>
-                        <div data-icon="fa-thumbs-up" data-cls="kudos"><i class="fas fa-thumbs-up"></i></div>
-                        <div data-icon="fa-bolt" data-cls="impact"><i class="fas fa-bolt"></i></div>
-                        <div data-icon="fa-medal" data-cls=""><i class="fas fa-medal"></i></div>
-                        <div data-icon="fa-award" data-cls="excel"><i class="fas fa-award"></i></div>
-                        <div data-icon="fa-flask" data-cls="research"><i class="fas fa-flask"></i></div>
-                        <div data-icon="fa-road" data-cls="pm"><i class="fas fa-road"></i></div>
-                        <div data-icon="fa-calendar-check" data-cls=""><i class="fas fa-calendar-check"></i></div>
-                        <div data-icon="fa-fire" data-cls="impact"><i class="fas fa-fire"></i></div>
-                        <div data-icon="fa-crown" data-cls="kudos"><i class="fas fa-crown"></i></div>
-                        <div data-icon="fa-rocket" data-cls="pm"><i class="fas fa-rocket"></i></div>
-                        <div data-icon="fa-certificate" data-cls="excel"><i class="fas fa-certificate"></i></div>
-                        <div data-icon="fa-lightbulb" data-cls="research"><i class="fas fa-lightbulb"></i></div>
-                        <div data-icon="fa-handshake" data-cls="kudos"><i class="fas fa-handshake"></i></div>
-                        <div data-icon="fa-graduation-cap" data-cls="pm"><i class="fas fa-graduation-cap"></i></div>
-                        <div data-icon="fa-chart-line" data-cls="excel"><i class="fas fa-chart-line"></i></div>
-                        <div data-icon="fa-code" data-cls="research"><i class="fas fa-code"></i></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
                     </div>
 
-                    <input type="text" id="award-title" placeholder="Award Title *">
-                    <input type="text" id="award-org" placeholder="Organization / Issuer (e.g. Finastra)">
-                    <textarea id="award-desc" placeholder="Description (optional)" rows="3"></textarea>
-                    <div class="file-upload-area" onclick="document.getElementById('award-img').click()"
-                        id="awardUploadArea">
-                        <i class="fas fa-image"></i>
-                        <span id="award-img-label">Click to upload certificate image (optional)</span>
-                        <input type="file" id="award-img" accept="image/*" style="display: none;"
-                            onchange="previewAwardImage(this)">
-                    </div>
-                    <div class="modal-actions">
-                        <button class="btn btn-primary" onclick="addAward()">Add Award</button>
-                        <button class="btn btn-outline" onclick="closeModal('addAwardModal')">Cancel</button>
-                    </div>
-
+                <input type="text" id="award-title" placeholder="Award Title *">
+                <input type="text" id="award-org" placeholder="Organization / Issuer (e.g. Finastra)">
+                <textarea id="award-desc" placeholder="Description (optional)" rows="3"></textarea>
+                <div class="file-upload-area" onclick="document.getElementById('award-img').click()"
+                    id="awardUploadArea">
+                    <i class="fas fa-image"></i>
+                    <span id="award-img-label">Click to upload certificate image (optional)</span>
+                    <input type="file" id="award-img" accept="image/*" style="display: none;"
+                        onchange="previewAwardImage(this)">
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" onclick="addAward()">Add Award</button>
+                    <button class="btn btn-outline" onclick="closeModal('addAwardModal')">Cancel</button>
+                </div>
             </div>
-    </div>
+        </div>
 
-    <!-- ====== CONTACT ======== -->
-    <div id="contact">
-        <div class="container">
-            <h2 class="sub-title">Contact Me</h2>
-            <div class="row contact-grid">
-                <div class="contact-left">
-                    <div class="contact-card">
-                                <p><i class="fas fa-paper-plane"></i> shivamgoyal452@gmail.com</p>
+        <!-- ====== CONTACT ======== -->
+        <div id="contact">
+            <div class="container">
+                <h2 class="sub-title">Contact Me</h2>
+                <div class="row contact-grid">
+                    <div class="contact-left">
+                        <div class="contact-card">
+                            <p><i class="fas fa-paper-plane"></i> shivamgoyal452@gmail.com</p>
                                 <p><i class="fas fa-phone-square-alt"></i> +91 83441 91219</p>
 
                                 <div class="social-icons">
@@ -662,10 +660,10 @@
                                     </div>
                                 </div>
                             </div>
-                    </div>
+                        </div>
 
-                <div class="contact-right">
-                    <div class="contact-card contact-form-card">
+                        <div class="contact-right">
+                            <div class="contact-card contact-form-card">
                                 <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"
                                     action="/thank-you.html" netlify id="contactForm">
                                     <input type="hidden" name="form-name" value="contact" />
@@ -710,13 +708,13 @@
                                     <p>Thanks for reaching out, I'll get back to you soon.</p>
                                     <button class="cf-success-reset" id="cfReset">Send Another</button>
                                 </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="back-to-top" id="backToTop">&#x25B2;</div>
+            <div class="back-to-top" id="backToTop">&#x25B2;</div>
 
 
     <footer>
@@ -770,7 +768,8 @@
 
 
     <!-- ======= JS Script =========== -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
     <!-- Navigation hamburger -->
     <script src="/JavaScript/nav.js"></script>
@@ -778,10 +777,10 @@
     <script src="/JavaScript/logo.js"></script>
     <!-- Back-to-top button -->
     <script src="/JavaScript/scroll-top.js"></script>
-    <!-- Typed hero text, modals, toast, cursor spotlight - MUST be first -->
-    <script src="/JavaScript/ui.js"></script>
-    <!-- Resume download + upload manager -->
+    <!-- Resume download + upload manger -->
     <script src="/JavaScript/resume.js"></script>
+    <!-- Typed hero text, modals, toast, cursor spotlight -->
+    <script src="/JavaScript/ui.js"></script>
     <!-- About profile picture + collapsible panels -->
     <script src="/JavaScript/about.js"></script>
     <!-- Achievement tabs, lightbox, add/remove cert & award -->
