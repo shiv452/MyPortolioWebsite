@@ -38,9 +38,16 @@
             </svg>
         </div>
         <div class="speed-dock-panel">
-            <span class="speed-dock-label">Float Speed</span>
+            <div class="speed-dock-top">
+                <span class="speed-dock-label">Float Speed</span>
+                <span class="speed-dock-value" id="speedValue">1.0&times;</span>
+            </div>
             <input type="range" id="speedSlider" class="speed-slider" min="0" max="200" value="100" step="5">
-            <span class="speed-dock-value" id="speedValue">1.0&times;</span>
+            <div class="speed-dock-scale">
+                <span>0&times;</span>
+                <span>1&times;</span>
+                <span>2&times;</span>
+            </div>
         </div>
     </div>
 
@@ -119,16 +126,47 @@
                 var stars = [], shoots = [], shootTimer = 0, nextShoot = 70;
                 function resize() { c.width = window.innerWidth; c.height = window.innerHeight; }
                 window.addEventListener('resize', resize); resize();
-                for (var i = 0; i < 180; i++)
-                    stars.push({ x: Math.random(), y: Math.random(), r: rand(0.25, 1.3), a: Math.random(), sp: rand(0.0003, 0.0006), d: Math.random() > 0.5 ? 1 : -1 });
+
+                /* Layered starfield for parallax depth: far (tiny, dim, slow twinkle),
+                   mid (small, medium twinkle), near (bigger, brighter, occasional color tint) */
+                var starLayers = [
+                    { count: 140, rMin: 0.2, rMax: 0.7, aMin: 0.15, aMax: 0.55, spMin: 0.0002, spMax: 0.0004, tint: false },
+                    { count: 90, rMin: 0.5, rMax: 1.1, aMin: 0.3, aMax: 0.8, spMin: 0.0003, spMax: 0.0006, tint: false },
+                    { count: 36, rMin: 0.9, rMax: 1.9, aMin: 0.45, aMax: 1.0, spMin: 0.0004, spMax: 0.0009, tint: true }
+                ];
+                var starTints = ['255,255,255', '199,210,254', '165,243,252', '253,224,196'];
+                starLayers.forEach(function (layer) {
+                    for (var i = 0; i < layer.count; i++) {
+                        stars.push({
+                            x: Math.random(), y: Math.random(),
+                            r: rand(layer.rMin, layer.rMax),
+                            a: Math.random(),
+                            sp: rand(layer.spMin, layer.spMax),
+                            d: Math.random() > 0.5 ? 1 : -1,
+                            tint: layer.tint && Math.random() < 0.35 ? starTints[Math.floor(Math.random() * starTints.length)] : '255,255,255'
+                        });
+                    }
+                });
+
+                /* Slow drifting cosmic dust specks - tiny, very faint, adds atmospheric depth */
+                var dust = [];
+                for (var i = 0; i < 60; i++) {
+                    dust.push({
+                        x: Math.random(), y: Math.random(),
+                        r: rand(0.4, 1.1), a: rand(0.03, 0.10),
+                        dx: rand(-0.00006, 0.00006), dy: rand(0.00002, 0.00009)
+                    });
+                }
 
                 /* Slow-drifting nebula clouds for a "living" galaxy backdrop */
                 var nebulae = [
-                    { x: 0.22, y: 0.30, r: 0.42, c: '99,102,241', a: 0.10, dx: 0.000018, dy: 0.000009, t: 0 },
-                    { x: 0.78, y: 0.62, r: 0.46, c: '34,211,238', a: 0.08, dx: -0.000014, dy: 0.000012, t: 2.1 },
-                    { x: 0.50, y: 0.85, r: 0.38, c: '167,139,250', a: 0.09, dx: 0.000010, dy: -0.000016, t: 4.4 },
-                    { x: 0.12, y: 0.78, r: 0.34, c: '244,114,182', a: 0.07, dx: 0.000016, dy: -0.000007, t: 1.3 },
-                    { x: 0.88, y: 0.18, r: 0.36, c: '52,211,153', a: 0.07, dx: -0.000011, dy: 0.000013, t: 3.2 }
+                    { x: 0.22, y: 0.30, r: 0.42, c: '99,102,241', a: 0.12, dx: 0.000018, dy: 0.000009, t: 0 },
+                    { x: 0.78, y: 0.62, r: 0.46, c: '34,211,238', a: 0.10, dx: -0.000014, dy: 0.000012, t: 2.1 },
+                    { x: 0.50, y: 0.85, r: 0.38, c: '167,139,250', a: 0.11, dx: 0.000010, dy: -0.000016, t: 4.4 },
+                    { x: 0.12, y: 0.78, r: 0.34, c: '244,114,182', a: 0.08, dx: 0.000016, dy: -0.000007, t: 1.3 },
+                    { x: 0.88, y: 0.18, r: 0.36, c: '52,211,153', a: 0.09, dx: -0.000011, dy: 0.000013, t: 3.2 },
+                    { x: 0.40, y: 0.12, r: 0.30, c: '251,191,36', a: 0.06, dx: 0.000013, dy: 0.000008, t: 5.0 },
+                    { x: 0.65, y: 0.92, r: 0.32, c: '236,72,153', a: 0.07, dx: -0.000009, dy: -0.000011, t: 0.7 }
                 ];
 
                 function spawnShoot() {
@@ -140,7 +178,7 @@
 
                     /* Base radial vignette glow */
                     var g = ctx.createRadialGradient(c.width * .5, c.height * .38, 0, c.width * .5, c.height * .28, c.width * .6);
-                    g.addColorStop(0, 'rgba(99,102,241,0.06)');
+                    g.addColorStop(0, 'rgba(99,102,241,0.07)');
                     g.addColorStop(1, 'transparent');
                     ctx.fillStyle = g; ctx.fillRect(0, 0, c.width, c.height);
 
@@ -160,10 +198,21 @@
                         ctx.fillRect(0, 0, c.width, c.height);
                     });
 
+                    /* Cosmic dust - tiny, near-invisible specks drifting slowly for atmosphere */
+                    dust.forEach(function (d) {
+                        d.x += d.dx; d.y += d.dy;
+                        if (d.x < -0.05) d.x = 1.05; if (d.x > 1.05) d.x = -0.05;
+                        if (d.y > 1.05) d.y = -0.05;
+                        ctx.beginPath();
+                        ctx.arc(d.x * c.width, d.y * c.height, d.r, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(255,255,255,' + d.a + ')';
+                        ctx.fill();
+                    });
+
                     stars.forEach(function (s) {
                         s.a += s.sp * s.d; if (s.a > 1 || s.a < 0.08) s.d *= -1;
                         ctx.beginPath(); ctx.arc(s.x * c.width, s.y * c.height, s.r, 0, Math.PI * 2);
-                        ctx.fillStyle = 'rgba(255,255,255,' + s.a + ')'; ctx.fill();
+                        ctx.fillStyle = 'rgba(' + s.tint + ',' + s.a + ')'; ctx.fill();
                     });
                     shootTimer++;
                     if (shootTimer >= nextShoot) { spawnShoot(); shootTimer = 0; nextShoot = rand(55, 100); }
