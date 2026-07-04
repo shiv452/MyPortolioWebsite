@@ -22,8 +22,27 @@ function openLightbox(src) {
     var lb = document.getElementById('certLightbox');
     var img = document.getElementById('certLbImg');
     if (!lb || !img) return;
+    // Support both image sources and PDF documents
+    if (src && src.toLowerCase().indexOf('.pdf') !== -1) {
+        // Replace inner content with an embedded PDF viewer
+        var inner = lb.querySelector('.cert-lb-inner');
+        if (!inner) return;
+        inner.innerHTML = '<button class="cert-lb-close" onclick="closeLightbox(event)">&times;</button>' +
+            '<object data="' + src + '" type="application/pdf" width="100%" height="700px">' +
+            '<p>Your browser does not support viewing PDFs inline. <a href="' + src + '" target="_blank">Open PDF</a></p>' +
+            '</object>';
+        lb.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        return;
+    }
+    // Otherwise treat as image
     img.src = src;
     img.alt = 'Certificate';
+    // Ensure inner wrapper has expected structure in case it was replaced earlier
+    var inner = lb.querySelector('.cert-lb-inner');
+    if (inner && !inner.querySelector('img')) {
+        inner.innerHTML = '<button class="cert-lb-close" onclick="closeLightbox(event)">&times;</button><img id="certLbImg" src="' + src + '" alt="Certificate">';
+    }
     lb.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
@@ -246,7 +265,9 @@ function addDelBtn(parent, removeFn, cls) {
     }
 
     //carousel needed when cards would full more than 3 rows
+    // Only enable carousel on mobile/tablet viewports (<=1024px)
     function shouldEnable() {
+        if (window.innerWidth > 1024) return false; // desktop: never auto-scroll
         return realCount() > colCount() * 3;
     }
 
