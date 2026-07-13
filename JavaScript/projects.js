@@ -27,17 +27,19 @@ function addProject() {
     var link = document.getElementById('proj-link').value.trim();
     var imgUrl = projImageData || '/Images/website_images/web-development.png';
     var tags = tagsRaw
-        ? tagsRaw.split(',').map(function (t) { return '<span class="tag">' + t.trim() + '</span>'; }).join('') : '';
-    var linkHtml = link ? '<a href="' + link + '" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i></a>' : '';
+        ? tagsRaw.split(',').map(function (t) { return '<span class="tag">' + escapeHtml(t.trim()) + '</span>'; }).join('') : '';
+    // Only allow http(s) links - blocks javascript: URI injection via the link field
+    var safeLink = /^https?:\/\//i.test(link) ? link : '';
+    var linkHtml = safeLink ? '<a href="' + escapeHtml(safeLink) + '" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i></a>' : '';
 
     var card = document.createElement('div');
     card.className = 'work';
     card.innerHTML =
-        '<img src="' + imgUrl + '" alt="' + title + '">' +
+        '<img src="' + imgUrl + '" alt="' + escapeHtml(title) + '">' +
         '<div class="layer">' +
         '<div class="layer-tags">' + tags + '</div>' +
-        '<h3>' + title + '</h3>' +
-        '<p>' + desc + '</p>' +
+        '<h3>' + escapeHtml(title) + '</h3>' +
+        '<p>' + escapeHtml(desc) + '</p>' +
         linkHtml +
         '</div>';
 

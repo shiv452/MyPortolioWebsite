@@ -35,6 +35,15 @@ function handleOverlayClick(e, id) {
     if (e.target.id === id) closeModal(id);
 }
 
+/* ========= HTML escaping ========= */
+// Used by projects.js/achievements.js before interpolating user-typed
+// text into innerHTML strings, to prevent stored XSS from add-forms.
+function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+}
+
 //=================Toast Notification =========//
 // showToast() is used by multiple other files - defined here so it loads first
 
