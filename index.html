@@ -437,13 +437,13 @@
             <input type="text" id="proj-tags" placeholder="Tags (comma-separated e.g. React, Node.js)">
             <textarea id="proj-desc" placeholder="Short description" rows="3"></textarea>
             <input type="url" id="proj-link" placeholder="GitHub / Live URL">
-            <label class="proj-img-upload file-upload-area" id="projImgUploadArea"
+            <div class="file-upload-area" id="projImgUploadArea"
                 onclick="document.getElementById('proj-img-file').click()">
                 <i class="fas fa-image"></i>
                 <span id="proj-img-label">Click to upload project image (optional)</span>
                 <input type="file" id="proj-img-file" accept="image/*" style="display: none;"
                     onchange="previewProjImage(this)">
-            </label>
+            </div>
             <div class="modal-actions">
                 <button class="btn btn-primary" onclick="addProject()">Add Project</button>
                 <button class="btn btn-outline" onclick="closeModal('addProjectModal')">Cancel</button>
@@ -817,7 +817,7 @@
                 <div class="file-upload-area" onclick="document.getElementById('award-img').click()"
                     id="awardUploadArea">
                     <i class="fas fa-image"></i>
-                    <span id="award-img-label">Click to upload certificate image (optional)</span>
+                    <span id="award-img-label">Click to upload award image (optional)</span>
                     <input type="file" id="award-img" accept="image/*" style="display: none;"
                         onchange="previewAwardImage(this)">
                 </div>

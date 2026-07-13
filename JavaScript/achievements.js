@@ -178,7 +178,7 @@ function addAward() {
     document.getElementById('award-org').value = '';
     document.getElementById('award-desc').value = '';
     document.getElementById('award-img').value = '';
-    document.getElementById('award-img-label').textContent = 'Click to upload certificate image (optional)';
+    document.getElementById('award-img-label').textContent = 'Click to upload award image (optional)';
     document.getElementById('awardUploadArea').style.borderColor = '';
     awardImageData = '';
 
