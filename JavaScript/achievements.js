@@ -61,20 +61,31 @@ function closeLightbox(e) {
     document.body.style.overflow = '';
 }
 
-//Certificates Image Preview
-var certImageData = '';
+//Certificates Image Preview (uploaded to Cloudinary on submit, see addCertificate())
+var certImageFile = null;
 function previewCertImage(input) {
     if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            certImageData = e.target.result;
-            var lbl = document.getElementById('cert-img-label');
-            if (lbl) lbl.textContent = input.files[0].name;
-            var up = document.getElementById('uploadArea');
-            if (up) up.style.borderColor = 'var(--accent)';
-        };
-        reader.readAsDataURL(input.files[0]);
+        certImageFile = input.files[0];
+        var lbl = document.getElementById('cert-img-label');
+        if (lbl) lbl.textContent = input.files[0].name;
+        var up = document.getElementById('uploadArea');
+        if (up) up.style.borderColor = 'var(--accent)';
     }
+}
+
+// Builds a .cert-thumb element from Firestore-shaped data (also used to
+// render the initial Firestore read further down this file).
+function buildCertThumb(p) {
+    var thumb = document.createElement('div');
+    thumb.className = 'cert-thumb';
+    if (p.id) thumb.dataset.id = p.id;
+    var src = p.imageUrl;
+    thumb.setAttribute('onclick', "openLightbox('" + src.replace(/'/g, "\\'") + "')");
+    thumb.innerHTML = '<img src="' + src + '" alt="' + escapeHtml(p.title) + '">';
+    // Only Firestore-backed thumbs (real doc id) are deletable - the static
+    // seed thumbs aren't tied to a document yet.
+    if (p.id) thumb.appendChild(addDelBtn(thumb, removeCert, 'cert-del-btn'));
+    return thumb;
 }
 
 
@@ -110,30 +121,42 @@ function addCertificate() {
     var titleEl = document.getElementById('cert-title');
     var title = titleEl ? titleEl.value.trim() : '';
     if (!title) { showToast('Certificate title is required.', 'error'); return; }
-    var imgSrc = certImageData || '/Images/website_images/software testing.png';
+    var topic = document.getElementById('cert-topic').value.trim();
+    var author = document.getElementById('cert-author').value.trim();
+    var desc = document.getElementById('cert-desc').value.trim();
+    var imageFile = certImageFile;
 
-    var certGrid = document.getElementById('certsGrid');
-    if (certGrid) {
-        var thumb = document.createElement('div');
-        thumb.className = 'cert-thumb';
-        var src = imgSrc;
-        thumb.setAttribute('onclick', "openLightbox('" + src.replace(/'/g, "\\'") + "')");
-        thumb.innerHTML = '<img src="' + src + '" alt="' + escapeHtml(title) + '">';
-        var dBtn = addDelBtn(thumb, removeCert, 'cert-del-btn');
-        thumb.appendChild(dBtn);
-        certGrid.insertBefore(thumb, certGrid.firstChild);
-    }
+    var submitBtn = document.querySelector('#addCertModal .modal-actions .btn-primary');
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Saving...'; }
 
-    document.getElementById('cert-title').value = '';
-    document.getElementById('cert-topic').value = '';
-    document.getElementById('cert-author').value = '';
-    document.getElementById('cert-desc').value = '';
-    document.getElementById('cert-img').value = '';
-    document.getElementById('cert-img-label').textContent = 'Click to upload certificate image';
-    document.getElementById('uploadArea').style.borderColor = '';
-    certImageData = '';
-    closeModal('addCertModal');
-    showToast('certificate added!', 'success');
+    import('/JavaScript/data-certificates.js').then(function (m) {
+        var uploadP = imageFile ? m.uploadCertificateImage(imageFile) : Promise.resolve('/Images/website_images/software testing.png');
+        return uploadP.then(function (imageUrl) {
+            var data = { title: title, topic: topic, author: author, description: desc, imageUrl: imageUrl };
+            return m.addCertificateDoc(data).then(function (id) {
+                data.id = id;
+                return data;
+            });
+        });
+    }).then(function (data) {
+        var certGrid = document.getElementById('certsGrid');
+        if (certGrid) certGrid.insertBefore(buildCertThumb(data), certGrid.firstChild);
+
+        document.getElementById('cert-title').value = '';
+        document.getElementById('cert-topic').value = '';
+        document.getElementById('cert-author').value = '';
+        document.getElementById('cert-desc').value = '';
+        document.getElementById('cert-img').value = '';
+        document.getElementById('cert-img-label').textContent = 'Click to upload certificate image';
+        document.getElementById('uploadArea').style.borderColor = '';
+        certImageFile = null;
+        closeModal('addCertModal');
+        showToast('Certificate added!', 'success');
+    }).catch(function () {
+        showToast('Failed to add certificate - check you are signed in as admin.', 'error');
+    }).then(function () {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Add Certificate'; }
+    });
 }
 
 // Add Award
@@ -207,10 +230,17 @@ function removeAward(card) {
 }
 
 function removeCert(thumb) {
+    var id = thumb.dataset.id;
     thumb.style.transition = 'opacity 0.28s, transform 0.28s';
     thumb.style.opacity = '0';
     thumb.style.transform = 'scale(0.82)';
     setTimeout(function () { if (thumb.parentNode) thumb.remove(); }, 300);
+
+    if (id) {
+        import('/JavaScript/data-certificates.js')
+            .then(function (m) { return m.deleteCertificateDoc(id); })
+            .catch(function () { showToast('Failed to delete on the server - it may reappear on reload.', 'error'); });
+    }
 }
 
 // delete button factory
@@ -229,13 +259,34 @@ function addDelBtn(parent, removeFn, cls) {
 }
 
 // INIT : WIRED DELETE BUTTONS
-// Session-only - Firebase will replace this with live Firestore reads.
+// Awards are still session-only (next phase). Certificates: these wire up
+// the static seed thumbnails already in index.html; if Firestore has real
+// certificates the block below replaces certsGrid's content entirely
+// before this matters.
 (function () {
     document.querySelectorAll('#achProf .ach-award-grid .ach-award-card').forEach(function (card) {
         card.appendChild(addDelBtn(card, removeAward, 'ach-card-del'));
     });
     document.querySelectorAll('#certsGrid .cert-thumb').forEach(function (thumb) {
         thumb.appendChild(addDelBtn(thumb, removeCert, 'cert-del-btn'));
+    });
+})();
+
+// Initial load: Firestore is the source of truth once it has data; the
+// static thumbnails already in index.html are only a first-load/offline seed.
+(function () {
+    var certGrid = document.getElementById('certsGrid');
+    if (!certGrid) return;
+
+    import('/JavaScript/data-certificates.js').then(function (m) {
+        return m.getCertificates();
+    }).then(function (certs) {
+        if (certs && certs.length) {
+            certGrid.innerHTML = '';
+            certs.forEach(function (c) { certGrid.appendChild(buildCertThumb(c)); });
+        }
+    }).catch(function () {
+        // Offline or Firestore error - keep the static seed thumbnails already on the page
     });
 })();
 
