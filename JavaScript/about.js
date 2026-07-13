@@ -30,17 +30,35 @@
     fileInp.style.display = 'none';
     fileInp.onchange = function () {
         if (!fileInp.files || !fileInp.files[0]) return;
-        var reader = new FileReader();
-        reader.onload = function (ev) {
+        var file = fileInp.files[0];
+        fileInp.value = '';
+
+        showToast('Uploading photo...', 'success');
+        import('/JavaScript/data-profile.js').then(function (m) {
+            return m.uploadProfilePhoto(file).then(function (photoUrl) {
+                return m.setProfilePhoto(photoUrl).then(function () { return photoUrl; });
+            });
+        }).then(function (photoUrl) {
             var pic = document.getElementById('aboutProfilePic');
-            if (pic) pic.src = ev.target.result;
+            if (pic) pic.src = photoUrl;
             showToast('Profile photo updated!', 'success');
-        };
-        reader.readAsDataURL(fileInp.files[0]);
+        }).catch(function () {
+            showToast('Failed to update photo - check you are signed in as admin.', 'error');
+        });
     };
 
     lb1.appendChild(fileInp);
     wrap.appendChild(lb1);
+
+    // Initial load: Firestore is the source of truth once it has a photo;
+    // the static image already in index.html is only a first-load/offline seed.
+    import('/JavaScript/data-profile.js').then(function (m) {
+        return m.getProfilePhoto();
+    }).then(function (photoUrl) {
+        if (photoUrl) col1img.src = photoUrl;
+    }).catch(function () {
+        // Offline or Firestore error - keep the static photo already on the page
+    });
 })();
 
 /* ================= About Panel Peek/Pin ============== */
