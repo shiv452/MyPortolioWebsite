@@ -89,18 +89,41 @@ function buildCertThumb(p) {
 }
 
 
-// Award image preview
-var awardImageData = '';
+// Award image preview (uploaded to Cloudinary on submit, see addAward())
+var awardImageFile = null;
 function previewAwardImage(input) {
     if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            awardImageData = e.target.result;
-            document.getElementById('award-img-label').textContent = input.files[0].name;
-            document.getElementById('awardUploadArea').style.borderColor = 'var(--accent2, #22d3ee)';
-        };
-        reader.readAsDataURL(input.files[0]);
+        awardImageFile = input.files[0];
+        document.getElementById('award-img-label').textContent = input.files[0].name;
+        document.getElementById('awardUploadArea').style.borderColor = 'var(--accent2, #22d3ee)';
     }
+}
+
+// Builds an .ach-award-card element from Firestore-shaped data (also used
+// to render the initial Firestore read further down this file).
+function buildAwardCard(p) {
+    var imgHTML = '';
+    if (p.imageUrl) {
+        var safeUrl = p.imageUrl.replace(/'/g, "\\'");
+        imgHTML = '<div class="ach-award-img" onclick="openLightbox(\'' + safeUrl + '\')"><img src="' + p.imageUrl + '" alt="' + escapeHtml(p.title) + '"><span>VIEW</span></div>';
+    }
+
+    var card = document.createElement('div');
+    card.className = 'ach-award-card';
+    if (p.id) card.dataset.id = p.id;
+    card.innerHTML =
+        '<div class="ach-award-badge ' + (p.iconClass || '') + '"><i class="fas ' + (p.icon || 'fa-trophy') + '"></i></div>' +
+        '<div class="ach-award-info">' +
+        (p.org ? '<span class="ach-award-org">' + escapeHtml(p.org) + '</span>' : '') +
+        '<h4 class="ach-award-title">' + escapeHtml(p.title) + '</h4>' +
+        (p.description ? '<p class="ach-award-desc">' + escapeHtml(p.description) + '</p>' : '') +
+        '</div>' +
+        imgHTML;
+
+    // Only Firestore-backed cards (real doc id) are deletable - the static
+    // seed cards aren't tied to a document yet.
+    if (p.id) card.appendChild(addDelBtn(card, removeAward, 'ach-card-del'));
+    return card;
 }
 
 
@@ -172,54 +195,56 @@ function addAward() {
     var selected = document.querySelector('#awardiconPicker .selected');
     var icon = selected ? selected.getAttribute('data-icon') : 'fa-trophy';
     var cls = selected ? (selected.getAttribute('data-cls') || '') : '';
+    var imageFile = awardImageFile;
 
     var grid = document.querySelector('#achProf .ach-award-grid');
     if (!grid) return;
 
-    var imgHTML = '';
-    if (awardImageData) {
-        var safeData = awardImageData.replace(/'/g, "\\'");
-        imgHTML = '<div class="ach-award-img" onclick="openLightbox(\'' + safeData + '\')"><img src="' + awardImageData + '" alt="' + escapeHtml(title) + '"><span>VIEW</span></div>';
-    }
+    var submitBtn = document.querySelector('#addAwardModal .modal-actions .btn-primary');
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Saving...'; }
 
-    var card = document.createElement('div');
-    card.className = 'ach-award-card';
-    card.innerHTML =
-        '<div class="ach-award-badge ' + cls + '"><i class="fas ' + icon + '"></i></div>' +
-        '<div class="ach-award-info">' +
-        (org ? '<span class="ach-award-org">' + escapeHtml(org) + '</span>' : '') +
-        '<h4 class="ach-award-title">' + escapeHtml(title) + '</h4>' +
-        (desc ? '<p class="ach-award-desc">' + escapeHtml(desc) + '</p>' : '') +
-        '</div>' +
-        imgHTML;
+    import('/JavaScript/data-awards.js').then(function (m) {
+        var uploadP = imageFile ? m.uploadAwardImage(imageFile) : Promise.resolve(null);
+        return uploadP.then(function (imageUrl) {
+            var data = { title: title, org: org, description: desc, icon: icon, iconClass: cls, imageUrl: imageUrl };
+            return m.addAwardDoc(data).then(function (id) {
+                data.id = id;
+                return data;
+            });
+        });
+    }).then(function (data) {
+        grid.insertBefore(buildAwardCard(data), grid.firstChild);
 
-    card.appendChild(addDelBtn(card, removeAward, 'ach-card-del'));
-    grid.insertBefore(card, grid.firstChild);
+        //Reset form
+        document.getElementById('award-title').value = '';
+        document.getElementById('award-org').value = '';
+        document.getElementById('award-desc').value = '';
+        document.getElementById('award-img').value = '';
+        document.getElementById('award-img-label').textContent = 'Click to upload award image (optional)';
+        document.getElementById('awardUploadArea').style.borderColor = '';
+        awardImageFile = null;
 
-    //Reset form
-    document.getElementById('award-title').value = '';
-    document.getElementById('award-org').value = '';
-    document.getElementById('award-desc').value = '';
-    document.getElementById('award-img').value = '';
-    document.getElementById('award-img-label').textContent = 'Click to upload award image (optional)';
-    document.getElementById('awardUploadArea').style.borderColor = '';
-    awardImageData = '';
+        //Reset icon selection back to first option
+        document.querySelectorAll('#awardiconPicker div').forEach(function (opt, i) {
+            opt.classList.toggle('selected', i === 0);
+        });
 
-    //Reset icon selection back to first option
-    document.querySelectorAll('#awardiconPicker div').forEach(function (opt, i) {
-        opt.classList.toggle('selected', i === 0);
+        closeModal('addAwardModal');
+        showToast('Award added!', 'success');
+        //Recheck carousel after adding a new card
+        if (typeof window._checkAwardCarousel == 'function') {
+            setTimeout(window._checkAwardCarousel, 50);
+        }
+    }).catch(function () {
+        showToast('Failed to add award - check you are signed in as admin.', 'error');
+    }).then(function () {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Add Award'; }
     });
-
-    closeModal('addAwardModal');
-    showToast('Award added!', 'success');
-    //Recheck carousel after adding a new card
-    if (typeof window._checkAwardCarousel == 'function') {
-        setTimeout(window._checkAwardCarousel, 50);
-    }
 }
 
 // Remove Helpers
 function removeAward(card) {
+    var id = card.dataset.id;
     card.style.transition = 'opacity 0.28s, transform 0.28s';
     card.style.opacity = '0';
     card.style.transform = 'scale(0.86)';
@@ -227,6 +252,12 @@ function removeAward(card) {
         if (card.parentNode) card.remove();
         if (typeof window._checkAwardCarousel === 'function') window._checkAwardCarousel();
     }, 310);
+
+    if (id) {
+        import('/JavaScript/data-awards.js')
+            .then(function (m) { return m.deleteAwardDoc(id); })
+            .catch(function () { showToast('Failed to delete on the server - it may reappear on reload.', 'error'); });
+    }
 }
 
 function removeCert(thumb) {
@@ -259,10 +290,9 @@ function addDelBtn(parent, removeFn, cls) {
 }
 
 // INIT : WIRED DELETE BUTTONS
-// Awards are still session-only (next phase). Certificates: these wire up
-// the static seed thumbnails already in index.html; if Firestore has real
-// certificates the block below replaces certsGrid's content entirely
-// before this matters.
+// These wire up the static seed cards/thumbnails already in index.html; if
+// Firestore has real data the blocks below replace the grids' content
+// entirely before this matters.
 (function () {
     document.querySelectorAll('#achProf .ach-award-grid .ach-award-card').forEach(function (card) {
         card.appendChild(addDelBtn(card, removeAward, 'ach-card-del'));
@@ -287,6 +317,30 @@ function addDelBtn(parent, removeFn, cls) {
         }
     }).catch(function () {
         // Offline or Firestore error - keep the static seed thumbnails already on the page
+    });
+})();
+
+// Same for Awards. The auto-scroll carousel (further down this file) may
+// have already wrapped the static seed cards into strips by the time this
+// resolves - clear that state so window._checkAwardCarousel() rebuilds
+// cleanly from the real cards instead of leaving a stale carousel-mode shell.
+(function () {
+    var grid = document.querySelector('#achProf .ach-award-grid');
+    if (!grid) return;
+
+    import('/JavaScript/data-awards.js').then(function (m) {
+        return m.getAwards();
+    }).then(function (awards) {
+        if (awards && awards.length) {
+            grid.innerHTML = '';
+            grid.classList.remove('carousel-mode');
+            delete grid.dataset.carouselCols;
+            awards.forEach(function (a) { grid.appendChild(buildAwardCard(a)); });
+        }
+    }).catch(function () {
+        // Offline or Firestore error - keep the static seed cards already on the page
+    }).then(function () {
+        if (typeof window._checkAwardCarousel === 'function') window._checkAwardCarousel();
     });
 })();
 
