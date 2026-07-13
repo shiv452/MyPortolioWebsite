@@ -3417,6 +3417,7 @@ body:not(.is-admin) .add-item-btn,
 body:not(.is-admin) .add-award-btn,
 body:not(.is-admin) .add-cert-btn,
 body:not(.is-admin) .rw-upload-btn,
+body:not(.is-admin) .rw-del-btn,
 body:not(.is-admin) .about-pic-edit,
 body:not(.is-admin) .ach-card-del,
 body:not(.is-admin) .cert-del-btn {

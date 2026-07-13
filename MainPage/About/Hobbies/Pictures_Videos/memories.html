@@ -7,6 +7,11 @@
     <title>Glimpse of Memories</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/MainPage/About/Hobbies/Pictures_Videos/memories.css">
+    <!-- Firebase Auth: reuses the admin session signed into from the main
+         site's footer lock icon (Firebase Auth persists across pages on
+         the same origin). Toggles body.is-admin, which memories.css uses
+         to hide the add/remove controls for regular visitors. -->
+    <script type="module" src="/JavaScript/auth.js"></script>
 </head>
 
 <body>
@@ -358,7 +363,7 @@
 
             /* ======== Create dot ====== */
 
-            function createDot(src, onScreen) {
+            function createDot(src, onScreen, id) {
                 var dotSize = Math.floor(rand(7, 14));
                 var g = GLOWS[Math.floor(Math.random() * GLOWS.length)];
 
@@ -385,7 +390,7 @@
                 document.body.appendChild(el);
 
                 var b = {
-                    el: el, src: src,
+                    el: el, src: src, id: id,
                     x: rand(20, W - 20),
                     y: onScreen ? rand(HEADER_H + 10, H - 20) : rand(-H * 0.9, -10),
                     vx: rand(-0.32, 0.32),
@@ -409,6 +414,16 @@
                         updateCount();
                         showToast('Photo removed');
                     }, 320);
+
+                    // Only Firestore-backed photos (real doc id) are actually
+                    // deleted server-side - the 32 built-in seed photos aren't
+                    // tied to a document, so removing one is session-only,
+                    // same as it always was.
+                    if (b.id) {
+                        import('/JavaScript/data-memories.js')
+                            .then(function (m) { return m.deleteMemoryDoc(b.id); })
+                            .catch(function () { showToast('Failed to delete on the server - it may reappear on reload.'); });
+                    }
                 });
 
                 el.addEventListener('click', function (e) {
@@ -443,9 +458,20 @@
                 b.el.classList.remove('expanded', 'pinned');
             }
 
-            /* Populate all photo */
+            /* Populate all photo - the 32 built-in ones are permanent site
+               content, always shown. Admin-uploaded photos (Firestore) are
+               added on top once the read resolves, not a replacement. */
             SRCS.forEach(function (src, i) { createDot(src, i % 2 === 0); });
             updateCount();
+
+            import('/JavaScript/data-memories.js').then(function (m) {
+                return m.getMemories();
+            }).then(function (memories) {
+                memories.forEach(function (mem) { createDot(mem.imageUrl, true, mem.id); });
+                updateCount();
+            }).catch(function () {
+                // Offline or Firestore error - the built-in gallery still shows
+            });
 
             /* ====== Physics Loop ====== */
             function loop() {
@@ -505,21 +531,27 @@
                 setTimeout(function () { mx = -9999; }, 1400);
             });
 
-            /* Add Photo */
+            /* Add Photo - uploads to Cloudinary, persists via Firestore */
             document.getElementById('photoInput').addEventListener('change', function (e) {
                 var files = Array.from(e.target.files).filter(function (f) { return f.type.startsWith('image/'); });
-                var loaded = 0;
-                files.forEach(function (file) {
-                    var reader = new FileReader();
-                    reader.onload = function (ev) {
-                        createDot(ev.target.result, true);
-                        updateCount();
-                        loaded++;
-                        if (loaded === files.length) showToast(loaded + ' photo' + (loaded > 1 ? 's' : '') + ' added');
-                    };
-                    reader.readAsDataURL(file);
-                });
                 this.value = '';
+                if (!files.length) return;
+
+                import('/JavaScript/data-memories.js').then(function (m) {
+                    var done = 0;
+                    files.forEach(function (file) {
+                        m.uploadMemoryImage(file).then(function (imageUrl) {
+                            return m.addMemoryDoc(imageUrl).then(function (id) {
+                                createDot(imageUrl, true, id);
+                                updateCount();
+                                done++;
+                                if (done === files.length) showToast(done + ' photo' + (done > 1 ? 's' : '') + ' added');
+                            });
+                        }).catch(function () {
+                            showToast('Upload failed - check you are signed in as admin.');
+                        });
+                    });
+                });
             });
 
             function updateCount() {

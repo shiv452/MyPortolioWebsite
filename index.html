@@ -772,8 +772,8 @@
 
                 <div class="file-upload-area" onclick="document.getElementById('cert-img').click()" id="uploadArea">
                     <i class="fas fa-cloud-upload-alt"></i>
-                    <span id="cert-img-label">Click to upload certificate image</span>
-                    <input type="file" id="cert-img" accept="image/*" style="display: none;"
+                    <span id="cert-img-label">Click to upload certificate image or PDF</span>
+                    <input type="file" id="cert-img" accept="image/*,.pdf,application/pdf" style="display: none;"
                         onchange="previewCertImage(this)">
                 </div>
                 <div class="modal-actions">
@@ -817,8 +817,8 @@
                 <div class="file-upload-area" onclick="document.getElementById('award-img').click()"
                     id="awardUploadArea">
                     <i class="fas fa-image"></i>
-                    <span id="award-img-label">Click to upload award image (optional)</span>
-                    <input type="file" id="award-img" accept="image/*" style="display: none;"
+                    <span id="award-img-label">Click to upload award image or PDF (optional)</span>
+                    <input type="file" id="award-img" accept="image/*,.pdf,application/pdf" style="display: none;"
                         onchange="previewAwardImage(this)">
                 </div>
                 <div class="modal-actions">

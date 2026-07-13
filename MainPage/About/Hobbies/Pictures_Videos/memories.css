@@ -5,6 +5,13 @@
   margin: 0;
   padding: 0;
 }
+
+/* Adding/removing photos is an admin-only action - body.is-admin is
+   toggled by JavaScript/auth.js on Firebase Auth state. */
+body:not(.is-admin) .add-btn,
+body:not(.is-admin) .dot-remove {
+  display: none !important;
+}
 :root {
   --bg: #04050d;
   --text: #f1f5f9;
