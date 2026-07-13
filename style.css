@@ -3405,3 +3405,42 @@ footer {
     padding: 12px 8px;
   }
 }
+
+/* ====================================
+   ADMIN GATING
+   Content editing (add/upload/delete) is only for the signed-in owner.
+   body.is-admin is toggled by JavaScript/auth.js on Firebase Auth state.
+==================================== */
+body:not(.is-admin) .add-item-btn,
+body:not(.is-admin) .add-award-btn,
+body:not(.is-admin) .add-cert-btn,
+body:not(.is-admin) .rw-upload-btn,
+body:not(.is-admin) .about-pic-edit,
+body:not(.is-admin) .ach-card-del,
+body:not(.is-admin) .cert-del-btn {
+  display: none !important;
+}
+
+.admin-entry {
+  background: none;
+  border: none;
+  color: var(--text-muted, #94a3b8);
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-left: 10px;
+  opacity: 0.5;
+  transition: opacity 0.2s, color 0.2s;
+}
+.admin-entry:hover {
+  opacity: 1;
+  color: var(--accent, #6366f1);
+}
+.admin-signout {
+  display: none;
+}
+body.is-admin #adminEntry {
+  display: none;
+}
+body.is-admin #adminSignOutBtn {
+  display: inline;
+}

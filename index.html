@@ -1002,8 +1002,29 @@
         <div class="copyright">
             <p>&copy; 2025 Shivam Goyal &nbsp;&middot;&nbsp; Built with <i class="fas fa-heart"></i>
                 &nbsp;&middot;&nbsp; Deployed on Netlify</p>
+            <button id="adminEntry" class="admin-entry" title="Admin sign in"><i class="fas fa-lock"></i></button>
+            <button id="adminSignOutBtn" class="admin-entry admin-signout" title="Sign out"><i
+                    class="fas fa-lock-open"></i></button>
         </div>
     </footer>
+
+    <!-- ========== ADMIN LOGIN MODAL ========== -->
+    <div class="modal-overlay" id="adminLoginModal" onclick="handleOverlayClick(event,'adminLoginModal')">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeModal('adminLoginModal')">&times;</button>
+            <h3><i class="fas fa-lock"></i> Admin Sign In</h3>
+            <form id="adminLoginForm">
+                <input type="email" id="admin-email" placeholder="Email" autocomplete="username" required>
+                <input type="password" id="admin-password" placeholder="Password" autocomplete="current-password"
+                    required>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                    <button type="button" class="btn btn-outline"
+                        onclick="closeModal('adminLoginModal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
 
 
@@ -1027,6 +1048,8 @@
     <script src="/JavaScript/achievements.js"></script>
     <!-- Project add-card modal + infinite carousel -->
     <script src="/JavaScript/projects.js"></script>
+    <!-- Firebase Auth: admin sign-in, toggles body.is-admin -->
+    <script type="module" src="/JavaScript/auth.js"></script>
     <script>/* All JS has been moved to external files under /JavaScript/ folder */</script>
 
 </body>
