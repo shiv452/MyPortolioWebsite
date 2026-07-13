@@ -442,6 +442,7 @@ nav .fas {
 }
 
 .work {
+  position: relative;
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--border);
@@ -2761,7 +2762,8 @@ nav .fas.fa-bars {
     background 0.2s,
     transform 0.2s;
 }
-.ach-award-card:hover .ach-card-del {
+.ach-award-card:hover .ach-card-del,
+.work:hover .ach-card-del {
   opacity: 1;
   pointer-events: auto;
 }
