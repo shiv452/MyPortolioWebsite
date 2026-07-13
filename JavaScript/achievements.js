@@ -118,7 +118,7 @@ function addCertificate() {
         thumb.className = 'cert-thumb';
         var src = imgSrc;
         thumb.setAttribute('onclick', "openLightbox('" + src.replace(/'/g, "\\'") + "')");
-        thumb.innerHTML = '<img src="' + src + '" alt="' + title + '">';
+        thumb.innerHTML = '<img src="' + src + '" alt="' + escapeHtml(title) + '">';
         var dBtn = addDelBtn(thumb, removeCert, 'cert-del-btn');
         thumb.appendChild(dBtn);
         certGrid.insertBefore(thumb, certGrid.firstChild);
@@ -156,7 +156,7 @@ function addAward() {
     var imgHTML = '';
     if (awardImageData) {
         var safeData = awardImageData.replace(/'/g, "\\'");
-        imgHTML = '<div class="ach-award-img" onclick="openLightbox(\'' + safeData + '\')"><img src="' + awardImageData + '" alt="' + title + '"><span>VIEW</span></div>';
+        imgHTML = '<div class="ach-award-img" onclick="openLightbox(\'' + safeData + '\')"><img src="' + awardImageData + '" alt="' + escapeHtml(title) + '"><span>VIEW</span></div>';
     }
 
     var card = document.createElement('div');
@@ -164,9 +164,9 @@ function addAward() {
     card.innerHTML =
         '<div class="ach-award-badge ' + cls + '"><i class="fas ' + icon + '"></i></div>' +
         '<div class="ach-award-info">' +
-        (org ? '<span class="ach-award-org">' + org + '</span>' : '') +
-        '<h4 class="ach-award-title">' + title + '</h4>' +
-        (desc ? '<p class="ach-award-desc">' + desc + '</p>' : '') +
+        (org ? '<span class="ach-award-org">' + escapeHtml(org) + '</span>' : '') +
+        '<h4 class="ach-award-title">' + escapeHtml(title) + '</h4>' +
+        (desc ? '<p class="ach-award-desc">' + escapeHtml(desc) + '</p>' : '') +
         '</div>' +
         imgHTML;
 
