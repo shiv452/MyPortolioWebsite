@@ -229,11 +229,6 @@ nav .fas {
   color: var(--accent);
   background: rgba(99, 102, 241, 0.1);
 }
-/* Hide the mobile hamburger/close icons that got cloned along with the <ul> */
-.nav-sticky-inner ul li .fas {
-  display: none;
-}
-
 /* Sticky nav's own hamburger trigger - hidden by default (link list is visible
    above the mobile/tablet breakpoint), shown only when the link list hides. */
 .nav-sticky-bars {
@@ -448,46 +443,40 @@ nav .fas {
 
 .work {
   border-radius: var(--radius);
-  position: relative;
   overflow: hidden;
   border: 1px solid var(--border);
+  background: var(--card);
   flex-shrink: 0;
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
-  width: 420px;
-  min-height: 300px;
+  width: 380px;
+  display: flex;
+  flex-direction: column;
   transition:
-    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    box-shadow 0.4s ease,
-    border-color 0.35s ease;
+    transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.35s ease,
+    border-color 0.3s ease;
   will-change: transform;
 }
 
 .work img {
   width: 100%;
-  height: 300px;
+  height: 200px;
   object-fit: cover;
   display: block;
-  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.95);
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.95);
 }
 
 .layer {
-  width: 100%;
-  height: 0;
-  background: rgba(17, 24, 39, 0.97);
-  border-radius: var(--radius);
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  overflow: hidden;
+  background: var(--card);
+  border-top: 1px solid var(--border);
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-  padding: 24px;
-  text-align: center;
-  transition: height 0.4s ease;
+  align-items: flex-start;
+  flex: 1;
+  padding: 22px 24px;
+  text-align: left;
   color: var(--text);
 }
 
@@ -495,8 +484,7 @@ nav .fas {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .tag {
@@ -511,9 +499,9 @@ nav .fas {
 }
 
 .layer h3 {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 800;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   color: var(--text);
   letter-spacing: -0.01em;
 }
@@ -521,41 +509,42 @@ nav .fas {
 .layer p {
   font-size: 0.9rem;
   color: var(--muted);
-  line-height: 1.7;
-  margin-bottom: 20px;
+  line-height: 1.65;
+  margin-bottom: 18px;
 }
 
 .layer a {
+  margin-top: auto;
+  align-self: flex-start;
   color: var(--accent2);
   text-decoration: none;
-  font-size: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 9px 16px;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  background: rgba(34, 211, 238, 0.3);
+  gap: 8px;
+  background: rgba(34, 211, 238, 0.12);
   border: 1px solid rgba(34, 211, 238, 0.3);
-  transition: background 0.3s;
+  transition: background 0.25s, border-color 0.25s, transform 0.2s;
 }
 
 .layer a:hover {
-  background: rgba(34, 211, 238, 0.25);
+  background: rgba(34, 211, 238, 0.22);
+  border-color: rgba(34, 211, 238, 0.55);
+  transform: translateX(3px);
 }
 
 .work:hover img {
-  transform: scale(1.08);
-}
-
-.work:hover .layer {
-  height: 100%;
+  transform: scale(1.06);
 }
 
 .work:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-8px);
   box-shadow:
-    0 24px 64px rgba(99, 102, 241, 0.38),
-    0 8px 24px rgba(0, 0, 0, 0.5);
+    0 24px 64px rgba(99, 102, 241, 0.28),
+    0 8px 24px rgba(0, 0, 0, 0.45);
   border-color: rgba(99, 102, 241, 0.65);
   z-index: 2;
 }
@@ -573,25 +562,64 @@ nav .fas {
 .portfolio-link-section {
   margin-top: 32px;
   display: grid;
-  gap: 18px;
+  gap: 14px;
 }
 
 .portfolio-section-title {
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .portfolio-link-block {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 16px 18px;
+  padding: 18px 20px;
+  transition: border-color 0.25s ease;
+}
+
+.portfolio-link-block:hover {
+  border-color: rgba(99, 102, 241, 0.35);
 }
 
 .portfolio-link-block h4 {
-  margin: 0 0 10px;
+  margin: 0;
   font-size: 0.95rem;
+  color: var(--accent2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.portfolio-link-block h4 .fa-linkedin {
+  color: #0a66c2;
+  font-size: 1.05rem;
+}
+
+.link-count {
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  padding: 2px 9px;
+  border-radius: 999px;
+}
+
+.link-chevron {
+  font-size: 0.8rem;
+  color: var(--muted);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.portfolio-link-block.open .link-chevron {
+  transform: rotate(180deg);
   color: var(--accent2);
 }
 
@@ -668,24 +696,43 @@ nav .fas {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: none; /* hidden by default; reveal on hover or when .open */
-  gap: 8px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
+  transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
 }
 
-.portfolio-link-block:hover .portfolio-link-list,
 .portfolio-link-block.open .portfolio-link-list {
-  display: grid;
+  max-height: 3000px;
+  opacity: 1;
+  margin-top: 14px;
 }
 
 .portfolio-link-list a {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: var(--text);
   text-decoration: none;
   border: 1px solid rgba(99, 102, 241, 0.2);
   border-radius: 10px;
   padding: 10px 12px;
   background: rgba(17, 24, 39, 0.35);
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.portfolio-link-list a::before {
+  content: '\f0c1';
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: var(--accent2);
+  font-size: 0.75rem;
+  flex-shrink: 0;
 }
 
 .portfolio-link-list a[data-preview] {
@@ -712,15 +759,21 @@ nav .fas {
 }
 
 .portfolio-link-list a::after {
-  content: ' ↗';
-  font-size: 0.95rem;
-  color: var(--accent2);
-  margin-left: 6px;
+  content: '↗';
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .portfolio-link-list a:hover {
   transform: translateY(-2px);
-  border-color: rgba(99, 102, 241, 0.45);
+  border-color: rgba(99, 102, 241, 0.5);
+  background: rgba(99, 102, 241, 0.08);
+}
+
+.portfolio-link-list a:hover::after {
+  color: var(--accent2);
 }
 
 .ach-award-links {
@@ -1748,6 +1801,23 @@ nav .fas.fa-bars {
   display: none;
 }
 
+/* Dimmed backdrop behind the slide-out drawer */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 998;
+}
+.nav-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 /* Achievement responsive */
 @media (max-width: 900px) {
   .ach-award-grid {
@@ -1820,15 +1890,17 @@ nav .fas.fa-bars {
     width: 72%;
     max-width: 320px;
     height: 100vh;
-    background: #0f1117;
-    border-left: 1px solid var(--border);
+    background: rgba(10, 10, 15, 0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
     padding: 64px 28px 28px;
     transform: translateX(100%);
-    transition: transform 0.3s ease;
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     display: flex;
     flex-direction: column;
     z-index: 999;
-    box-shadow: -8px 0 40px rgba(0, 0, 0, 0.5);
+    box-shadow: -16px 0 48px rgba(0, 0, 0, 0.45);
   }
   nav ul.show {
     transform: translateX(0);
@@ -1841,16 +1913,38 @@ nav .fas.fa-bars {
     padding: 10px 4px;
     display: block;
   }
-  nav .fas.fa-bars {
-    display: block;
+
+  /* Hamburger trigger + in-drawer close button - matching circular icon style */
+  nav .fas.fa-bars,
+  nav ul .fa-times {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+    color: var(--text);
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
   }
   nav .fas.fa-bars {
     position: absolute;
     top: 20px;
     right: 24px;
-    font-size: 22px;
-    color: var(--text);
-    cursor: pointer;
+  }
+  nav ul .fa-times {
+    position: absolute;
+    top: 20px;
+    right: 28px;
+  }
+  nav .fas.fa-bars:hover,
+  nav ul .fa-times:hover {
+    background: rgba(99, 102, 241, 0.18);
+    border-color: rgba(99, 102, 241, 0.45);
+    transform: translateY(-1px);
   }
 }
 
@@ -1923,6 +2017,8 @@ nav .fas.fa-bars {
   border-radius: 16px;
   border: 1px solid var(--border);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
 }
 
 .about-intro .about-col-2 {
