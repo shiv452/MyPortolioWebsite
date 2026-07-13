@@ -83,6 +83,27 @@ function showToast(msg, type) {
     });
 })();
 
+/* ============ 3D tilt on hover (project cards + profile photo) ========= */
+(function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var tiltEls = document.querySelectorAll('.work, .about-intro .about-col-1 img');
+
+    tiltEls.forEach(function (el) {
+        el.addEventListener('mousemove', function (e) {
+            var r = el.getBoundingClientRect();
+            var px = (e.clientX - r.left) / r.width;
+            var py = (e.clientY - r.top) / r.height;
+            var rotY = (px - 0.5) * 14;
+            var rotX = (0.5 - py) * 14;
+            el.style.transform = 'perspective(700px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) translateY(-6px)';
+        });
+        el.addEventListener('mouseleave', function () {
+            el.style.transform = '';
+        });
+    });
+})();
+
 /* =============== Section Reveal Animation ========= */
 (function () {
     //Selector to animate in on scroll 

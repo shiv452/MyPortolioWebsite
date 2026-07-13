@@ -5,21 +5,37 @@
 
 var sidemenu = document.getElementById('sidemenu');
 
+// Dimmed backdrop behind the drawer - click it to close, like any modal
+// Inserted inside <nav> (not appended to <body>) so it shares the same
+// stacking context as the drawer - #header .container has z-index:1, which
+// traps the drawer's z-index:999 inside that context; an overlay appended
+// straight to <body> would sit in the root context and paint over it regardless.
+var navOverlay = document.createElement('div');
+navOverlay.className = 'nav-overlay';
+navOverlay.setAttribute('aria-hidden', 'true');
+navOverlay.addEventListener('click', closemenu);
+var navEl = document.querySelector('nav');
+if (navEl && sidemenu) {
+    navEl.insertBefore(navOverlay, sidemenu);
+} else {
+    document.body.appendChild(navOverlay);
+}
+
 // Hamburger open/close - use .show class to match CSS transform transition
 function openmenu() {
     if (sidemenu) sidemenu.classList.add('show');
+    navOverlay.classList.add('show');
 }
 
 function closemenu() {
     if (sidemenu) sidemenu.classList.remove('show');
+    navOverlay.classList.remove('show');
 }
 
-// Close drawer when a nav link is trapped on mobile
+// Close drawer when a nav link is tapped on mobile
 if (sidemenu) {
     sidemenu.querySelectorAll('a').forEach(function (link) {
-        link.addEventListener('click', function () {
-            sidemenu.classList.remove('show');
-        });
+        link.addEventListener('click', closemenu);
     });
 }
 
@@ -83,6 +99,10 @@ if (sidemenu) {
         if (menuList) {
             var listClone = menuList.cloneNode(true);
             listClone.removeAttribute('id');
+            // Strip the drawer's own close icon - it's a direct child of the <ul>
+            // (not inside an <li>), so it rides along on clone and would otherwise
+            // render as a stray, unstyled icon in the sticky nav.
+            listClone.querySelectorAll('.fas, .far, .fab').forEach(function (icon) { icon.remove(); });
             inner.appendChild(listClone);
         }
 
