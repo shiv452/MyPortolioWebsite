@@ -61,6 +61,14 @@ function closeLightbox(e) {
     document.body.style.overflow = '';
 }
 
+// A PDF can't be rendered by an <img> tag - Cloudinary rasterizes a PDF's
+// first page to a JPG when the URL's extension is swapped, so thumbnails
+// use this while the lightbox (which already handles PDFs) keeps the
+// original URL and opens the real document.
+function cloudinaryPdfThumb(url) {
+    return /\.pdf(\?|$)/i.test(url) ? url.replace(/\.pdf(\?|$)/i, '.jpg$1') : url;
+}
+
 //Certificates Image Preview (uploaded to Cloudinary on submit, see addCertificate())
 var certImageFile = null;
 function previewCertImage(input) {
@@ -81,7 +89,7 @@ function buildCertThumb(p) {
     if (p.id) thumb.dataset.id = p.id;
     var src = p.imageUrl;
     thumb.setAttribute('onclick', "openLightbox('" + src.replace(/'/g, "\\'") + "')");
-    thumb.innerHTML = '<img src="' + src + '" alt="' + escapeHtml(p.title) + '">';
+    thumb.innerHTML = '<img src="' + cloudinaryPdfThumb(src) + '" alt="' + escapeHtml(p.title) + '">';
     // Only Firestore-backed thumbs (real doc id) are deletable - the static
     // seed thumbs aren't tied to a document yet.
     if (p.id) thumb.appendChild(addDelBtn(thumb, removeCert, 'cert-del-btn'));
@@ -105,7 +113,7 @@ function buildAwardCard(p) {
     var imgHTML = '';
     if (p.imageUrl) {
         var safeUrl = p.imageUrl.replace(/'/g, "\\'");
-        imgHTML = '<div class="ach-award-img" onclick="openLightbox(\'' + safeUrl + '\')"><img src="' + p.imageUrl + '" alt="' + escapeHtml(p.title) + '"><span>VIEW</span></div>';
+        imgHTML = '<div class="ach-award-img" onclick="openLightbox(\'' + safeUrl + '\')"><img src="' + cloudinaryPdfThumb(p.imageUrl) + '" alt="' + escapeHtml(p.title) + '"><span>VIEW</span></div>';
     }
 
     var card = document.createElement('div');
@@ -170,7 +178,7 @@ function addCertificate() {
         document.getElementById('cert-author').value = '';
         document.getElementById('cert-desc').value = '';
         document.getElementById('cert-img').value = '';
-        document.getElementById('cert-img-label').textContent = 'Click to upload certificate image';
+        document.getElementById('cert-img-label').textContent = 'Click to upload certificate image or PDF';
         document.getElementById('uploadArea').style.borderColor = '';
         certImageFile = null;
         closeModal('addCertModal');
@@ -220,7 +228,7 @@ function addAward() {
         document.getElementById('award-org').value = '';
         document.getElementById('award-desc').value = '';
         document.getElementById('award-img').value = '';
-        document.getElementById('award-img-label').textContent = 'Click to upload award image (optional)';
+        document.getElementById('award-img-label').textContent = 'Click to upload award image or PDF (optional)';
         document.getElementById('awardUploadArea').style.borderColor = '';
         awardImageFile = null;
 
