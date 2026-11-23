@@ -3444,6 +3444,23 @@ body:not(.is-admin) .cert-del-btn {
 body.is-admin #adminEntry {
   display: none;
 }
-body.is-admin #adminSignOutBtn {
+body.is-admin #adminSignOutBtn,
+body.is-admin #changePasswordBtn {
   display: inline;
+}
+.admin-password-change {
+  display: none;
+}
+.forgot-password-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin: 2px 0 14px;
+  padding: 0;
+}
+.forgot-password-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
 }
