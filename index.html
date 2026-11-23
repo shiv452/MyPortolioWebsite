@@ -1003,6 +1003,8 @@
             <p>&copy; 2025 Shivam Goyal &nbsp;&middot;&nbsp; Built with <i class="fas fa-heart"></i>
                 &nbsp;&middot;&nbsp; Deployed on Netlify</p>
             <button id="adminEntry" class="admin-entry" title="Admin sign in"><i class="fas fa-lock"></i></button>
+            <button id="changePasswordBtn" class="admin-entry admin-password-change" title="Change password"><i
+                    class="fas fa-key"></i></button>
             <button id="adminSignOutBtn" class="admin-entry admin-signout" title="Sign out"><i
                     class="fas fa-lock-open"></i></button>
         </div>
@@ -1017,6 +1019,7 @@
                 <input type="email" id="admin-email" placeholder="Email" autocomplete="username" required>
                 <input type="password" id="admin-password" placeholder="Password" autocomplete="current-password"
                     required>
+                <button type="button" id="forgotPasswordBtn" class="forgot-password-btn">Forgot password?</button>
                 <div class="modal-actions">
                     <button type="submit" class="btn btn-primary">Sign In</button>
                     <button type="button" class="btn btn-outline"
@@ -1026,7 +1029,26 @@
         </div>
     </div>
 
-
+    <!-- ========== CHANGE PASSWORD MODAL ========== -->
+    <div class="modal-overlay" id="changePasswordModal" onclick="handleOverlayClick(event,'changePasswordModal')">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeModal('changePasswordModal')">&times;</button>
+            <h3><i class="fas fa-key"></i> Change Password</h3>
+            <form id="changePasswordForm">
+                <input type="password" id="change-current-password" placeholder="Current password"
+                    autocomplete="current-password" required>
+                <input type="password" id="change-new-password" placeholder="New password (6+ characters)"
+                    autocomplete="new-password" minlength="6" required>
+                <input type="password" id="change-confirm-password" placeholder="Confirm new password"
+                    autocomplete="new-password" minlength="6" required>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Update Password</button>
+                    <button type="button" class="btn btn-outline"
+                        onclick="closeModal('changePasswordModal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- ======= JS Script =========== -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
